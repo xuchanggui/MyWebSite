@@ -9,3 +9,4 @@ _asset_bundler_cache
 Gemfile.lock
 *.bak
 *.dump
+*.log
