@@ -1,0 +1,22 @@
+
+<%include start_dream_header.ejs%>
+
+<!--header-end-->
+<!--main static-->
+<div class="launch">
+	<div class="tree tc">
+		<p class="txt-1 fs36">如果你有一颗真诚的心<br>那么请在这里<span class="fb">发起你的梦想</span></p>
+		<p class="fs14">众筹网是一家可以帮助您实现梦想的网站，在这里您可以发布您的梦想、创意和创业计划，并通过网络平台面对公众集资，<br>让有创造力的人可能获得他们所需要的资金，以便使他们的梦想有可能实现。</p>
+		<p class="agreement"><input id="flag" name="flag" type="checkbox" checked="checked">
+		阅读并同意众筹网的
+		<a href="/help-term" target="_blank">《服务协议》</a>
+		<a href="/help-announcement" target="_bank">《众筹公告》</a></p>
+		<%if(!user){%>
+		<a class="start-dream" href="javascript:getLogin('/project-info');">发起我的梦想</a>
+		<%}else{%>
+		<a class="start-dream" href="/project-info">发起我的梦想</a>
+		<%}%>
+	</div>
+</div>
+
+<%include start_dream_footer.ejs%>

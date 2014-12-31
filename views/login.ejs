@@ -1,40 +1,5 @@
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8"/>
-<meta name="google-site-verification" content="ut7BeTtfYcLMGQV17SBt-6isJj4QwdlXQLemK290nAs" /> 
-<meta name="360-site-verification" content="e14ad415b8f36bb6cbfed7027688c5b3" />
-<meta name="keywords" content="股权众筹平台,互联网金融平台,原始会">
-<meta name="description" content="原始会，是中国股权众筹平台领军企业，也是国内卓越的互联网金融平台！原始会为创业者和小微企业提供融资渠道，服务内容包括资源对接、宣传报道、可视化估值、财务预测、融资辅导等。">
-<title>原始会官网-中国股权众筹平台领军企业，卓越的互联网金融平台！</title>
-
-<link rel="stylesheet" type="text/css" href="http://istatic.yuanshihui.com/angelpc/v2/static/css/??base.css,common.css,login.css?v=20141112">
-<script type="text/javascript" src="http://istatic.yuanshihui.com/angelpc/v2/static/js/??jquery-1.10.2.min.js,jquery.cookie.js,wx.js,wx.config.js,common.js,newLogin.js?v=20141112" wx-main></script>
-</head>
-<body>
-<!--header static-->
-<div class="header">
-	<!-- <a href="/" class="logo"><img src="/images/favicon.ico" title="北京原始会投资管理有限公司" alt="英雄会" /></a> -->
-	<div class="menuBar">
-		<ul class="clearfix">
-			<li><a href="/">首页</a></li>
-			<li><a href="/deal/list">浏览项目</a></li>
-			<li><a href="/startup/deal">发起项目</a></li>
-			<li><a href="/about/about">关于我们</a></li>
-		</ul>
-	</div>
-<form id="se" name="se" action="/deal/list" method="post" wx-validator wx-validator-ajax >
-	<span class="search"><a type="submit" href="###"><img src="http://istatic.yuanshihui.com/angelpc/v2/static/images/index/icons.png?v=20141112" /></a>
-	<input wx-validator-notip name="q" type="text" value=""  placeholder="输入关键词" />
-	</span>
-</form>
-			<div class="userbox">
-		<a href="/login" class="logon"  rel="nofollow">登录</a>
-		<a href="/reg" class="reg"  rel="nofollow">注册</a>
-	</div>
-	</div>
-
+<%include common_header.ejs%>
 <!-- content static -->
 <div  class="pass-bg">
 	<div  class="pass-box wid315">
@@ -61,42 +26,4 @@
 </div>
 <!-- content end --> 
 
-
-<div class="footer">
-	<div class="wrap">
-	    <ul class="clearfix">	    	
-	    	<li><a href="/about/contact">联系我们</a></li>
-	    	<li><a href="/about/entrepreneurs">用户指南</a></li>
-	    	<!--<li class="qaw"><a href="javascript:;">Q&A</a></li>-->
-	    	<li><a href="javascript:;">合作机构</a></li>
-	    	<li class="link_b"><a href="/about/friend">友情链接</a></li>
-
-	    </ul>
-		<p>&copy;2014  insupper互联网有限公司   YUANSHIHUI.COM  版权所有   京ICP备14027236号-1   京公安网安备11010502026268</p>
-	</div>
-</div>
-
-<!--footer end-->
-</body>
-</html>
-<script type="text/javascript">
-var value=null;
-$(document).ready(function(){
-	$.cookie('zcid',value);
-});
-</script>
-<script type="text/javascript">
-var _ncf={"prd":"yuanshihui","pstr":"","pfunc":null,"pcon":"&nm=user&na=login","pck":{"beid":"beid","zcid":"zcid"}};
-    (function(p,h,s){var o=document.createElement(h);o.src=s;p.appendChild(o)})(document.getElementsByTagName("HEAD")[0],"script","http://zcstatic.wangxingroup.com/js/ncfpb.1.1.min.js");
-</script>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-53854063-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
-
+<%include common_footer%>

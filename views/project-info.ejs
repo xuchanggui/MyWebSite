@@ -1,0 +1,166 @@
+
+<%include project_info_header.ejs%>
+<div class="process">
+		<!--flow step static-->
+		<div class="project-edit-nav">
+			<h3 class="steps-1">项目信息</h3>
+		</div>
+		<!--flow step end--> 
+</div>
+<!--main static-->
+<div class="main clearfix">
+	<div class="process-wrap clearfix">
+	<form wx-validator wx-validator-ajax="jump" action="/projectnew-save" method="post" name="HwForm">
+		<div class="tit-wrap">
+			<h3>项目信息</h3>
+		</div>
+			<!--project start-->
+			<div class="project-box">
+				<div class="project-con fl w835">					
+					<div class="project-edit">
+						<div class="form-item clearfix">
+							<label>项目名称：</label>
+							<input type="text" name="name" class="w655" wx-validator-rule="required|maxLength" wx-validator-param="|40" wx-validator-placeholder="项目名称不能超过40个字" wx-validator-name-maxLength="项目名称不能超过40个字" value="" maxLength="40"/>
+						</div>
+						<div class="form-item clearfix">
+							<label>筹资金额：</label>
+								<input type="text" name="limit_price" class="w408" wx-validator-rule="required|digits|min" wx-validator-param="||500" wx-validator-placeholder="不少于500元" value="" />
+								<em>元</em>
+								<span class="error-text" id="wx-validator-limit_price-error" style="display: none;">不少于500元</span>
+						</div>
+						<div class="form-item clearfix">
+							<label>募集天数：</label>
+								<input type="text" name="deal_days" wx-validator-placeholder="10~90天"  class="w408" wx-validator-rule="required|digits|range" wx-validator-param="||10-90" value=""/>
+								<em>天</em>
+								<span class="error-text" id="wx-validator-deal_days-error" style="display: none;">天数为10-90天</span>
+						</div>
+						<div class="form-item clearfix">
+							<label>类别：</label>
+							<div id="Js-select-cate" class="option-sort">
+							    								   <span data-id="10000" >科技</span> 
+																   <span data-id="23" >公益</span> 
+																   <span data-id="16" >出版</span> 
+																   <span data-id="10001" >娱乐</span> 
+																   <span data-id="22" >艺术</span> 
+																   <span data-id="28" >农业</span> 
+																   <span data-id="10003" >商铺</span> 
+															</div>
+							<input id="Js-cate" class="hidden" name="cate_id"  value=""/>
+						</div>
+						<div class="form-item clearfix">
+							<label>项目地点：</label>
+							<div class="option-box">
+								<select name="province" data-class="select-1"  data-placeholder='选择省份' wx-validator-error-value="请选择省份" data-default="">
+								<option value="">请选择省份</option>
+																		   <option value="安徽" data-id="3" >安徽</option>
+																		   <option value="澳门" data-id="396" >澳门</option>
+																		   <option value="北京" data-id="52" >北京</option>
+																		   <option value="福建" data-id="4" >福建</option>
+																		   <option value="甘肃" data-id="5" >甘肃</option>
+																		   <option value="广东" data-id="6" >广东</option>
+																		   <option value="广西" data-id="7" >广西</option>
+																		   <option value="贵州" data-id="8" >贵州</option>
+																		   <option value="海南" data-id="9" >海南</option>
+																		   <option value="河北" data-id="10" >河北</option>
+																		   <option value="黑龙江" data-id="12" >黑龙江</option>
+																		   <option value="河南" data-id="11" >河南</option>
+																		   <option value="湖北" data-id="13" >湖北</option>
+																		   <option value="湖南" data-id="14" >湖南</option>
+																		   <option value="江苏" data-id="16" >江苏</option>
+																		   <option value="江西" data-id="17" >江西</option>
+																		   <option value="吉林" data-id="15" >吉林</option>
+																		   <option value="辽宁" data-id="18" >辽宁</option>
+																		   <option value="内蒙古" data-id="19" >内蒙古</option>
+																		   <option value="宁夏" data-id="20" >宁夏</option>
+																		   <option value="青海" data-id="21" >青海</option>
+																		   <option value="山东" data-id="22" >山东</option>
+																		   <option value="上海" data-id="321" >上海</option>
+																		   <option value="山西" data-id="23" >山西</option>
+																		   <option value="陕西" data-id="24" >陕西</option>
+																		   <option value="四川" data-id="26" >四川</option>
+																		   <option value="台湾" data-id="397" >台湾</option>
+																		   <option value="天津" data-id="343" >天津</option>
+																		   <option value="香港" data-id="395" >香港</option>
+																		   <option value="西藏" data-id="28" >西藏</option>
+																		   <option value="新疆" data-id="29" >新疆</option>
+																		   <option value="云南" data-id="30" >云南</option>
+																		   <option value="浙江" data-id="31" >浙江</option>
+																		   <option value="重庆" data-id="394" >重庆</option>
+																	</select>
+								<select name="city" data-class="select-2"  data-placeholder='选择城市' wx-validator-error-value="选择城市" data-default="">
+								<option value="">请选择城市</option>
+																	</select>
+								<span id="wx-validator-province-error" class="error-text" style="display:none">请选择省份</span>
+        						<span id="wx-validator-city-error" class="error-text" style="display:none">请选择城市</span>
+							</div>
+						</div>
+						<div class="form-item clearfix">
+							<label>项目封面：</label>
+							<div class="up-btn fs14">
+								<div class="ipt-file">
+									<input wx-upload="/upload" style="font-size:50px" wx-upload-assign="image=url" wx-upload-set="image=url" type="file" id="image_file" name="image_file"/>
+									<a class="">上传封面</a> 
+								</div>
+								<span class="gray">支持jpg、jpeg、png，大小不超过5M。建议尺寸：640 x 480px</span>
+							</div>
+						</div>
+						<div class="form-item clearfix">
+							<label>视频：</label>
+							<input type="text" name="vedio" class="inp-w310" placeholder="请输入优酷视频的播放页地址" wx-validator-placeholder="请输入优酷视频的播放页地址"  maxLength='200' value=""/>
+						</div>
+						<div class="form-item clearfix">
+							<label>项目简介：</label>
+							<textarea name="brief" wx-validator-rule="required|maxLength" wx-validator-param="|75"  wx-validator-placeholder="不超过75个字" maxLength="75"></textarea>
+							<span id="wx-validator-brief-maxLength" class="error-text hidden">不能超过75个汉字</span>
+						</div>
+						<div class="form-item clearfix">
+							<label>项目详情：</label>
+							<textarea id="Js-description" name="description" wx-validator-rule="required">
+																<h2>关于我（也可使用个性化小标题）</h2>
+								<p>向支持者介绍你自己或你的团队，并详细说明你与所发起的项目之间的背景，让支持者能够在最短时间内了解你，以拉近彼此之间的距离。</p>
+								<h2>我想要做什么（也可使用个性化小标题）</h2>
+								<p>这是项目介绍中最关键的部分，建议上传5张以上高清图片（宽700、高不限），配合文字来简洁生动地说明你的项目，让支持者对你要做的事情一目了然并充满兴趣。</p>
+								<h2>为什么我需要你的支持及资金用途（也可使用个性化小标题）</h2>
+								<p>请在这一部分说明你的项目不同寻常的特色，为什么需要大家的支持以及详细的资金用途，这会增加你项目的可信度并由此提高筹资的成功率。</p>
+								<h2>可能存在的风险（也可使用个性化小标题）</h2>
+								<p>请在此标注你的项目在实施过程中可能存在的风险，让支持者对你的项目有全面而清晰的认识。</p>
+															</textarea>
+						</div>
+						<div class="form-item clearfix">
+							<label>标签：</label>
+							<input id="Js-tag" name="tags" type="text" class="inp-w310"  placeholder="请使用空格或逗号分隔不同标签" value=""/>
+						</div>
+						
+						<input type="hidden" name="image" value="" />
+						<input type="hidden" name="savenext" value="1" />
+						<input type="hidden" name="id" value="" />
+						
+						<div class="action">
+						    <a class="btn-effect-blue btn-sub w170" type="submit" href="javascript:void(0);" wx-validator-submit-error="您填写的部分内容不符合规范" id="savenext">下一步</a>
+						</div>
+					</div>
+				</div>
+			<!--project end-->
+		<!--side static-->
+		<div class="sidebar w383 fr">
+			<p class="view-area fs18 fb">预览区域</p>
+			<!--list item static-->
+			<div class="list-item">
+						<a class="item-figure" href="javascript:void(0);">
+							<img id="image" src="http://zcs5.ncfstatic.com/v3/static/images/open/default.jpg" />
+						</a>
+						<h3 class="project-name"><a id="Js-name" href="javascript:;"></a></h3>	
+						<div class="item-caption">
+						<span class="caption-title">目标：<span id="Js-days"></span>&nbsp;&nbsp;&nbsp;
+						<span id="Js-price"></span></span>
+					</div>
+			<!--list item end-->
+		</div>
+		<!--side end-->
+	</div>
+	</form>
+				</div>
+
+</div>
+<!--main end-->
+<%include project_info_footer%>

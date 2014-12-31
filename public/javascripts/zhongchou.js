@@ -20,7 +20,7 @@
       _winHeight  = $(window).height(),
       _globalData = {};
       
-	function wx(){}
+  function wx(){}
   window.wx = wx;
 
   wx.VERSION = "1.4.7";
@@ -64,7 +64,7 @@
    * @param   {Integer}   延时
    * @return  {Function}  节流方法
   */
-	wx.throttle = function(fn, timeout) {
+  wx.throttle = function(fn, timeout) {
     var timer;
     return function(){
         var self = this, args = arguments;
@@ -439,7 +439,7 @@
   }
 
   //弹框的核心方法
-	function _pop(content, callback, opts) {
+  function _pop(content, callback, opts) {
     if(!$.isFunction(callback) && $.type(callback) === "object")
       opts = callback;
     opts = opts||{};
@@ -1606,18 +1606,18 @@ function loginDialog(){
                     <p class="p-shut-down clearfix"><a class="shut-down-icon Js-pop-close"></a></p>\
                     <h2>登录</h2>\
                     <div class="form-item change-pt">\
-                         <form action="/user-ajax_login" wx-validator name="loginForm" wx-validator-ajax wx-validator-single-error="loginFormError">\
+                         <form action="/project-info"  method="post" onsubmit="return validate();" wx-validator name="loginForm" >\
                              <span id="loginFormError" class="red-color dis-span"></span>\
                              <div class="row clearfix">\
-                                 <input type="text" name="username" wx-validator-rule="required" wx-validator-username-required="用户名不能为空" wx-validator-placeholder="请输入用户名／邮箱／手机号">\
+                                 <input type="text" id="mobile" wx-validator-rule="required"   wx-validator-placeholder="请输入用户名／邮箱／手机号">\
                              </div>\
                               <div class="row clearfix">\
-                                 <input type="password" name="user_pwd" type="password" wx-validator-rule="required|rangelength" wx-validator-param="|6-16"  wx-validator-placeholder="请输入密码">\
+                                 <input type="password" id="password" type="password" wx-validator-rule="required|rangelength" wx-validator-param="|6-16"  wx-validator-placeholder="请输入密码">\
                              </div>\
                              <div class="row clearfix">\
                                   <p class="p-checked"><a class="blue-color  fine-tuning" href="/user-getpassword">忘记密码?</a></p>\
                              </div>\
-                             <p class="p-btn"><a class="a-btn" type="submit" href="###">登录</a></p>\
+                             <p class="p-btn"><input  class="a-btn" type="submit" value="登录" /></p>\
                              <p class="p-login">使用合作帐号登录</p>\
                              <p class="p-login">\
                                <a class="weixin" href="https://api.weibo.com/oauth2/authorize?client_id=1494625316&redirect_uri=http%3A%2F%2Fwww.zhongchou.cn%2Fapi_callback.php%3Fc%3DSina%26response_type%3Dcode&response_type=code"></a>\
@@ -1634,7 +1634,7 @@ function loginDialog(){
                     <p class="p-shut-down clearfix"><a class="shut-down-icon Js-pop-close"></a></p>\
                     <h2>注册</h2>\
                     <div class="form-item change-pt">\
-                         <form action="/user-ajax_register" wx-validator name="registerForm" wx-validator-ajax wx-validator-single-error="registerFormError">\
+                         <form action="/reg" wx-validator name="registerForm" wx-validator-ajax wx-validator-single-error="registerFormError">\
                              <span id="registerFormError" class="red-color dis-span"></span>\
                              <div class="row clearfix">\
                                  <input name="mobile" type="text"  wx-validator-rule="required|mobile" wx-validator-placeholder="请输入手机号">\
@@ -1645,14 +1645,14 @@ function loginDialog(){
                              <div class="row clearfix">\
                                  <input name="confirm_user_pwd" type="password" wx-validator-rule="required|equalTo" wx-validator-param="|user_pwd" wx-validator-confirm_user-pwd-equalTo="密码输入不一致" wx-validator-placeholder="请再次输入6-16位密码">\
                              </div>\
-              							 <div class="row clearfix">\
-              						      <input id="v_code" name="v_code" wx-validator-rule="required" type="text" class="verification-code" wx-validator-placeholder="请输入图片中的数字"><img style="border:1px solid #E4E4E4;padding:0;width:126px;cursor:pointer;height:44px;margin-left:10px;" \
-              									src="/verify.php" onclick="this.src=\'/verify.php?\' + Math.random();" class="get-verification-code" />\
-              						   </div>\
+                             <div class="row clearfix">\
+                                <input id="v_code" name="v_code" wx-validator-rule="required" type="text" class="verification-code" wx-validator-placeholder="请输入图片中的数字"><img style="border:1px solid #E4E4E4;padding:0;width:126px;cursor:pointer;height:44px;margin-left:10px;" \
+                                src="/verify.php" onclick="this.src=\'/verify.php?\' + Math.random();" class="get-verification-code" />\
+                             </div>\
                              <div class="row clearfix">\
                                  <input name="verify" wx-validator-rule="required" type="text" class="verification-code" wx-validator-placeholder="请输入验证码"><a id="Js-registerGetCode" class="get-verification-code">获取验证码</a>\
                              </div>\
-	  						             <div class="row clearfix">\
+                             <div class="row clearfix">\
                                   <p class="p-checked"><label><input name="article" type="checkbox" checked wx-validator-article-nocheck="请阅读协议并勾选同意">阅读并同意众筹网的</label><a class="blue-color" target="_blank" href="/help-registerpro">《服务协议》</a></p>\
                              </div>\
                              <p class="p-btn"><a class="a-btn" type="submit" href="###">注册</a></p>\
@@ -1736,9 +1736,49 @@ function loginDialog(){
   }
 }
 
+//验证用户名密码
+var flag=0;
+function validate(){
+  if(flag==1){
+    return true;
+  }
+        var params ={
+                mobile: $("#mobile").val(),
+                password: $("#password").val()
+            };
+            $.ajax({
+                data: params,
+                url: '/checkUserAndPassword',
+                dataType: 'json',
+                type:'post',
+                async: false,
+                cache: false,
+                timeout: 5000,
+                success: function(data){
+                  if(data.error){
+                       alert(data.error);
+                      /* document.getElementById("mobile").value="";*/
+                       document.getElementById("password").value="";
+                       document.getElementById("mobile").focus();
+                       return false;
+                  }else{
+                    alert(data.success);
+                    flag=flag+1;
+                    return true;
+                  }
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    alert('错误提示:==== ' + textStatus + " " + errorThrown); 
+                    document.getElementById("mobile").value="";
+                    document.getElementById("password").value="";
+                    document.getElementById("mobile").focus();
+                    return false;
+                }
+            });
+ }
+
 function openLogin(jump){
-  loginRegisterJump = jump;
-	$('.Js-showLogin').trigger('click');
+  $('.Js-showLogin').trigger('click');
 }
 
 function loginForm(data){
@@ -1888,4 +1928,3 @@ function baizeAnalytics(){
   o.src="http://zcstatic.wangxingroup.com/js/ncfpb.1.1.min.js";
   document.getElementsByTagName("HEAD")[0].appendChild(o);
 }
-
