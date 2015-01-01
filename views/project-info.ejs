@@ -96,9 +96,10 @@
 						</div>
 						<div class="form-item clearfix">
 							<label>项目封面：</label>
+							<p><font size="" color="#ff0000"><%- message %></font></p>
 							<div class="up-btn fs14">
 								<div class="ipt-file">
-									<input wx-upload="/upload" style="font-size:50px" wx-upload-assign="image=url" wx-upload-set="image=url" type="file" id="image_file" name="image_file"/>
+									<input wx-upload="/upload" style="font-size:50px" onclick="return upload(image_file.value);" wx-upload-assign="image=url" wx-upload-set="image=url" type="file" id="image_file" name="image_file"/>
 									<a class="">上传封面</a> 
 								</div>
 								<span class="gray">支持jpg、jpeg、png，大小不超过5M。建议尺寸：640 x 480px</span>

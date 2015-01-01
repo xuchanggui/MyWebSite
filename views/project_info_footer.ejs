@@ -129,6 +129,17 @@ function image_file(data){
 	wx.alert(data.msg);
     }
 }
+
+function uploadPicture(value){
+alert("哈哈哈");
+    if (value == ''){
+
+        alert('请选择文件！');
+        imageform.file.focus();
+        return false;
+    }
+}
+
 </script>
 </body>
 </html>

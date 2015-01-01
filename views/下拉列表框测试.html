@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+    <script type="text/javascript">
+  <!--
+function check(value){;
+	var city=["成都","郫县","温江","新都"];
+	alert("value==="+value);
+	if(value=="1"){
+	    for(var i=0;i<city.length;i++){
+			if(i==1){
+				document.getElementById("city").add(new Option(city[i],city[i]));
+				alert("默认值=="+document.getElementById("city").options[i].value);
+				document.getElementById("city").options[i].selected=true;
+			}else{
+				document.getElementById("city").add(new Option(city[i],city[i]));
+				alert("默认值=="+document.getElementById("city").options[i].value);
+			}
+			
+		}
+		
+	}
+
+}
+  //-->
+  </script>
+ </head>
+ <body>
+
+ <select id="pro" onchange=check(this.value)>
+<option value=0>请选择省份</option>
+<option value=1>四川</option>
+<option value=2>重庆</option>
+<option value=3>上海</option>
+<option value=4>深圳</option>
+</select>
+<br>
+ <select id="city" >
+   <option value="请选择" selected="selected">请选择</option> 
+</select>
+
+ </body>
+</html>

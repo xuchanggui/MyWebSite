@@ -4,13 +4,30 @@
   
   <meta http-equiv="Content-Type"  content="text/html;charset=UTF-8"/>
 </head>
-<body>
+<body onload="init();">
   <%if(success){%>
-  <div><%=success%></div>
+  <p><font size="" color="#ff0000"><%=success%></font></p>
+  <%}%>
+  <%if(error){%>
+  <p><font size="" color="#ff0000"><%=error%></font></p>
   <%}%>
   <form action="/upload" enctype="multipart/form-data" method="post">
     <input type="file" name="upload" multiple="multiple">
     <input type="submit" value="上传文件"/>
   </form>
+
+
+
+<img style="width:150px; height:150px;" src="" id="image"/>
 </body>
+  <script type="text/javascript">
+  function init(){
+  	if("<%=picture_url%>"){
+  	document.getElementById("image").src="/images/"+"<%=picture_url%>";
+  	}else{
+  		document.getElementById("image").style.display="none";
+  	}
+  
+  }
+  </script>
 </html>

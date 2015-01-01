@@ -52,12 +52,20 @@ app.use(function(req, res, next){
 res.locals.user = req.session.user;
 var err = req.session.error;
 var succ =req.session.success;
-res.locals.error =err;
-res.locals.success = succ;
+var pic_url=req.session.picture_url;
+res.locals.error ="";
+res.locals.success = "";
+res.locals.picture_url="";
+if(pic_url){
+  res.locals.picture_url=pic_url;
+  console.log("图片名称=============="+pic_url);
+}
 if(err){
+  res.locals.error=err;
  	console.log("错误提示信息=============="+err);
 }
 if(succ){
+  res.locals.success=succ;
  	console.log("成功提示信息=============="+succ);
 }
 console.log("================");
