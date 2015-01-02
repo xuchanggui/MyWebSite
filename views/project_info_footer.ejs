@@ -25,6 +25,7 @@
 	</div>
 	<div class="footer-copy">
 		<div class="wrap">
+			<!-- 
 			<div class="m-Links">
 									<a href="http://iof.hexun.com/zhongchou/index.html" target="_blank" rel="nofollow">和讯网</a>
 									<a href="http://www.leiphone.com/" target="_blank" rel="nofollow">雷锋网</a>
@@ -57,16 +58,17 @@
 									<a href="http://www.kuaidi100.com/" target="_blank" >快递查询</a>
 				              
 			</div>
+			 -->
             <p>&copy;2014 北京网信众筹网络科技有限公司 zhongchou.cn 版权所有 京ICP备14016844号 | 出版物经营许可证编号新出发（京）批字第直140141号 </p>
 		</div>
 	</div>
 </div>
-<script type="text/javascript" src="http://zcs7.ncfstatic.com/zhongchou/pub/v3/fe3974b84fb6b50da0f329242078614c.js?V=1419418897"></script>                   
+<script type="text/javascript" src="http://zcs7.ncfstatic.com/zhongchou/pub/v3/fe3974b84fb6b50da0f329242078614c.js?V=1420011048"></script>                   
 <div id="gotop" class="go-top"></div>
 <!--footer end-->
  
 <!--footer end-->
-<script type="text/javascript" src="http://zcs7.ncfstatic.com/zhongchou/pub/v3/1b959497b95e50f530d89bf54cb9884e.js?V=1419418897"></script>
+<script type="text/javascript" src="http://zcs7.ncfstatic.com/zhongchou/pub/v3/1b959497b95e50f530d89bf54cb9884e.js?V=1420011048"></script>
 
 <script>
 
@@ -130,16 +132,57 @@ function image_file(data){
     }
 }
 
-function uploadPicture(value){
-alert("哈哈哈");
-    if (value == ''){
-
-        alert('请选择文件！');
-        imageform.file.focus();
-        return false;
+//下拉列表框事件
+function checkItem(value){
+    if(value==""){
+    return;
     }
+	var city=["成都","郫县","温江","新都"];
+	alert("vaule==="+value);
+	if(value=="四川"){
+	    for(var i=0;i<city.length;i++){
+			if(i==1){
+				document.getElementById("city").add(new Option(city[i],city[i]));
+				document.getElementById("city").options[i].selected=true;
+			}else{
+				document.getElementById("city").add(new Option(city[i],city[i]));
+				//alert("默认值=="+document.getElementById("city").options[i].value);
+			}
+			
+		}
+		
+	}
+
 }
 
+function category(value){
+	alert("选中类别");
+	if(value){
+	document.getElementById("category").value=value;
+	alert(""+document.getElementById("category").value);
+	}
+	
+}
+
+function checkForm(){
+	var name=document.getElementById("name").value;
+	var limit_price=document.getElementById("limit_price").value;
+	var deal_days=document.getElementById("deal_days").value;
+	var category=document.getElementById("category").value;
+	var project_location=document.getElementById("project_location").value;
+	var city=document.getElementById("city").value;
+	var vedio_url=document.getElementById("vedio_url").value;
+	var project_brief=document.getElementById("project_brief").value;
+	var project_details=document.getElementById("project_details").value;
+	var agr=document.getElementById("agr").value;
+	if(name==""){
+	 document.getElementById("show_name").style.display="block";
+	 document.getElementById("show_name").firstChild.firstChild.innerHTML="用户名不能为空!";
+	 document.getElementById("name").focus();
+	 return false;
+	}
+
+}
 </script>
 </body>
 </html>

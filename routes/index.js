@@ -36,18 +36,35 @@ app.get('/project',function(req,res){
 
 
 app.get('/project-info',function(req,res){
-	res.render('project-info', { title: '我的项目'});
+	res.render('project_info', { title: '我的项目'});
 });
 
 app.post('/project-info',function(req,res){
-	res.render('project-info', { title: '我的项目'});
+	res.render('project_info', { title: '我的项目'});
 });
+
+app.post('/project_info_save',requestHandlers.project_info_save);
+
+
+app.get('/project_returns',function(req, res){
+res.render('project_returns', { title: 'project_returns'});
+});
+
 
 app.post('/checkUserAndPassword',requestHandlers.checkUserAndPassword);
 
 app.get('/home',requestHandlers.checkLogin);
 app.get('/home',function(req, res){
 res.render('home', { title: 'Home'});
+});
+
+
+app.get("/settings-get_region",function(req,res){
+	console.log("get=====settings-get_region");
+});
+
+app.post("/settings-get_region",function(req,res){
+	console.log("post====settings-get_region");
 });
 
 app.get('/logout',requestHandlers.checkLogin);

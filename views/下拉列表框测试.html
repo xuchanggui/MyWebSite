@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
  <head>
   <meta charset="UTF-8">
@@ -11,16 +11,14 @@
   <!--
 function check(value){;
 	var city=["成都","郫县","温江","新都"];
-	alert("value==="+value);
 	if(value=="1"){
 	    for(var i=0;i<city.length;i++){
 			if(i==1){
 				document.getElementById("city").add(new Option(city[i],city[i]));
-				alert("默认值=="+document.getElementById("city").options[i].value);
 				document.getElementById("city").options[i].selected=true;
 			}else{
 				document.getElementById("city").add(new Option(city[i],city[i]));
-				alert("默认值=="+document.getElementById("city").options[i].value);
+				//alert("默认值=="+document.getElementById("city").options[i].value);
 			}
 			
 		}
@@ -34,11 +32,11 @@ function check(value){;
  <body>
 
  <select id="pro" onchange=check(this.value)>
-<option value=0>请选择省份</option>
-<option value=1>四川</option>
-<option value=2>重庆</option>
-<option value=3>上海</option>
-<option value=4>深圳</option>
+<option value="请选择省份">请选择省份</option>
+<option value="四川">四川</option>
+<option value="重庆">重庆</option>
+<option value="上海">上海</option>
+<option value="深圳">深圳</option>
 </select>
 <br>
  <select id="city" >
@@ -46,4 +44,9 @@ function check(value){;
 </select>
 
  </body>
+ <script type="text/javascript">
+ <!--
+	alert("获取下拉列表框的值==="+document.getElementById("pro").value);
+ //-->
+ </script>
 </html>

@@ -3,6 +3,7 @@ var url=require("url");
 var util = require('util');
 var crypto=require('crypto');
 var User = require('./user');
+var User_Project_Info = require('./user_project_info');
 var path = require('path');
 fs=require("fs");
 formidable=require("formidable");
@@ -13,13 +14,68 @@ function reg(req,res){
 //检查用户两次输入的口令是否一致
 if(!(req.body['confirm_password'])||!(req.body['password'])||!(req.body['mobile']))
 {
-	req.session.error='密码或者手机号码不能为空!';
+	err="密码或者手机号码不能为空!";
+	req.session.error=err;
 	return res.redirect('/reg');
 }
+
+len=req.body.mobile.length;
+console.log("登录mobile的长度====="+len);
+if(len==0){
+	err="请输入手机号码";
+	console.log(err);
+	req.session.error=err;
+	return res.redirect('/reg');
+}else if(len!=11){
+	err="请输入正确长度的手机号码";
+    console.log(err);
+    req.session.error=err;
+	return res.redirect('/reg');
+}else if(isNaN(len)){
+    err="您输入的手机号码格式不对,请输入正确的手机号码";
+    console.log(err);
+    req.session.error=err;
+	return res.redirect('/reg');
+}
+
+len=req.body.password.length;
+if(len==0){
+	err="密码不能为空,请输入密码!";
+	console.log(err);
+	req.session.error=err;
+	return res.redirect('/reg');
+}else if((len)<6||(len>16)){
+	err="您输入的密码长度有误，密码不能小于六位，同时也不能大于十六位！";
+	console.log(err);
+	req.session.error=err;
+	return res.redirect('/reg');
+}
+
 if(req.body['confirm_password']!=req.body['password']){
-	req.session.error='两次输入的口令不一致!';
+	err="两次输入的口令不一致!";
+	console.log(err);
+	req.session.error=err;
     return res.redirect('/reg');
 }
+
+var reg=/\s/g;
+if(req.body.username==""){
+    err="输入的昵称不能为空!";
+    console.log(err);
+	req.session.error=err;
+    return res.redirect('/reg');
+}else if(req.body.username.length>15){
+    err="输入昵称的长度不对，请重新输入！";
+    console.log(err);
+	req.session.error=err;
+    return res.redirect('/reg');
+}else if(reg.test(req.body.username)){
+	err="输入内容包含空格，请出新输入!";
+	console.log(err);
+	req.session.error=err;
+	return res.redirect('/reg');
+}
+
 //生成口令的数列值return 
 var md5=crypto.createHash('md5');
 var username=req.body.username;
@@ -120,6 +176,88 @@ var password=md5.update(req.body.password).digest('base64');
 	res.json({"success":"验证通过"});
  });
 }
+
+
+//保存项目信息
+function project_info_save(req,res){
+
+/*//检查用户两次输入的口令是否一致
+if(!(req.body['confirm_password'])||!(req.body['password'])||!(req.body['mobile']))
+{
+	req.session.error='密码或者手机号码不能为空!';
+	return res.redirect('/reg');
+}
+if(req.body['confirm_password']!=req.body['password']){
+	req.session.error='两次输入的口令不一致!';
+    return res.redirect('/reg');
+}
+//生成口令的数列值return 
+var md5=crypto.createHash('md5');*/
+var name=req.body.name;
+var limit_price=req.body.limit_price;
+var deal_days=req.body.deal_days;
+var category=req.body.category;
+var project_location=req.body.project_location;
+var city=req.body.city;
+var vedio_url=req.body.vedio_url;
+var project_brief=req.body.project_brief;
+var project_details=req.body.project_details;
+var user_mobile=req.body.user_mobile;
+var tags=req.body.tags;
+
+var user_project_info=new User_Project_Info(
+{
+  name:name,//项目名称
+  limit_price:limit_price,//筹集金额
+  deal_days:deal_days,//筹集天数
+  category:category,//筹集类别
+  project_location:project_location,//项目地点
+  city:city,//所在城市
+  vedio_url: vedio_url,//项目视频地址
+  project_brief: project_brief,//项目简介
+  project_details: project_details,//项目详情 
+  user_mobile: user_mobile,//项目发起者手机号码(这是唯一的主键)
+  tags:tags//项目标签
+});
+	console.log("name====="+name);
+	console.log('limit_price======'+limit_price);
+	console.log('deal_days======'+deal_days);
+	console.log("category====="+category);
+	console.log('project_location======'+project_location);
+	console.log('city======'+city);
+	console.log("vedio_url====="+vedio_url);
+	console.log('project_brief======'+project_brief);
+	console.log('project_details======'+project_details);
+	console.log('user_mobile======'+user_mobile);
+	console.log('tags======'+tags);
+ //检查用户名是否已经存在
+ User_Project_Info.findUserProjectInfoByMobile(user_mobile,function(err,project_info){
+ 	console.log("通过手机号码查询项目信息");
+ 	if(project_info){
+ 		err='user_project_info already exists';
+ 	}
+ 	console.log("err===="+err);
+ 	if(err){
+ 		req.session.error=err;
+ 		return res.redirect('/project-info');
+ 	}
+ 	 //console.log("执行到了5");
+ 	//如果用户不存在则新增用户
+ 	user_project_info.save(function(err){
+ 	if(err){
+ 		console.log("保存项目信息出错==="+err);
+ 		req.session.error=err;
+ 		//console.log("执行到了6");
+ 		return res.redirect('/');
+ 	}
+   // console.log("执行到了7");
+ 	//req.session.user=newUser;
+	req.session.success='项目信息保存成功!'
+ 	return res.redirect('/project_returns');	
+ 	});
+ });
+}
+
 
 function logout(req, res){
 req.session.user=null;
@@ -290,5 +428,6 @@ exports.checkLogin=checkLogin;
 exports.checkNotLogin=checkNotLogin;
 exports.reg=reg;
 exports.login=login;
+exports.project_info_save=project_info_save;
 exports.checkUserAndPassword=checkUserAndPassword;
 exports.logout=logout;
