@@ -164,25 +164,198 @@ function category(value){
 	
 }
 
-function checkForm(){
+function check_name(){
 	var name=document.getElementById("name").value;
-	var limit_price=document.getElementById("limit_price").value;
-	var deal_days=document.getElementById("deal_days").value;
-	var category=document.getElementById("category").value;
-	var project_location=document.getElementById("project_location").value;
-	var city=document.getElementById("city").value;
-	var vedio_url=document.getElementById("vedio_url").value;
-	var project_brief=document.getElementById("project_brief").value;
-	var project_details=document.getElementById("project_details").value;
-	var agr=document.getElementById("agr").value;
 	if(name==""){
 	 document.getElementById("show_name").style.display="block";
-	 document.getElementById("show_name").firstChild.firstChild.innerHTML="用户名不能为空!";
+	 document.getElementById("show_name").firstChild.firstChild.innerHTML="项目名不能为空!";
+	 //document.getElementById("name").focus();
+	 return false;
+	}else if(name.length>40){
+	 document.getElementById("show_name").style.display="block";
+	 document.getElementById("show_name").firstChild.firstChild.innerHTML="项目名称不能大于40个字符!";
+	 //document.getElementById("name").focus();
+	 return false;
+	}else{
+	document.getElementById("show_name").style.display="none";
+	}  
+}
+
+function check_limit_price(){
+	var limit_price=document.getElementById("limit_price").value;
+	if(limit_price==""){
+	document.getElementById("show_limit_price").style.display="block";
+	document.getElementById("show_limit_price").firstChild.firstChild.innerHTML="请输入筹集的金额数!";
+	return false;	
+	}else if(limit_price<500){
+	document.getElementById("show_limit_price").style.display="block";
+	document.getElementById("show_limit_price").firstChild.firstChild.innerHTML="筹集金额不能小于500元!";
+	return false;
+	}else{
+	document.getElementById("show_limit_price").style.display="none";
+	}
+}
+
+function check_deal_days(){
+	var deal_days=document.getElementById("deal_days").value;
+	if(deal_days<10||deal_days>90){
+	document.getElementById("show_deal_days").style.display="block";
+	document.getElementById("show_deal_days").firstChild.firstChild.innerHTML="筹集天数不能小于10天或者不能大于90天!";
+	return false;
+	}else{
+	document.getElementById("show_deal_days").style.display="none";
+	}
+}
+
+function check_category(){
+var category=document.getElementById("category").value;
+if(category==""){
+	document.getElementById("show_category").style.display="block";
+	document.getElementById("show_category").firstChild.firstChild.innerHTML="请选择项目分类!";
+	return false;	
+}else{
+	document.getElementById("show_category").style.display="none";
+}
+}
+
+function check_project_location(){
+	var project_location=document.getElementById("project_location").value;
+	if(project_location==""){
+	document.getElementById("show_project_location").style.display="block";
+	document.getElementById("show_project_location").firstChild.firstChild.innerHTML="请选择省份!";
+	return false;
+	}else{
+	document.getElementById("show_project_location").style.display="none";
+	}
+}
+
+function check_project_brief(){
+var project_brief=document.getElementById("project_brief").value;
+	if(project_brief==""){
+	document.getElementById("show_project_brief").style.display="block";
+	document.getElementById("show_project_brief").firstChild.firstChild.innerHTML="请输入项目简介!";
+	return false;
+	}else if(project_brief.length>75){
+	document.getElementById("show_project_brief").style.display="block";
+	document.getElementById("show_project_brief").firstChild.firstChild.innerHTML="项目简介不能超过75个字!";
+	return false;
+	}else{
+	document.getElementById("show_project_brief").style.display="none";
+	}
+}
+
+function check_project_details(){
+var project_details=document.getElementById("project_details").value;
+if(project_details==""){
+	document.getElementById("show_project_details").style.display="block";
+	document.getElementById("show_project_details").firstChild.firstChild.innerHTML="项目详细信息不能为空!";
+	return false;
+	}else if(project_details.length>2000){
+	document.getElementById("show_project_details").style.display="block";
+	document.getElementById("show_project_details").firstChild.firstChild.innerHTML="项目详细信息字数不能超过两千字!";
+	return false;
+ }else{
+ document.getElementById("show_project_details").style.display="none";
+ }
+} 
+
+function check_agr(){
+	var agr=document.getElementById("agr");
+	if(!agr.checked){
+	document.getElementById("show_agr").style.display="block";
+	document.getElementById("show_agr").firstChild.firstChild.innerHTML="请勾选服务协议!";
+	return false;  
+	}else{
+	document.getElementById("show_agr").style.display="none";
+	}
+}
+
+
+function check_tags(){
+var tags=document.getElementById("tags").value;
+if(tags==""){
+	document.getElementById("show_tags").style.display="block";
+	document.getElementById("show_tags").firstChild.firstChild.innerHTML="请输入标签!";
+	return false;
+	}else if(tags.length>12){
+	document.getElementById("show_tags").style.display="block";
+	document.getElementById("show_tags").firstChild.firstChild.innerHTML="输入的标签长度不能大于12个字符!";
+	return false;
+	}else{
+	document.getElementById("show_tags").style.display="none";
+	}
+} 
+
+function check_form(){
+
+var name=document.getElementById("name").value;
+var limit_price=document.getElementById("limit_price").value;
+var deal_days=document.getElementById("deal_days").value;
+var category=document.getElementById("category").value;
+var project_location=document.getElementById("project_location").value;
+var vedio_url=document.getElementById("vedio_url").value;
+var project_brief=document.getElementById("project_brief").value;
+var project_details=document.getElementById("project_details").value;
+var user_mobile=document.getElementById("user_mobile").value;
+var tags=document.getElementById("tags").value;
+var agr=document.getElementById("agr");
+if(name==""){
+alert("name========="+name);
+	 document.getElementById("name").focus();
+	 return false;
+	}else if(name.length>40){
 	 document.getElementById("name").focus();
 	 return false;
 	}
-
+if(limit_price==""){
+	document.getElementById("limit_price").focus();
+	return false;	
+	}else if(limit_price<500){
+	document.getElementById("limit_price").focus();
+	return false;
+	}	
+if(deal_days<10||deal_days>90){
+    document.getElementById("deal_days").focus();
+	return false;
+	}
+if(category==""){
+    document.getElementById("category").focus();
+	return false;	
 }
+if(project_location==""){
+    document.getElementById("project_location").focus();
+	return false;
+	}
+if(project_brief==""){
+    document.getElementById("project_brief").focus();
+	return false;
+	}else if(project_brief.length>75){
+    document.getElementById("project_brief").focus();
+	return false;
+	}
+if(project_details==""){
+	document.getElementById("project_details").focus();
+	return false;
+	}else if(project_details.length>2000){
+	document.getElementById("project_details").focus();
+	return false;
+ }
+if(!agr.checked){
+	document.getElementById("agr").focus();
+	return false;  
+	}
+
+if(tags==""){
+	document.getElementById("tags").focus();
+	return false;
+	}else if(tags.length>12){
+	document.getElementById("tags").focus();
+	return false;
+	}
+
+	 document.getElementById("HwForm").submit();
+}
+
 </script>
 </body>
 </html>
