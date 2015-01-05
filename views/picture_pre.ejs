@@ -1,0 +1,37 @@
+<html>
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+<form action="" method="post" enctype="multipart/form-data" name="form1">
+<input name="attach" type="file" onchange="javascript:ShowImg(this.value);" onKeyDown="javascript:return(false);" size="20">
+<script language="JavaScript">
+function ShowImg(src)
+{
+	alert("src==="+src);
+document.getElementById("imgDiv").innerHTML="图片预览：<br><img id='imgObj' onload='javascript:GetSize()' src='file:///" + src + "'>";
+}
+function GetSize()
+{
+var width,height;
+var imgObj=document.getElementById("imgObj");
+width=imgObj.width;
+height=imgObj.height;
+document.getElementById("err_msg").innerHTML="图片大小(宽×高):<font color=red>" + width + "×" + height + "</font>";
+if(width>164){
+imgObj.width=164;
+imgObj.height=imgObj.height/(imgObj.width/164);
+}
+}
+function GetError()
+{
+document.getElementById("err_msg").innerHTML="图片大小(宽×高):<font color=red>NaN</font>";
+document.getElementById("imgDiv").innerHTML="";
+document.getElementById("err_msg").innerHTML="图片文件不存在或格式错误！"
+}
+</script>
+<div id="imgDiv" align="center"></div>
+<div id="err_msg" align="center"></div>
+</form>
+</body>
+</html>

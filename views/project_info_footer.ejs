@@ -352,10 +352,58 @@ if(tags==""){
 	document.getElementById("tags").focus();
 	return false;
 	}
-
-	 document.getElementById("HwForm").submit();
 }
 
+</script>
+<script type="text/javascript">
+function previewImage(file)
+{
+  var MAXWIDTH  = 230;
+  var MAXHEIGHT = 175;
+  var div = document.getElementById('preview');
+  if (file.files && file.files[0])
+  {
+  	var img = document.getElementById('image');
+  	var reader = new FileReader();
+  	reader.onload = function(evt){
+	img.src = evt.target.result;
+	}	
+  	reader.readAsDataURL(file.files[0]);
+  }
+  else
+  {
+    var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+    file.select();
+    var src = document.selection.createRange().text;
+    var img = document.getElementById('image');
+    var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+    div.innerHTML = "<div id=div_head style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;margin-left:"+rect.left+"px;"+sFilter+src+"\"'></div>"+"<h3 class='project-name'><a id='Js-name' href='javascript:;'></a></h3>"+"<div class='item-caption'>"+"<span class='caption-title'>目标：<span id='Js-days'>&nbsp;&nbsp;&nbsp"+"<span id='Js-price'></span></span>";
+
+  }
+}
+
+function clacImgZoomParam( maxWidth, maxHeight, width, height ){
+	var param = {top:0, left:0, width:width, height:height};
+	if( width>maxWidth || height>maxHeight )
+	{
+		rateWidth = width / maxWidth;
+		rateHeight = height / maxHeight;
+		
+		if( rateWidth > rateHeight )
+		{
+			param.width =  maxWidth;
+			param.height = Math.round(height / rateWidth);
+		}else
+		{
+			param.width = Math.round(width / rateHeight);
+			param.height = maxHeight;
+		}
+	}
+	
+	param.left = Math.round((maxWidth - param.width) / 2);
+	param.top = Math.round((maxHeight - param.height) / 2);
+	return param;
+}
 </script>
 </body>
 </html>

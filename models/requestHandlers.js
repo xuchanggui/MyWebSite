@@ -263,6 +263,7 @@ function logout(req, res){
 req.session.user=null;
 req.session.error=null;
 req.session.success=null;
+req.session.picture_url=null;
 res.redirect('/');
 }
 
@@ -297,14 +298,14 @@ function upload(req, res) {
 	req.session.error=null;
   console.log("开始解析");
   for (var i in req.files) {
-  	console.log("文件大小信息==="+req.files[i].size);
-  	console.log("文件类型==="+req.files[i].type);
+  	console.log("图片大小信息==="+req.files[i].size);
+  	console.log("图片类型==="+req.files[i].type);
   	if(req.files[i].type!="image/jpeg"&&req.files[i].type!="image/bmp"){
   	 err="上传的图片类型不正确!";
      req.session.error=err;
      console.log(err);
   	}else if(req.files[i].size>1048576){  	//1M=lo48576;
-  		err="文件大小最多不超过1M，请从新上传!";
+  		err="图片大小最多不超过1M，请从新上传!";
   		console.log(err);
   		req.session.error=err;
   		fs.unlinkSync(req.files[i].path);
@@ -313,7 +314,7 @@ function upload(req, res) {
   	}else if (req.files[i].size == 0){
       // 使用同步方式删除一个文件
       fs.unlinkSync(req.files[i].path);
-      err="请选择要上传的文件";
+      err="请选择要上传的图片";
       req.session.error=err;
       console.log('Successfully removed an empty file!');
     } else {
@@ -325,7 +326,7 @@ function upload(req, res) {
 
 	util.pump(readStream, writeStream, function() {
 	fs.unlinkSync(req.files[i].path);
-	console.log('临时文件已被删除');
+	console.log('临时图片已被删除');
 	});
 	console.log('Successfully renamed a file!');
 	req.session.picture_url=req.files[i].name;
@@ -336,7 +337,7 @@ function upload(req, res) {
   	res.redirect('/project-info');
   	return;
   }
-  succ="文件上传成功";
+  succ="图片上传成功";
   req.session.success=succ;
   console.log(succ);
   res.redirect('/project-info');
