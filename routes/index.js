@@ -50,6 +50,7 @@ app.get('/project_returns',function(req, res){
 res.render('project_returns', { title: 'project_returns'});
 });
 
+app.post('/project_returns',requestHandlers.project_returns_save);
 
 app.post('/checkUserAndPassword',requestHandlers.checkUserAndPassword);
 

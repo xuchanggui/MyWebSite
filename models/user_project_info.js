@@ -6,6 +6,7 @@ function User_Project_Info(user_project_info) {
   this.deal_days=user_project_info.deal_days;//筹集天数
   this.category = user_project_info.category;//筹集类别
   this.project_location = user_project_info.project_location;//项目地点
+  this.pic_path=user_project_info.pic_path;
   this.city=user_project_info.city;//所在城市
   this.vedio_url=user_project_info.vedio_url;//项目视频地址
   this.project_brief=user_project_info.project_brief;//项目简介
@@ -24,6 +25,7 @@ User_Project_Info.prototype.save = function (callback) {
     limit_price: this.limit_price,
     deal_days:this.deal_days,
     category:this.category,
+    pic_path:this.pic_path,
     project_location:this.project_location,
     city:this.city,
     vedio_url:this.vedio_url,

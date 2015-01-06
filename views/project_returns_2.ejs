@@ -7,10 +7,10 @@
 <meta name="keywords" content="众筹 创业 项目 投资 支持"/>
 <meta name="description" content="在众筹网发布项目，获得投资支持，实现你的创业梦想"/>
 <meta name="renderer" content="webkit"/>
-<link rel="shortcut icon" type="image/png" href="http://zcs1.ncfstatic.com/zhongchou/images/favicon_v3.png?v=1">
+<link rel="shortcut icon" type="image/png" href="http://zcs6.ncfstatic.com/zhongchou/images/favicon_v3.png?v=1">
 <!--public js&css start-->            
-<link rel="stylesheet" type="text/css" href="http://zcs6.ncfstatic.com/zhongchou/pub/v3/14c4c0d24fba6ed25d8b6758064ef7b8.css?V=1420011048"/>
-<script type="text/javascript" src="http://zcs6.ncfstatic.com/zhongchou/pub/v3/2cc0475e1160ea574d0a9b5ebea60136.js?V=1420011048"></script>   
+<link rel="stylesheet" type="text/css" href="http://zcs9.ncfstatic.com/zhongchou/pub/v3/14c4c0d24fba6ed25d8b6758064ef7b8.css?V=1420540647"/>
+<script type="text/javascript" src="http://zcs9.ncfstatic.com/zhongchou/pub/v3/2cc0475e1160ea574d0a9b5ebea60136.js?V=1420540647"></script>   
 <!--public js&css end -->                                         
 </head>
 <body>
@@ -33,11 +33,7 @@
         	
         	
             <div id="Js-header-loginBtn"> 
-               <%if(user){%>
-              <span class="pull-down clearfix"><i class="meun-02"></i><i class="meun-01"><%=user.mobile%></i></span>
-              <%}else{%>
-              <span class="pull-down clearfix"><i class="meun-02"></i><i class="meun-01">没有登录</i></span>
-              <%}%>
+              <span class="pull-down clearfix"><i class="meun-02"></i><i class="meun-01">155****1686</i></span>
               <ul id="Js-header-login" class="mm-nubg">
                   <li><a href="/home/id-428140"><i class="down-menu01"></i>支持的项目</a></li>
                   <li><a href="/home-build_deal/id-428140"><i class="down-menu02"></i>发起的项目</a></li>
@@ -45,7 +41,7 @@
                   <li><a href="/home-focus/id-428140"><i class="down-menu03"></i>喜欢的项目</a></li>
                   <li><a href="/message"><i class="down-menu04"></i>消息中心</a></li>
                   <li><a href="/settings"><i class="down-menu05"></i>个人设置</a></li>
-                  <li><a href="/logout"><i class="down-menu06"></i>退出</a></li>
+                  <li><a href="/usernew-loginout"><i class="down-menu06"></i>退出</a></li>
               </ul>
             </div>
                         <form action="/deals" method="post" id="header_new_search_form" wx-validator>
@@ -59,7 +55,7 @@
 	</div>		
 </div>
 <!--header end-->
-<link rel="stylesheet" type="text/css" href="http://zcs6.ncfstatic.com/zhongchou/pub/v3/ee7ae0c1751620090a1f580e44d12fba.css?V=1420011048"/>
+<link rel="stylesheet" type="text/css" href="http://zcs9.ncfstatic.com/zhongchou/pub/v3/ee7ae0c1751620090a1f580e44d12fba.css?V=1420540647"/>
 <style>
 	.edui-image ul li {
 width: 92px;
@@ -159,32 +155,47 @@ z-index: 3;
 									</tr>
 								</thead>
 								<tbody>
-								    																	</tbody>
+								    																			<tr>
+											<th>01</th>
+											<td class="strong">¥1.00</td>
+											<td>不限</td>
+											<td class="tl">1111</td>
+											<td>项目结束后立即发送</td>
+											<td>无</td>
+											<td><a data-id="100036108" class="green Js-del-item">删除</a><br /><a class="green Js-edit" data-id="100036108" data-num="01" href="javascript:;">编辑</a></td>
+										</tr>
+																										</tbody>
 							</table>
 						</div>
 						<!--project-info end-->
 						<!--project-set-form static-->
 						<div class="project-set-form">
-							<div id="Js-edit-num" class="form-item-tit">支持回报选项01</div>
-							<form name="item_form" id="item_form" action="/project_returns" method="post" onsubmit="return check_form();" enctype="multipart/form-data">
+							<div id="Js-edit-num" class="form-item-tit">支持回报选项02</div>
+							<form name="item_form" id="item_form" action="/projectnew-save_deal_item" method="post" wx-validator wx-validator-ajax>
 								<div class="form-item clearfix">
 									<label>支持金额：</label>
-										<input type="text" class="w188 " id="price" name="price" onblur="return check_price();" wx-validator-rule="required|digits"/>
-										<span id="show_price"  class="error-text"  style="display:none"><p><font size="" color="#ff0000"></font></p></span>
+										<input type="text" class="w188 " name="price"  wx-validator-rule="required|digits"/>
+										<em>元</em>
 								</div>
 								<div class="form-item clearfix">
 									<label>回报内容：</label>
-									<textarea class="return-textarea" id="description" name="description" onblur="return check_description();"
+									<textarea class="return-textarea" name="description"
 								wx-validator-rule="required|maxLength"
 							    wx-validator-param="|500" wx-validator-placeholder="请填写关于回报或任何你希望项目发起人知道的信息,不多于500字" maxLength="500"></textarea>
-                              <span id="show_description"  class="error-text" style="display:none"><p><font size="" color="#ff0000"></font></p></span>
+							    <span id="wx-validator-description-required" class="error-text" style="display:none;margin-left:5px;">不能为空</span>
+								<span id="wx-validator-description-maxLength" class="error-text" style="display:none;margin-left:5px;">所输入内容不多于500字</span>
+							<span 
+							id="wx-validator-description-maxLength"
+						    class="error-text" style="display:none;">请输入不大于500的字</span>
 								</div>
 								<div class="form-item clearfix">
 									<label>说明图片：</label>
 									<div class="edui-image up-btn fs14">
 										<div class="ipt-file">
 											<!--<input type="file" value="上传图片" id="JS-deal_item_imgload"/>-->
-											<input onchange="previewImage(this);" type="file" id="image_file" name="image_file"
+											<input type="file"
+											wx-upload="/upload.php"
+											name="image_file"
 											style="font-size:30px;" />
 											<a class="">上传图片</a>
 										</div>
@@ -194,54 +205,46 @@ z-index: 3;
 								</div>
 								<div class="form-item clearfix">
 									<label>限定名额：</label>
-									<input class="w188" type="text" placeholder="“0”为不限名额" id="limit_num" name="limit_num" onblur="return check_limit_num();" class="inp-w68" value="0" wx-validator-rule="required|digits"/>
+									<input class="w188" type="text" placeholder="“0”为不限名额" name="limit_num" class="inp-w68" value="0" wx-validator-rule="required|digits"/>
 <span id="wx-validator-limit_num-digits" class="error-text hidden">请填写正确的数字</span>
 									<em>个</em>
 									<span class="input-tips gray">“0”为不限名额</span>
-									 <span id="show_limit_num"  class="error-text" style="display:none"><p><font size="" color="#ff0000"></font></p></span>
 								</div>
 								<div class="form-item clearfix">
 									<label>运费：</label>
-									<input class="w188" type="text" placeholder="“0”为不收运费" id="delivery_fee" name="delivery_fee"  onblur="return check_delivery_fee();" value="0" wx-validator-rule="required|digits"/>
+									<input class="w188" type="text" placeholder="“0”为不收运费" name="delivery_fee" value="0" wx-validator-rule="required|digits"/>
 <span id="wx-validator-delivery_fee-digits" class="error-text hidden">请填写正确的数字</span>
 									<em>元</em>
 									<span class="input-tips gray">“0”为不收运费</span>
-									 <span id="show_delivery_fee"  class="error-text" style="display:none"><p><font size="" color="#ff0000"></font></p></span>
 								</div>
 								
 								<div class="form-item clearfix">
 									<label>回报时间：</label>
 									<em class="w80"></em>
-									<input class="w107" type="text" placeholder="“0”为项目结束后立即发送" onblur="return check_repaid_day();" id="repaid_day" name="repaid_day" value="0" wx-validator-rule="required|digits"/>
+									<input class="w107" type="text" placeholder="“0”为项目结束后立即发送" name="repaid_day" value="0" wx-validator-rule="required|digits"/>
 <span id="wx-validator-repaid_day-digits" class="error-text hidden">请填写正确的数字</span>
 									<em>天</em>
 									<span class="input-tips gray">“0”为项目结束后立即发送</span>
-									 <span id="show_repaid_day"  class="error-text" style="display:none"><p><font size="" color="#ff0000"></font></p></span>
 								</div>
 								
 								<div class="form-item clearfix">
 									<label>回报类型：</label>
-									<input class="hblx" checked name="return_type" onblur="return check_return_type1();" id="return_type1" type="radio" group='grp_return_type'  value="1"/>
+									<input class="hblx" checked name="return_type" id="return_type1" type="radio" group='grp_return_type'  value="1"/>
 									<span class="input-notes">实物回报(需要快递／邮寄的)</span>																		
-									<input class="hblx" name="return_type" id="return_type2" onblur="return check_return_type2();" type="radio" group='grp_return_type'  value="2" />
+									<input class="hblx" name="return_type" id="return_type2" type="radio" group='grp_return_type'  value="2" />
 									<span class="input-notes">虚拟回报(不需要快递/邮寄的，电子照片等)</span>
 								</div>
 								
 								<div class="form-submit" name="finish">
-									<button class="remin-save" type="submit" >保存</button>
-									<button class="remin-save" ><span id="cancel_item">取消保存</span></button>
+									<a class="remin-save" type="submit" href="javascript:void(0);">保存</a>
+									<a class="remin-save" href="javascript:void(0);"><span id="cancel_item">取消保存</span></a>
 								</div>	
-								<input type="hidden" name="deal_id" value="59944" />
-								<input type="hidden" name="id" value="" />
-								<input type="hidden" id="user_mobile" name="user_mobile" value="<%=user.mobile%>" />
-								<input type="hidden" id="real_pic_url" name="real_pic_url" value="" />
-							    <input type="hidden" id="returntype" name="returntype" value="1" />
-
-
+								<input type="hidden" name="deal_id" value="63442" />
+								<input type="hidden" name="id" value="" />							
 							</form>
 							<div class="action fl">
-								<button  onclick="javascript:location.href='/project-info';"  class="btn-effect-blue btn-sub w170">上一步</button>
-								<button  onclick="javascript:wx.alert('请添加回报');"  class="btn-effect-blue btn-sub w170">下一步</button>
+								<a href="/projectnew-edit/id-63442" class="btn-effect-blue btn-sub w170">上一步</a>
+								<a  href="/projectauthnew/id-63442"  class="btn-effect-blue btn-sub w170">下一步</a>
 							</div>
 						</div>
 						<!--project-set-form static-->
@@ -261,23 +264,6 @@ z-index: 3;
 					<p class="black fb">回报最好是项目的衍生品</p>
 					<p>与项目内容有关的回报更能吸引到大家的支持。</p>
 			</div>
-
-			<!--side static-->
-			<div class="sidebar w383 fr">
-				<p class="view-area fs18 fb">预览区域</p>
-				<!--list item static-->
-				<div class="list-item" id="preview">
-							<a class="item-figure" href="javascript:void(0);">
-								<img id="image" src="http://zcs7.ncfstatic.com/v3/static/images/open/default.jpg" />
-							</a>
-							<h3 class="project-name"><a id="Js-name" href="javascript:;"></a></h3>	
-							<div class="item-caption">
-							<span class="caption-title">目标：<span id="Js-days"></span>&nbsp;&nbsp;&nbsp;
-							<span id="Js-price"></span></span>
-						</div>
-				<!--list item end-->
-			</div>
-			<!--side end-->
 			<!--side-list end-->
 		</div>
 		<!--side end-->
@@ -303,19 +289,57 @@ z-index: 3;
 		<a class="s-06" rel="nofollow" target="_blank" href="http://user.qzone.qq.com/2357291729" alt="QQ空间" title="QQ空间"></a>
 		<a class="s-07" rel="nofollow" target="_blank" href="http://tieba.baidu.com/f?ie=utf-8&kw=%E4%BC%97%E7%AD%B9%E7%BD%91" alt="百度贴吧" title="百度贴吧"></a>
 		<a class="s-08" rel="nofollow" target="_blank" href="http://www.douban.com/people/zhongchou_cn/" alt="豆瓣小站" title="豆瓣小站"></a>
+		<!--<a class="s-05" rel="nofollow" target="_blank" href="http://tieba.baidu.com/f?ie=utf-8&kw=%E4%BC%97%E7%AD%B9%E7%BD%91" alt="百度贴吧" title="百度贴吧">百度贴吧</a>-->
+		<!--<a class="s-06" rel="nofollow" target="_blank" href="http://user.qzone.qq.com/2357291729" alt="QQ空间" title="QQ空间">QQ空间</a>-->
+		<!--<a class="s-07" rel="nofollow" target="_blank" href="http://e.weibo.com/zhongchouwang2013" alt="新浪微博" title="新浪微博">新浪微博</a>-->
+		<!--<a class="s-08" rel="nofollow" target="_blank" href="http://www.douban.com/people/zhongchou_cn/" alt="豆瓣小站" title="豆瓣小站">豆瓣小站</a>-->
 	</div>
 	<div class="footer-copy">
 		<div class="wrap">
-
-            <p>&copy;2014 北京网信众筹网络科技有限公司 zhongchou.cn 版权所有 京ICP备14016844号 | 出版物经营许可证编号新出发（京）批字第直140141号 </p>
+			<!-- 
+			<div class="m-Links">
+									<a href="http://iof.hexun.com/zhongchou/index.html" target="_blank" rel="nofollow">和讯网</a>
+									<a href="http://www.leiphone.com/" target="_blank" rel="nofollow">雷锋网</a>
+									<a href="http://www.36kr.com/   " target="_blank" rel="nofollow">36氪</a>
+									<a href="http://www.hao123.com/" target="_blank" rel="nofollow">hao123</a>
+									<a href="http://hao.360.cn/" target="_blank" rel="nofollow">360安全网址</a>
+									<a href="http://www.ynet.com/" target="_blank" rel="nofollow">北青网</a>
+									<a href="http://finance.ifeng.com/" target="_blank" rel="nofollow">凤凰网</a>
+									<a href="http://jrj.com.cn" target="_blank" rel="nofollow">金融界</a>
+									<a href="http://www.caixin.com/" target="_blank" rel="nofollow">财新网</a>
+									<a href="http://www.tmtpost.com/" target="_blank" rel="nofollow">钛媒体</a>
+									<a href="http://www.imgii.com?zhongchou" target="_blank" rel="nofollow">IMGII</a>
+									<a href="http://www.m1905.com/film/" target="_blank" rel="nofollow">电影网</a>
+									<a href="http://www.artron.net/" target="_blank" rel="nofollow">雅昌艺术网</a>
+									<a href="http://www.vmovier.com/" target="_blank" rel="nofollow">V电影</a>
+									<a href="http://www.eguan.cn" target="_blank" rel="nofollow">易观网</a>
+									<a href="http://www.pedaily.cn/" target="_blank" rel="nofollow">投资界          </a>
+									<a href="http://home.ebrun.com/" target="_blank" rel="nofollow">亿邦动力社区</a>
+									<a href="http://www.9888.cn" target="_blank" rel="nofollow">金融工场</a>
+									<a href="http://www.trchina.org/" target="_blank" rel="nofollow">投融中国联盟</a>
+									<a href="http://www.youcheng.org/" target="_blank" rel="nofollow">友成基金会</a>
+									<a href="http://life.renren.com" target="_blank" rel="nofollow">人人生活</a>
+									<a href="http://www.meng800.com/ " target="_blank" rel="nofollow">众筹导航</a>
+									<a href="http://www.qidic.com" target="_blank" rel="nofollow">奇笛网</a>
+									<a href="http://www.rong360.com" target="_blank" rel="nofollow">融360</a>
+									<a href=" http://www.diyifangdai.com" target="_blank" rel="nofollow">第一房贷</a>
+									<a href="http://finance.ifeng.com/itfinance/index.shtml" target="_blank" rel="nofollow">凤凰互联网金融</a>
+									<a href="http://www.huoqiu.cn" target="_blank" >火球网</a>
+									<a href="http://www.renchoubao.com/" target="_blank" >认筹宝</a>
+									<a href="http://www.kuaidi100.com/" target="_blank" >快递查询</a>
+				              
+			</div>
+			 -->
+			 <div class="m-Links"></div>
+            <p>&copy;2014 北京网信众筹网络科技有限公司 zhongchou.cn 版权所有 京ICP备14016844号 | 出版物经营许可证编号新出发（京）批字第直140141号 | 营业性演出许可证 编号：京市演2102 | 食品流通许可证 编号：SP1101051410311599</p>
 		</div>
 	</div>
 </div>
-<script type="text/javascript" src="http://zcs6.ncfstatic.com/zhongchou/pub/v3/fe3974b84fb6b50da0f329242078614c.js?V=1420011048"></script>                   
+<script type="text/javascript" src="http://zcs9.ncfstatic.com/zhongchou/pub/v3/fe3974b84fb6b50da0f329242078614c.js?V=1420540647"></script>                   
 <div id="gotop" class="go-top"></div>
 <!--footer end-->
  
-<script type="text/javascript" src="http://zcs6.ncfstatic.com/zhongchou/pub/v3/4d7c9e426f1a32e3f16c4f53b8c9cdcf.js?V=1420011048"></script>
+<script type="text/javascript" src="http://zcs9.ncfstatic.com/zhongchou/pub/v3/4d7c9e426f1a32e3f16c4f53b8c9cdcf.js?V=1420540647"></script>
 <script>
 //upload image preview
 	function image_file(data){
@@ -333,7 +357,7 @@ $('.edui-image').on('click','span',function(){
 	//---create_image_upload($("#JS-deal_item_imgload")[0]);
 	function item_form(data){
 		wx.alert(data.info,function(){
-			location.href="/projectnew-add_item/id-59944";
+			location.href="/projectnew-add_item/id-63442";
 		});
 	}
 
@@ -417,176 +441,7 @@ $('.edui-image').on('click','span',function(){
 	});
 </script>
 <!--footer static-->
-<script type="text/javascript">
-function check_form(){
-	alert("asd");
-	if(!check_price()){
-		document.getElementById("price").focus();
-		return false;
 
-	}else if(!check_description()){
-		document.getElementById("description").focus();
-		return false;
-
-	}else if(!check_image_file()){
-        document.getElementById("image_file").focus();
-		return false;
-	}else if(!check_limit_num()){
-		document.getElementById("limit_num").focus();
-		return false;
-
-	}else if(!check_delivery_fee()){
-		document.getElementById("delivery_fee").focus();
-		return false;
-
-	}else if(!check_repaid_day()){
-        document.getElementById("repaid_day").focus();
-		return false;
-	}
-}
-
-function check_price(){
-var price=document.getElementById("price").value; 
-if(price==""){
-	document.getElementById("show_price").style.display="block";
-	document.getElementById("show_price").firstChild.firstChild.innerHTML="不能为空!";
-	return false;
-}else{
-	document.getElementById("show_price").style.display="none";
-	return true;
-}
-}
-
-function check_description(){
-var description=document.getElementById("description").value; 
-if(description==""){
-	document.getElementById("show_description").style.display="block";
-	document.getElementById("show_description").firstChild.firstChild.innerHTML="请填写关于回报或任何你希望项目发起人知道的信息,不多于500字!";
-	return false;
-}else if(description.length>500){
-	document.getElementById("show_description").style.display="block";
-	document.getElementById("show_description").firstChild.firstChild.innerHTML="不多于500字!";
-	return false;
-}else{
-	document.getElementById("show_description").style.display="none";
-	return true;
-}
-}
-
-function check_image_file(){
-var image_file=document.getElementById("image_file").value; 
-if(image_file==""){
-	document.getElementById("show_image_file").style.display="block";
-	document.getElementById("show_image_file").firstChild.firstChild.innerHTML="请先上传图片!";
-	return false;
-}else{
-	document.getElementById("show_image_file").style.display="none";
-	return true;
-}
-}
-
-function check_limit_num(){
-var limit_num=document.getElementById("limit_num").value; 
-if(limit_num==""){
-	document.getElementById("show_limit_num").style.display="block";
-	document.getElementById("show_limit_num").firstChild.firstChild.innerHTML="不能为空!";
-	return false;
-}else{
-	document.getElementById("show_limit_num").style.display="none";
-	return true;
-}
-}
-
-function check_delivery_fee(){
-var delivery_fee=document.getElementById("delivery_fee").value; 
-if(delivery_fee==""){
-	document.getElementById("show_delivery_fee").style.display="block";
-	document.getElementById("show_delivery_fee").firstChild.firstChild.innerHTML="不能为空!";
-	return false;
-}else{
-	document.getElementById("show_delivery_fee").style.display="none";
-	return true;
-}
-}
-
-function check_repaid_day(){
-var repaid_day=document.getElementById("repaid_day").value; 
-if(repaid_day==""){
-	document.getElementById("show_repaid_day").style.display="block";
-	document.getElementById("show_repaid_day").firstChild.firstChild.innerHTML="不能为空!";
-	return false;
-}else{
-	document.getElementById("show_repaid_day").style.display="none";
-	return true;
-}
-}	
-
-function check_return_type1(){
-	alert("return_type1");
-	var return_type1=document.getElementById("return_type1").value;
-	document.getElementById("returntype").value=return_type1;
-	
-}
-
-function check_return_type2(){
-	alert("return_type2");
-	var return_type2=document.getElementById("return_type2").value;
-	document.getElementById("returntype").value=return_type2;
-	
-}
-
-//图片预览方法
-function previewImage(file)
-{
-  var MAXWIDTH  = 230;
-  var MAXHEIGHT = 175;
-  var div = document.getElementById('preview');
-  if (file.files && file.files[0])
-  {
-  	var img = document.getElementById('image');
-  	var reader = new FileReader();
-  	reader.onload = function(evt){
-	img.src = evt.target.result;
-	}	
-  	reader.readAsDataURL(file.files[0]);
-  }
-  else
-  {
-    var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
-    file.select();
-    var src = document.selection.createRange().text;
-    var img = document.getElementById('image');
-    var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
-    div.innerHTML = "<div id=div_head style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;margin-left:"+rect.left+"px;"+sFilter+src+"\"'></div>"+"<h3 class='project-name'><a id='Js-name' href='javascript:;'></a></h3>"+"<div class='item-caption'>"+"<span class='caption-title'>目标：<span id='Js-days'>&nbsp;&nbsp;&nbsp"+"<span id='Js-price'></span></span>";
-
-  }
-}
-
-function clacImgZoomParam( maxWidth, maxHeight, width, height ){
-	var param = {top:0, left:0, width:width, height:height};
-	if( width>maxWidth || height>maxHeight )
-	{
-		rateWidth = width / maxWidth;
-		rateHeight = height / maxHeight;
-		
-		if( rateWidth > rateHeight )
-		{
-			param.width =  maxWidth;
-			param.height = Math.round(height / rateWidth);
-		}else
-		{
-			param.width = Math.round(width / rateHeight);
-			param.height = maxHeight;
-		}
-	}
-	
-	param.left = Math.round((maxWidth - param.width) / 2);
-	param.top = Math.round((maxHeight - param.height) / 2);
-	return param;
-}
-
-
-</script>
 <!--footer end-->
 </body>
 </html>

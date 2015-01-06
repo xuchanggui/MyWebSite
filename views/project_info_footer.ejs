@@ -138,7 +138,6 @@ function checkItem(value){
     return;
     }
 	var city=["成都","郫县","温江","新都"];
-	alert("vaule==="+value);
 	if(value=="四川"){
 	    for(var i=0;i<city.length;i++){
 			if(i==1){
@@ -156,10 +155,8 @@ function checkItem(value){
 }
 
 function category(value){
-	alert("选中类别");
 	if(value){
 	document.getElementById("category").value=value;
-	alert(""+document.getElementById("category").value);
 	}
 	
 }
@@ -293,6 +290,7 @@ var limit_price=document.getElementById("limit_price").value;
 var deal_days=document.getElementById("deal_days").value;
 var category=document.getElementById("category").value;
 var project_location=document.getElementById("project_location").value;
+var image_file=document.getElementById("image_file").value;
 var vedio_url=document.getElementById("vedio_url").value;
 var project_brief=document.getElementById("project_brief").value;
 var project_details=document.getElementById("project_details").value;
@@ -300,7 +298,6 @@ var user_mobile=document.getElementById("user_mobile").value;
 var tags=document.getElementById("tags").value;
 var agr=document.getElementById("agr");
 if(name==""){
-alert("name========="+name);
 	 document.getElementById("name").focus();
 	 return false;
 	}else if(name.length>40){
@@ -352,6 +349,13 @@ if(tags==""){
 	document.getElementById("tags").focus();
 	return false;
 	}
+if(image_file==""){
+    document.getElementById("image_file").focus();   
+    return false;
+    }else{
+    document.getElementById("real_pic_url").value=image_file;
+    //alert("url===="+document.getElementById("real_pic_url").value);
+    }
 }
 
 </script>

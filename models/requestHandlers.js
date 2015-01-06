@@ -4,6 +4,7 @@ var util = require('util');
 var crypto=require('crypto');
 var User = require('./user');
 var User_Project_Info = require('./user_project_info');
+var User_Project_Returns_Info = require('./user_project_returns_info');
 var path = require('path');
 fs=require("fs");
 formidable=require("formidable");
@@ -180,58 +181,18 @@ var password=md5.update(req.body.password).digest('base64');
 
 //保存项目信息
 function project_info_save(req,res){
+	req.session.success=null;
+	req.session.error=null;
+	//验证提交表单的内容
+	if(!validate_project_info(req,res)){
+		err="请仔细检查所填写的内容是否有误";
+		req.session.error=err;
+		console.log("验证表单不通过");
+		return res.redirect('/project-info');
+	}
 
-/*//检查用户两次输入的口令是否一致
-if(!(req.body['confirm_password'])||!(req.body['password'])||!(req.body['mobile']))
-{
-	req.session.error='密码或者手机号码不能为空!';
-	return res.redirect('/reg');
-}
-if(req.body['confirm_password']!=req.body['password']){
-	req.session.error='两次输入的口令不一致!';
-    return res.redirect('/reg');
-}
-//生成口令的数列值return 
-var md5=crypto.createHash('md5');*/
-var name=req.body.name;
-var limit_price=req.body.limit_price;
-var deal_days=req.body.deal_days;
-var category=req.body.category;
-var project_location=req.body.project_location;
-var city=req.body.city;
-var vedio_url=req.body.vedio_url;
-var project_brief=req.body.project_brief;
-var project_details=req.body.project_details;
-var user_mobile=req.body.user_mobile;
-var tags=req.body.tags;
-
-var user_project_info=new User_Project_Info(
-{
-  name:name,//项目名称
-  limit_price:limit_price,//筹集金额
-  deal_days:deal_days,//筹集天数
-  category:category,//筹集类别
-  project_location:project_location,//项目地点
-  city:city,//所在城市
-  vedio_url: vedio_url,//项目视频地址
-  project_brief: project_brief,//项目简介
-  project_details: project_details,//项目详情 
-  user_mobile: user_mobile,//项目发起者手机号码(这是唯一的主键)
-  tags:tags//项目标签
-});
-	console.log("name====="+name);
-	console.log('limit_price======'+limit_price);
-	console.log('deal_days======'+deal_days);
-	console.log("category====="+category);
-	console.log('project_location======'+project_location);
-	console.log('city======'+city);
-	console.log("vedio_url====="+vedio_url);
-	console.log('project_brief======'+project_brief);
-	console.log('project_details======'+project_details);
-	console.log('user_mobile======'+user_mobile);
-	console.log('tags======'+tags);
  //检查用户名是否已经存在
- User_Project_Info.findUserProjectInfoByMobile(user_mobile,function(err,project_info){
+ User_Project_Info.findUserProjectInfoByMobile(req.body.user_mobile,function(err,project_info){
  	console.log("通过手机号码查询项目信息");
  	if(project_info){
  		err='user_project_info already exists';
@@ -241,8 +202,23 @@ var user_project_info=new User_Project_Info(
  		req.session.error=err;
  		return res.redirect('/project-info');
  	}
- 	 //console.log("执行到了5");
- 	//如果用户不存在则新增用户
+
+ 	//上传图片
+   upload(req,res);
+   var user_project_info=getUserProjectInfo(req,res);
+	console.log("name====="+user_project_info.name);
+	console.log('limit_price======'+user_project_info.limit_price);
+	console.log('deal_days======'+user_project_info.deal_days);
+	console.log("category====="+user_project_info.category);
+	console.log("pic_path===="+user_project_info.pic_path);
+	console.log('project_location======'+user_project_info.project_location);
+	console.log('city======'+user_project_info.city);
+	console.log("vedio_url====="+user_project_info.vedio_url);
+	console.log('project_brief======'+user_project_info.project_brief);
+	console.log('project_details======'+user_project_info.project_details);
+	console.log('user_mobile======'+user_project_info.user_mobile);
+	console.log('tags======'+user_project_info.tags);
+     	//如果用户不存在则新增用户
  	user_project_info.save(function(err){
  	if(err){
  		console.log("保存项目信息出错==="+err);
@@ -257,6 +233,49 @@ var user_project_info=new User_Project_Info(
  	});
  });
 }
+
+
+//保存项目反馈信息
+function project_returns_save(req,res){
+	req.session.success=null;
+	req.session.error=null;
+	//验证提交表单的内容
+	if(!validate_returns_info(req,res)){
+		err="请仔细检查所填写的内容是否有误";
+		req.session.error=err;
+		console.log("验证表单不通过");
+		return res.redirect('/project_returns');
+	}
+
+ 	//上传图片
+   upload(req,res);
+   var user_project_returns_info=getUserProjectReturnsInfo(req,res);
+	console.log("price====="+user_project_returns_info.price);
+	console.log('description======'+user_project_returns_info.description);
+	console.log('image_file======'+user_project_returns_info.image_file);
+	console.log("limit_num====="+user_project_returns_info.limit_num);
+	console.log("delivery_fee===="+user_project_returns_info.delivery_fee);
+	console.log('repaid_day======'+user_project_returns_info.repaid_day);
+	console.log('return_type======'+user_project_returns_info.return_type);
+	console.log("user_mobile====="+user_project_returns_info.user_mobile);
+     	//如果用户不存在则新增用户
+ 	user_project_returns_info.save(function(err){
+ 	if(err){
+ 		console.log("保存项目反馈信息出错==="+err);
+ 		req.session.error=err;
+ 		//console.log("执行到了6");
+ 		return res.redirect('/project_returns');
+ 	}
+   // console.log("执行到了7");
+ 	//req.session.user=newUser;
+	req.session.success='项目反馈信息保存成功!'
+ 	return res.redirect('/project_returns');	
+ 	});
+
+
+
+}
+
 
 
 function logout(req, res){
@@ -294,8 +313,6 @@ function upload_bak(response,request){
 }
 
 function upload(req, res) {
-	req.session.success=null;
-	req.session.error=null;
   console.log("开始解析");
   for (var i in req.files) {
   	console.log("图片大小信息==="+req.files[i].size);
@@ -333,14 +350,126 @@ function upload(req, res) {
 	}
   }
   if(req.session.error){
-  	console.log("有错误信息");
+  	console.log(req.session.error);
   	res.redirect('/project-info');
   	return;
   }
   succ="图片上传成功";
   req.session.success=succ;
   console.log(succ);
-  res.redirect('/project-info');
+  //res.redirect('/project-info');
+}
+
+//验证表单的方法
+function validate_project_info(req,res){
+var name=req.body.name;
+var limit_price=req.body.limit_price;
+var deal_days=req.body.deal_days;
+var category=req.body.category;
+var real_pic_url=req.body.real_pic_url;//这里是特殊情况
+var project_location=req.body.project_location;
+var city=req.body.city;
+var vedio_url=req.body.vedio_url;
+var project_brief=req.body.project_brief;
+var project_details=req.body.project_details;
+var user_mobile=req.body.user_mobile;
+var tags=req.body.tags;
+var agr=req.body.agr;
+console.log("验证 name====="+name);
+console.log('验证 limit_price======'+limit_price);
+console.log('验证 deal_days======'+deal_days);
+console.log("验证 category====="+category);
+console.log("验证 real_pic_url===="+real_pic_url);
+console.log('验证 project_location======'+project_location);
+console.log('验证 city======'+city);
+console.log("验证 vedio_url====="+vedio_url);
+console.log('验证 project_brief======'+project_brief);
+console.log('验证 project_details======'+project_details);
+console.log('验证 user_mobile======'+user_mobile);
+console.log('验证 tags======'+tags);
+if(name==""){
+	 return false;
+	}else if(name.length>40){
+	 return false;
+	}
+if(limit_price==""){
+	return false;	
+	}else if(limit_price<500){
+	return false;
+	}	
+if(deal_days<10||deal_days>90){
+	return false;
+	}
+if(category==""){
+	return false;	
+}
+if(project_location==""){
+	return false;
+	}
+if(project_brief==""){
+	return false;
+	}else if(project_brief.length>75){
+	return false;
+	}
+if(project_details==""){
+	return false;
+	}else if(project_details.length>2000){
+	return false;
+ }
+if(agr==""){
+	return false;  
+	}
+
+if(tags==""){
+	return false;
+	}else if(tags.length>12){
+	return false;
+	}
+if(real_pic_url==""){
+    return false;
+    }
+return true;
+
+}
+
+function validate_returns_info(req,res){
+	return true;
+
+}
+
+
+function getUserProjectReturnsInfo(req,res){
+var user_project_returns_info=new User_Project_Returns_Info(
+{
+  price:req.body.price,//项目名称
+  description:req.body.description,//筹集金额
+  image_file:req.session.picture_url,//筹集天数
+  limit_num:req.body.limit_num,//筹集类别
+  delivery_fee:req.body.delivery_fee,
+  repaid_day:req.body.repaid_day,//项目地点
+  return_type:req.body.returntype,//所在城市
+  user_mobile: req.body.user_mobile//项目视频地址
+}); 
+return user_project_returns_info;
+}
+
+function getUserProjectInfo(req,res){
+var user_project_info=new User_Project_Info(
+{
+  name:req.body.name,//项目名称
+  limit_price:req.body.limit_price,//筹集金额
+  deal_days:req.body.deal_days,//筹集天数
+  category:req.body.category,//筹集类别
+  pic_path:req.session.picture_url,
+  project_location:req.body.project_location,//项目地点
+  city:req.body.city,//所在城市
+  vedio_url: req.body.vedio_url,//项目视频地址
+  project_brief: req.body.project_brief,//项目简介
+  project_details: req.body.project_details,//项目详情 
+  user_mobile: req.body.user_mobile,//项目发起者手机号码(这是唯一的主键)
+  tags:req.body.tags//项目标签
+}); 
+return user_project_info;
 }
 
 function loadPic(response){
@@ -430,5 +559,6 @@ exports.checkNotLogin=checkNotLogin;
 exports.reg=reg;
 exports.login=login;
 exports.project_info_save=project_info_save;
+exports.project_returns_save=project_returns_save;
 exports.checkUserAndPassword=checkUserAndPassword;
 exports.logout=logout;
