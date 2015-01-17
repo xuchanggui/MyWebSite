@@ -1606,13 +1606,13 @@ function loginDialog(){
                     <p class="p-shut-down clearfix"><a class="shut-down-icon Js-pop-close"></a></p>\
                     <h2>登录</h2>\
                     <div class="form-item change-pt">\
-                         <form action="/project-info"  method="post" onsubmit="return validate();" wx-validator name="loginForm" >\
+                         <form action="/login_form"  method="post" onsubmit="return validate();" wx-validator name="loginForm" >\
                              <span id="loginFormError" class="red-color dis-span"></span>\
                              <div class="row clearfix">\
-                                 <input type="text" id="mobile" wx-validator-rule="required"   wx-validator-placeholder="请输入用户名／邮箱／手机号">\
+                                 <input type="text" id="mobile" name="mobile" wx-validator-rule="required"   wx-validator-placeholder="请输入用户名／邮箱／手机号">\
                              </div>\
                               <div class="row clearfix">\
-                                 <input type="password" id="password" type="password" wx-validator-rule="required|rangelength" wx-validator-param="|6-16"  wx-validator-placeholder="请输入密码">\
+                                 <input type="password" id="password" name="password" type="password" wx-validator-rule="required|rangelength" wx-validator-param="|6-16"  wx-validator-placeholder="请输入密码">\
                              </div>\
                              <div class="row clearfix">\
                                   <p class="p-checked"><a class="blue-color  fine-tuning" href="/user-getpassword">忘记密码?</a></p>\

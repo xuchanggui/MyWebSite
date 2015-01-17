@@ -12,6 +12,9 @@ var http = require('http');
 var path = require('path');
 var flash = require('connect-flash');
 var settings=require('./settings');
+var partials = require('express-partials');
+var moment = require('moment');
+var time=new Date().getTime();
 //var SessionStore = require("session-mongoose")(express);
 var app = express();
 app.use(flash());
@@ -20,6 +23,7 @@ app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.favicon());
+app.use(partials());
 app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
@@ -37,7 +41,7 @@ app.use(express.cookieParser());
 //ssession组件
 app.use(session({
       secret : settings.cookieSecret,
-      cookie : {maxAge : 600000},
+      cookie : {maxAge : 60000000},
       store : new MongoStore({
           db : settings.db
       }),
@@ -45,17 +49,36 @@ app.use(session({
       saveUninitialized : true
   }));
 
+
+console.log("main===");
+console.log("初始化时间==="+time);
+
 //视图助手
 //start
-console.log("main===");
 app.use(function(req, res, next){
+console.log(moment(new Date()).format('YYYY-MM-DD HH:mm:ss'));
 res.locals.user = req.session.user;
 var err = req.session.error;
 var succ =req.session.success;
 var pic_url=req.session.picture_url;
+var user=res.locals.user;
 res.locals.error ="";
 res.locals.success = "";
 res.locals.picture_url="";
+
+if(user){
+  //将时间统计成秒形式
+  console.log("用户存在!");
+  console.log("时间差==="+(new Date().getTime()-time));
+  if(new Date().getTime()-time>600000){
+  console.log("登录超时,请从新登录"); 
+  time=new Date().getTime();
+  return res.redirect('/logout');
+  }
+  time=new Date().getTime();
+  console.log("当前时间==="+time);
+}
+
 if(pic_url){
   res.locals.picture_url=pic_url;
   console.log("图片名称=============="+pic_url);

@@ -5,11 +5,13 @@ var crypto=require('crypto');
 var User = require('./user');
 var User_Project_Info = require('./user_project_info');
 var User_Project_Returns_Info = require('./user_project_returns_info');
+var Author_Information = require('./author_information');
 var path = require('path');
 fs=require("fs");
 formidable=require("formidable");
 uploadDir = "G:/NodeJs_Runtime/nodejsApp/MyWebSite/public/images/"
 temp="G:/NodeJs_Runtime/nodejsApp/temp/";
+var returns_arr=new Array();
 
 function reg(req,res){
 //检查用户两次输入的口令是否一致
@@ -148,6 +150,36 @@ var password=md5.update(req.body.password).digest('base64');
 }
 
 
+//窗体登录
+function login_form(req,res){
+//生成口令的数列值return 
+var md5=crypto.createHash('md5');
+var mobile=req.body.mobile;
+var password=md5.update(req.body.password).digest('base64');
+ //检查用户名是否已经存在
+ console.log("mobile===="+mobile);
+ console.log("password===="+password);
+ User.findUserByMobile(mobile,function(err,user){
+ 	if(!user){
+ 		err='用户不存在!';
+		req.session.error=err;
+		return res.redirect('/login');
+ 	}
+ 	console.log("password2==="+user.password);
+ 	if(err){
+		req.session.error=err;
+ 		return res.redirect('/login');
+ 	}
+	if(user.password!=password){
+		req.session.error="用户密码错误";
+		return res.redirect('/login');
+	}
+ 	req.session.user=user;
+    req.session.success="登录成功";
+	return res.redirect('/project-info');
+ });	
+}
+
 function checkUserAndPassword(req, res){
 //生成口令的数列值return 
 var md5=crypto.createHash('md5');
@@ -204,7 +236,10 @@ function project_info_save(req,res){
  	}
 
  	//上传图片
-   upload(req,res);
+   if(!upload(req,res)){
+   	console.log("上传图片失败!");
+     return res.redirect('/project-info');
+   }
    var user_project_info=getUserProjectInfo(req,res);
 	console.log("name====="+user_project_info.name);
 	console.log('limit_price======'+user_project_info.limit_price);
@@ -224,11 +259,12 @@ function project_info_save(req,res){
  		console.log("保存项目信息出错==="+err);
  		req.session.error=err;
  		//console.log("执行到了6");
- 		return res.redirect('/');
+ 		return res.redirect('/project-info');
  	}
    // console.log("执行到了7");
  	//req.session.user=newUser;
-	req.session.success='项目信息保存成功!'
+	req.session.success='项目信息保存成功!';
+	req.session.user_project_info=user_project_info;
  	return res.redirect('/project_returns');	
  	});
  });
@@ -248,7 +284,10 @@ function project_returns_save(req,res){
 	}
 
  	//上传图片
-   upload(req,res);
+   if(!upload(req,res)){
+   	console.log("上传图片失败!");
+     return res.redirect('/project_returns');
+   }
    var user_project_returns_info=getUserProjectReturnsInfo(req,res);
 	console.log("price====="+user_project_returns_info.price);
 	console.log('description======'+user_project_returns_info.description);
@@ -258,6 +297,7 @@ function project_returns_save(req,res){
 	console.log('repaid_day======'+user_project_returns_info.repaid_day);
 	console.log('return_type======'+user_project_returns_info.return_type);
 	console.log("user_mobile====="+user_project_returns_info.user_mobile);
+	console.log("data_id====="+user_project_returns_info.data_id);
      	//如果用户不存在则新增用户
  	user_project_returns_info.save(function(err){
  	if(err){
@@ -268,7 +308,11 @@ function project_returns_save(req,res){
  	}
    // console.log("执行到了7");
  	//req.session.user=newUser;
-	req.session.success='项目反馈信息保存成功!'
+ 	returns_arr.push(user_project_returns_info);
+    //returns_arr.splice(1,1);
+	req.session.success='项目反馈信息保存成功!';
+	req.session.returns_arr=returns_arr;
+	req.session.user_project_returns_info=req.session.returns_arr;
  	return res.redirect('/project_returns');	
  	});
 
@@ -277,12 +321,49 @@ function project_returns_save(req,res){
 }
 
 
+function delete_user_project_returns_info(req,res){
+var data_id=req.query.data_id;
+console.log("data_id==="+data_id);
+//先删除session缓存的数据
+returns_arr=req.session.user_project_returns_info;
+for(var i=0;i<returns_arr.length;i++){
+	if(returns_arr[i].data_id==data_id){
+		console.log("删除的data_id=="+data_id);
+		returns_arr.splice(i,1);
+		console.log("returns_arr.length===="+returns_arr.length);
+		//重新给session赋值
+		req.session.returns_arr=returns_arr;
+		req.session.user_project_returns_info=req.session.returns_arr;
+
+	}
+}
+User_Project_Returns_Info.deleteUserProjectReturnsInfoByData_id(data_id,function(err,result){
+ 	if(err){
+ 		err='删除失败!';
+ 		console.log("err==="+err);
+ 		req.session.error=err;
+		 res.json({"error":err});
+		
+ 	}
+ 	console.log("result==="+result);
+	if(result<=0){
+		err="删除记录失败";
+		req.session.error=err;
+		 res.json({"error":err});
+	}
+ 	succ="删除记录成功!";
+    req.session.success=succ;
+    res.json({"success":succ});
+ });
+
+}
+
 
 function logout(req, res){
-req.session.user=null;
-req.session.error=null;
-req.session.success=null;
-req.session.picture_url=null;
+//清除session
+console.log("清除session===");
+req.session.destroy();
+
 res.redirect('/');
 }
 
@@ -321,12 +402,14 @@ function upload(req, res) {
   	 err="上传的图片类型不正确!";
      req.session.error=err;
      console.log(err);
+     return false;
   	}else if(req.files[i].size>1048576){  	//1M=lo48576;
   		err="图片大小最多不超过1M，请从新上传!";
   		console.log(err);
   		req.session.error=err;
   		fs.unlinkSync(req.files[i].path);
         console.log('Successfully removed an temporary file!');
+        return false;
         
   	}else if (req.files[i].size == 0){
       // 使用同步方式删除一个文件
@@ -334,6 +417,7 @@ function upload(req, res) {
       err="请选择要上传的图片";
       req.session.error=err;
       console.log('Successfully removed an empty file!');
+      return false;
     } else {
      var target_path = uploadDir+ req.files[i].name;
       // 使用同步方式重命名一个文件
@@ -347,12 +431,13 @@ function upload(req, res) {
 	});
 	console.log('Successfully renamed a file!');
 	req.session.picture_url=req.files[i].name;
+	return true;
 	}
   }
   if(req.session.error){
   	console.log(req.session.error);
   	res.redirect('/project-info');
-  	return;
+  	return false;
   }
   succ="图片上传成功";
   req.session.success=succ;
@@ -433,6 +518,29 @@ return true;
 }
 
 function validate_returns_info(req,res){
+	var price=req.body.price;
+	var description=req.body.description;
+	var image_file=req.body.image_file;
+	var limit_num=req.body.limit_num;
+	var delivery_fee=req.body.delivery_fee;
+	var repaid_day=req.body.repaid_day;
+	console.log("验证的price==="+price);
+	if(price==""){
+       return false;
+	}else if(description==""){
+	   return false;
+	}else if(description.length>500){
+		return false;
+	}else if(image_file==""){
+		return false;
+	}else if(limit_num==""){
+		return false;
+	}else if(delivery_fee==""){
+		return false;
+	}else if(repaid_day==""){
+		return false;
+	}
+
 	return true;
 
 }
@@ -448,7 +556,8 @@ var user_project_returns_info=new User_Project_Returns_Info(
   delivery_fee:req.body.delivery_fee,
   repaid_day:req.body.repaid_day,//项目地点
   return_type:req.body.returntype,//所在城市
-  user_mobile: req.body.user_mobile//项目视频地址
+  user_mobile: req.body.user_mobile,//项目视频地址
+  data_id:req.body.data_id
 }); 
 return user_project_returns_info;
 }
@@ -470,6 +579,89 @@ var user_project_info=new User_Project_Info(
   tags:req.body.tags//项目标签
 }); 
 return user_project_info;
+}
+
+
+//保存发起人信息
+function save_author_info_detail(req,res){
+
+	//验证提交表单的内容
+	if(!validate_author_info_detail(req,res)){
+		err="请仔细检查所填写的内容是否有误";
+		req.session.error=err;
+		console.log("验证表单不通过");
+		return res.redirect('/author_info');
+	}
+	var author_info=new Author_Information(
+	{
+		ex_real_name:req.body.ex_real_name,
+		province:req.body.province,
+		city:req.body.city,
+		ex_contact:req.body.ex_contact,
+		bank_name:req.body.bank_name,
+		bank:req.body.bank,
+		bank_user_name:req.body.bank_user_name,
+		bank_card:req.body.bank_card
+	});
+
+
+ Author_Information.findAuthor_InformationByMobile(req.body.ex_contact,function(err,author_information){
+ 	if(author_information){
+ 		err='author_information already exists!';
+ 			console.log("err===="+err);
+ 	}
+ 
+ 	if(err){
+ 		req.session.error=err;
+ 		return res.redirect('/author_info');
+ 	}
+
+    author_info.save(function(err){
+ 	if(err){
+ 		console.log("保存项目发起人信息出错==="+err);
+ 		req.session.error=err;
+ 		//console.log("执行到了6");
+ 		return res.redirect('/author_info');
+ 	}
+	req.session.success='保存项目发起人信息成功!'
+ 	return res.redirect('/author_info_detail');	
+ 	});
+ });
+
+}
+
+
+//检查发起人信息
+function validate_author_info_detail(req,res){
+var ex_real_name=req.body.ex_real_name;
+var province=req.body.province;
+var city=req.body.city;
+var ex_contact=req.body.ex_contact;
+var bank_name=req.body.bank_name;
+var bank=req.body.bank;
+var bank_user_name=req.body.bank_user_name;
+var bank_card=req.body.bank_card;
+console.log("验证的ex_real_name==="+ex_real_name);
+if(ex_real_name==""){
+   return false;
+}else if(province==""){
+   return false;
+}else if(city.length>500){
+	return false;
+}else if(ex_contact==""){
+	return false;
+}else if(bank_name==""){
+	return false;
+}else if(bank==""){
+	return false;
+}else if(bank_user_name==""){
+	return false;
+}else if(bank_card==""){
+    return false;
+}
+
+return true;
+
 }
 
 function loadPic(response){
@@ -556,9 +748,12 @@ exports.loadPic=loadPic;
 exports.show=show;
 exports.checkLogin=checkLogin;
 exports.checkNotLogin=checkNotLogin;
+exports.login_form=login_form;
 exports.reg=reg;
 exports.login=login;
 exports.project_info_save=project_info_save;
 exports.project_returns_save=project_returns_save;
+exports.delete_user_project_returns_info=delete_user_project_returns_info;
+exports.save_author_info_detail=save_author_info_detail;
 exports.checkUserAndPassword=checkUserAndPassword;
 exports.logout=logout;

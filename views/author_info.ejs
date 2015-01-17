@@ -1,0 +1,427 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>众筹网-中国最具影响力的众筹平台</title>
+<meta name="keywords" content="众筹 创业 项目 投资 支持"/>
+<meta name="description" content="在众筹网发布项目，获得投资支持，实现你的创业梦想"/>
+<meta name="renderer" content="webkit"/>
+<link rel="shortcut icon" type="image/png" href="http://zcs8.ncfstatic.com/zhongchou/images/favicon_v3.png?v=1">
+<!--public js&css start-->            
+<link rel="stylesheet" type="text/css" href="http://zcs8.ncfstatic.com/zhongchou/pub/v3/14c4c0d24fba6ed25d8b6758064ef7b8.css?V=1420799021"/>
+<script type="text/javascript" src="http://zcs8.ncfstatic.com/zhongchou/pub/v3/2cc0475e1160ea574d0a9b5ebea60136.js?V=1420799021"></script>   
+<!--public js&css end -->                                         
+</head>
+<body>
+<!--header static-->
+<div class="header">
+	<div class="wrap clearfix">		
+        <div class="m-left">
+          <h2><a alt="众筹网" class="img-logo" title="众筹网" href="/">众筹网</a></h2>
+          <ul class="m-nav clearfix">
+			      <li><a  class="z-home" href="/"><span><i class="s-01"></i></span>首页</a></li>
+          	<li><a  href="/browse"><i class="s-02"></i>浏览项目</a></li>
+            <li><a href="http://www.yuanshihui.com/" target="_blank"><i class="s-30"></i>原始会</a></li>
+          	<li style="display:none"><a href="http://news.zhongchou.cn/"><i class="s-09"></i>资讯</a></li>
+          	<li><a  class="selected" href="/project"><i class="s-03"></i>发起项目</a></li>
+            <li><a href="http://app.zhongchou.cn" target="_blank"><i class="s-phone"></i>手机众筹</a></li>
+            <li style="display:none"><a href="###"><i class="s-10"></i>论坛</a></li>
+          </ul>
+        </div>
+        <div class="m-right clearfix">
+        	
+        	
+            <div id="Js-header-loginBtn"> 
+				<%if(user){%>
+				<span class="pull-down clearfix"><i class="meun-02"></i><i class="meun-01"><%=user.mobile%></i></span>
+				<%}else{%>
+				<span class="pull-down clearfix"><i class="meun-02"></i><i class="meun-01">没有登录</i></span>
+				<%}%>
+              <ul id="Js-header-login" class="mm-nubg">
+                  <li><a href="/home/id-428140"><i class="down-menu01"></i>支持的项目</a></li>
+                  <li><a href="/home-build_deal/id-428140"><i class="down-menu02"></i>发起的项目</a></li>
+                  <li><a href="/corp-index"><i class="down-menu07"></i>发起者后台</a></li>
+                  <li><a href="/home-focus/id-428140"><i class="down-menu03"></i>喜欢的项目</a></li>
+                  <li><a href="/message"><i class="down-menu04"></i>消息中心</a></li>
+                  <li><a href="/settings"><i class="down-menu05"></i>个人设置</a></li>
+                  <li><a href="/logout"><i class="down-menu06"></i>退出</a></li>
+              </ul>
+            </div>
+                        <form action="/deals" method="post" id="header_new_search_form" wx-validator>
+            <span>
+              <input name="k" wx-validator-placeholder="输入关键词" wx-validator-rule="required" type="text" wx-validator-notip>
+              <span class="wx-placeholder" style="font-size:12px;position:absolute;top:3px;*top:3px;left:80px;*left:10px;">输入关键字</span>
+              <a href="###" type="submit" class="bh-mhnbo"></a>
+            </span>
+          </form>
+        </div>
+	</div>		
+</div>
+<!--header end-->
+<!--header static-->
+<link rel="stylesheet" type="text/css" href="http://zcs8.ncfstatic.com/zhongchou/pub/v3/82f8b8a65f382c57ae8ef8aeee541802.css?V=1420799021"/>
+<!--header-end-->
+<div class="process">
+		<!--flow step static-->
+		<div class="project-edit-nav">
+			<h3 class="steps-3">发起人信息</h3>
+		</div>
+		<!--flow step end-->
+</div>
+<!--main static-->
+<div class="main clearfix">	
+    <form id="project_auth" name="project_auth" action="/author_info" method="post"  onsubmit="return add_auth_submit_check();" >  	
+	<div class="process-wrap clearfix">
+			<div class="tit-wrap">
+				<h1><p><font size="" color="#ff0000"><%- message %></font></p></h1>
+				<h3>发起人信息</h3>
+			</div>
+			<!--project start-->
+			<div class="project-box">
+				<div class="project-con fl w760">					
+					<div class="project-msg">						
+						<div class="form-item clearfix">
+							<label>真实姓名：</label>
+							<input type="text" class="w198" value="" name="ex_real_name" id="ex_real_name" onblur="return check_ex_real_name();" />
+							<span id="show_ex_real_name"  class="error-text" style="display:none"><p><font size="" color="#ff0000"></font></p></span>
+						</div>
+						<div class="form-item clearfix">
+							<label>所在地：</label>
+							<div class="option-box">
+				
+																
+								<span id="wx-validator-province-error" class="error-text" style="display:none">请选择省份</span>
+        						<span id="wx-validator-city-error" class="error-text" style="display:none">请选择城市</span>
+        						
+        						<select name="province" id="province" onblur="return check_province();" data-class="select-1" onchange="return checkItem(this.value)"  data-placeholder='选择省份' wx-validator-error-value="请选择省份" data-default="">
+								<option value="">请选择省份</option>
+																		   <option value="安徽" data-id="3" >安徽</option>
+																		   <option value="澳门" data-id="396" >澳门</option>
+																		   <option value="北京" data-id="52" >北京</option>
+																		   <option value="福建" data-id="4" >福建</option>
+																		   <option value="甘肃" data-id="5" >甘肃</option>
+																		   <option value="广东" data-id="6" >广东</option>
+																		   <option value="广西" data-id="7" >广西</option>
+																		   <option value="贵州" data-id="8" >贵州</option>
+																		   <option value="海南" data-id="9" >海南</option>
+																		   <option value="河北" data-id="10" >河北</option>
+																		   <option value="黑龙江" data-id="12" >黑龙江</option>
+																		   <option value="河南" data-id="11" >河南</option>
+																		   <option value="湖北" data-id="13" >湖北</option>
+																		   <option value="湖南" data-id="14" >湖南</option>
+																		   <option value="江苏" data-id="16" >江苏</option>
+																		   <option value="江西" data-id="17" >江西</option>
+																		   <option value="吉林" data-id="15" >吉林</option>
+																		   <option value="辽宁" data-id="18" >辽宁</option>
+																		   <option value="内蒙古" data-id="19" >内蒙古</option>
+																		   <option value="宁夏" data-id="20" >宁夏</option>
+																		   <option value="青海" data-id="21" >青海</option>
+																		   <option value="山东" data-id="22" >山东</option>
+																		   <option value="上海" data-id="321" >上海</option>
+																		   <option value="山西" data-id="23" >山西</option>
+																		   <option value="陕西" data-id="24" >陕西</option>
+																		   <option value="四川" data-id="26" >四川</option>
+																		   <option value="台湾" data-id="397" >台湾</option>
+																		   <option value="天津" data-id="343" >天津</option>
+																		   <option value="香港" data-id="395" >香港</option>
+																		   <option value="西藏" data-id="28" >西藏</option>
+																		   <option value="新疆" data-id="29" >新疆</option>
+																		   <option value="云南" data-id="30" >云南</option>
+																		   <option value="浙江" data-id="31" >浙江</option>
+																		   <option value="重庆" data-id="394" >重庆</option>
+																	</select>
+								<select name="city" id="city" onblur="return check_city();" data-class="select-2"  data-placeholder='选择城市' wx-validator-error-value="选择城市" data-default="">
+								<option value="">请选择城市</option>
+																	</select>
+								<span id="show_province"  class="error-text" style="display:none"><p><font size="" color="#ff0000"></font></p></span>
+								<span id="wx-validator-province-error" class="error-text" style="display:none">请选择省份</span>
+        						<span id="wx-validator-city-error" class="error-text" style="display:none">请选择城市</span>
+							</div>
+						</div>
+						<div class="form-item clearfix">
+							<label>移动电话：</label>
+							<input type="text" class="w198" value="" name="ex_contact" id="ex_contact"  onblur="return check_ex_contact();"/>
+							<span id="show_ex_contact"  class="error-text" style="display:none"><p><font size="" color="#ff0000"></font></p></span>
+						</div>
+						<div class="form-item-tit">补充打款信息</div>
+						
+						<div class="form-item clearfix">
+							<label>银行名称：</label>
+							<input class="inp-418" type="text" value="" name="bank_name" id="bank_name"  onblur="return check_bank_name();" />
+							<span id="show_bank_name"  class="error-text" style="display:none"><p><font size="" color="#ff0000"></font></p></span>
+						</div>
+						<div class="form-item clearfix">
+							<label>开户支行：</label>
+							<input class="inp-418" type="text" value="" name="bank" id="bank"  onblur="return check_bank();" />
+							<span id="show_bank"  class="error-text" style="display:none"><p><font size="" color="#ff0000"></font></p></span>
+						</div>
+						<div class="form-item clearfix">
+							<label>开户名称：</label>
+							<input class="inp-418" type="text" value="" name="bank_user_name" id="bank_user_name" onblur="return check_bank_user_name();" />
+							<span id="show_bank_user_name"  class="error-text" style="display:none"><p><font size="" color="#ff0000"></font></p></span>
+						</div>
+						<div class="form-item clearfix">
+							<label>银行账号：</label>
+							<input class="inp-418" type="text" value="" name="bank_card" id="bank_card" onblur="return check_bank_card();"  />
+							<span id="show_bank_card"  class="error-text" style="display:none"><p><font size="" color="#ff0000"></font></p></span>
+
+						</div>
+						<div class="action tc">
+							<a class="btn-effect-blue btn-sub w170" href="/project_returns">上一步</a>
+							<button id="Js-save"  class="btn-effect-blue btn-sub w170">提交审核</button>
+						<!-- 	<a id="Js-send" href="javascript:void(0);" class="btn-effect-blue btn-sub w170">提交审核</a> -->
+						</div>
+					</div>
+				</div>
+				
+				<input type="hidden" name="savenext" value="1" />
+				<input type="hidden" value="1" name="ajax" />
+				<input type="hidden" name="id" value="65857" />
+				<input id="submit_check" type="hidden" name="submit_check" value="0"/>
+					
+			</div>
+			<!--project end-->
+		<!--side static-->
+		<div class="sidebar w413 fr">
+			<!--side-list static-->
+			<div class="reminder fs14">
+					<h3>温馨提示</h3>
+					<p>请仔细填写本页信息，确保项目成功后能快速并准确的为您打款。</p>
+			</div>
+			<!--side-list end-->
+		</div>
+		<!--side end-->
+	</div>
+</form>
+</div>
+<!--main end-->
+<script type="text/javascript">
+function add_auth_submit_check(){
+	if(!wx.validator.rule.required($("input[name=ex_real_name]").val())){
+		//wx.alert("请输入姓名");
+		document.getElementById('ex_real_name').focus();
+		return false;
+	}else if($("select[name='province']").val()=="选择省份" || $("select[name='city']").val()=="选择城市"){
+		//wx.alert("请输入地址");
+		document.getElementById('province').focus();
+		return false;
+	}else if(!wx.validator.rule.required($("input[name=ex_contact]").val())){
+		//wx.alert("请输入移动电话");
+		document.getElementById('ex_contact').focus();
+		return false;
+	}else if(!wx.validator.rule.required($("input[name=bank_name]").val())){
+		//wx.alert("请输入银行名称");
+		document.getElementById('bank_name').focus();
+		return false;
+	}else if(!wx.validator.rule.required($("input[name=bank]").val())){
+		//wx.alert("请输入开户支行");
+		document.getElementById('bank').focus();
+		return false;
+	}else if(!wx.validator.rule.required($("input[name=bank_user_name]").val())){
+		//wx.alert("请输入开户名称");
+		document.getElementById('bank_user_name').focus();
+		return false;
+	}else if(!wx.validator.rule.required($("input[name=bank_card]").val())){
+		//wx.alert("请输入银行账号");
+		document.getElementById('bank_card').focus();
+		return false;
+	}else{
+		return true;
+	}
+}
+
+//检查每个输入框的事件
+function check_ex_real_name(){
+	if(document.getElementById('ex_real_name').value==""){
+        document.getElementById('show_ex_real_name').style.display="block";
+        document.getElementById("show_ex_real_name").firstChild.firstChild.innerHTML="真是姓名不能为空!";
+        return false;
+	}else{
+		 document.getElementById('show_ex_real_name').style.display="none";
+	}
+
+}
+function check_province(){
+	if(document.getElementById('province').value==""){
+        document.getElementById('show_province').style.display="block";
+        document.getElementById("show_province").firstChild.firstChild.innerHTML="请选择省份!";
+        return false;
+	}else{
+		 document.getElementById('show_province').style.display="none";
+	}
+	
+}
+
+function check_ex_contact(){
+
+	if(document.getElementById('ex_contact').value==""){
+	document.getElementById('show_ex_contact').style.display="block";
+	document.getElementById("show_ex_contact").firstChild.firstChild.innerHTML="请输入移动电话号码!";
+	return false;
+	}else{
+		 document.getElementById('show_ex_contact').style.display="none";
+	}
+}
+function check_bank_name(){
+	if(document.getElementById('bank_name').value==""){
+	document.getElementById('show_bank_name').style.display="block";
+	document.getElementById("show_bank_name").firstChild.firstChild.innerHTML="请输入银行名称!";
+	return false;
+	}else{
+		document.getElementById('show_bank_name').style.display="none";
+	}
+}	
+
+function check_bank(){
+	if(document.getElementById('bank').value==""){
+	document.getElementById('show_bank').style.display="block";
+	document.getElementById("show_bank").firstChild.firstChild.innerHTML="请输入开户支行!";
+	return false;
+	}else{
+		document.getElementById('show_bank').style.display="none";
+	}
+}
+function check_bank_user_name(){
+	if(document.getElementById('bank_user_name').value==""){
+	document.getElementById('show_bank_user_name').style.display="block";
+	document.getElementById("show_bank_user_name").firstChild.firstChild.innerHTML="请输入开户名称!";
+	return false;
+	}else{
+		document.getElementById('show_bank_user_name').style.display="none";
+	}	
+}
+function check_bank_card(){
+	if(document.getElementById('bank_card').value==""){
+	document.getElementById('show_bank_card').style.display="block";
+	document.getElementById("show_bank_card").firstChild.firstChild.innerHTML="请输入银行卡号!";
+	return false;
+	}else{
+		document.getElementById('show_bank_card').style.display="none";
+	}	
+}
+
+
+//下拉列表框事件
+function checkItem(value){
+    if(value==""){
+    return false;
+    }
+	var city=["成都","郫县","温江","新都"];
+	if(value=="四川"){
+	    for(var i=0;i<city.length;i++){
+			if(i==1){
+				document.getElementById("city").add(new Option(city[i],city[i]));
+				document.getElementById("city").options[i].selected=true;
+			}else{
+				document.getElementById("city").add(new Option(city[i],city[i]));
+				//alert("默认值=="+document.getElementById("city").options[i].value);
+			}
+			
+		}
+		
+	}
+
+}
+
+$(function(){
+/*	$("#Js-save").click(function(){
+		if(add_auth_submit_check()){
+			//wx.sendData("/author_info_detail",$("#project_auth").serialize(),project_auth);
+			alert("asd");
+			//location.href="/author_info_detail";
+		}
+	});*/
+	$("#Js-send").click(function(){
+		if(add_auth_submit_check()){
+			wx.confirm("确认提交审核？提交后将无法编辑。",function(){
+				$("#submit_check").val('1');
+				wx.sendData("/projectauthnew-save",$("#project_auth").serialize(),project_auth);
+			});
+		}
+	});
+});
+</script>
+<script>
+function project_auth(data){
+	
+	if(data.status==1){
+		window.location.href=data.jump;
+	}else{
+		wx.alert(data.info);
+	}
+}
+</script>
+<!--footer static-->
+<!--footer static-->
+<div class="footer">
+	<div class="footer-nav">
+		<a rel="nofollow" href="/help-about/id-1" alt="关于众筹" title="关于众筹">关于我们 <i>｜</i> </a>
+		<a rel="nofollow" href="/help-contact" alt="联系我们" title="联系我们">联系我们 <i>｜</i> </a>
+		<!-- <a rel="nofollow" href="/help-team" alt="团队介绍" title="团队介绍">团队介绍 <i>｜</i> </a> -->
+		<a rel="nofollow" href="/help-term" alt="服务协议" title="服务协议">服务协议 <i>｜</i> </a>
+		<a rel="nofollow" href="/help-specification" alt="项目发起规范" title="项目发起规范">项目发起规范 <i>｜</i> </a>
+		<a  href="/partake" alt="新手帮助" title="新手帮助">新手帮助 <i>｜</i> </a>
+		<a  href="/help-center" alt="帮助中心" title="帮助中心">帮助中心 <i>｜</i> </a>
+		<a  target="_blank" href="/help-tourongzi" alt="投融资服务" title="投融资服务">投融资服务</a>
+	</div>
+	<div class="footer-icon">
+		<span>关注我们：</span>
+		<a class="s-05" rel="nofollow" target="_blank" href="http://e.weibo.com/zhongchouwang2013" alt="新浪微博" title="新浪微博"></a>
+		<a class="s-06" rel="nofollow" target="_blank" href="http://user.qzone.qq.com/2357291729" alt="QQ空间" title="QQ空间"></a>
+		<a class="s-07" rel="nofollow" target="_blank" href="http://tieba.baidu.com/f?ie=utf-8&kw=%E4%BC%97%E7%AD%B9%E7%BD%91" alt="百度贴吧" title="百度贴吧"></a>
+		<a class="s-08" rel="nofollow" target="_blank" href="http://www.douban.com/people/zhongchou_cn/" alt="豆瓣小站" title="豆瓣小站"></a>
+		<!--<a class="s-05" rel="nofollow" target="_blank" href="http://tieba.baidu.com/f?ie=utf-8&kw=%E4%BC%97%E7%AD%B9%E7%BD%91" alt="百度贴吧" title="百度贴吧">百度贴吧</a>-->
+		<!--<a class="s-06" rel="nofollow" target="_blank" href="http://user.qzone.qq.com/2357291729" alt="QQ空间" title="QQ空间">QQ空间</a>-->
+		<!--<a class="s-07" rel="nofollow" target="_blank" href="http://e.weibo.com/zhongchouwang2013" alt="新浪微博" title="新浪微博">新浪微博</a>-->
+		<!--<a class="s-08" rel="nofollow" target="_blank" href="http://www.douban.com/people/zhongchou_cn/" alt="豆瓣小站" title="豆瓣小站">豆瓣小站</a>-->
+	</div>
+	<div class="footer-copy">
+		<div class="wrap">
+			<!-- 
+			<div class="m-Links">
+									<a href="http://iof.hexun.com/zhongchou/index.html" target="_blank" rel="nofollow">和讯网</a>
+									<a href="http://www.leiphone.com/" target="_blank" rel="nofollow">雷锋网</a>
+									<a href="http://www.36kr.com/   " target="_blank" rel="nofollow">36氪</a>
+									<a href="http://www.hao123.com/" target="_blank" rel="nofollow">hao123</a>
+									<a href="http://hao.360.cn/" target="_blank" rel="nofollow">360安全网址</a>
+									<a href="http://www.ynet.com/" target="_blank" rel="nofollow">北青网</a>
+									<a href="http://finance.ifeng.com/" target="_blank" rel="nofollow">凤凰网</a>
+									<a href="http://jrj.com.cn" target="_blank" rel="nofollow">金融界</a>
+									<a href="http://www.caixin.com/" target="_blank" rel="nofollow">财新网</a>
+									<a href="http://www.tmtpost.com/" target="_blank" rel="nofollow">钛媒体</a>
+									<a href="http://www.imgii.com?zhongchou" target="_blank" rel="nofollow">IMGII</a>
+									<a href="http://www.m1905.com/film/" target="_blank" rel="nofollow">电影网</a>
+									<a href="http://www.artron.net/" target="_blank" rel="nofollow">雅昌艺术网</a>
+									<a href="http://www.vmovier.com/" target="_blank" rel="nofollow">V电影</a>
+									<a href="http://www.eguan.cn" target="_blank" rel="nofollow">易观网</a>
+									<a href="http://www.pedaily.cn/" target="_blank" rel="nofollow">投资界          </a>
+									<a href="http://home.ebrun.com/" target="_blank" rel="nofollow">亿邦动力社区</a>
+									<a href="http://www.9888.cn" target="_blank" rel="nofollow">金融工场</a>
+									<a href="http://www.trchina.org/" target="_blank" rel="nofollow">投融中国联盟</a>
+									<a href="http://www.youcheng.org/" target="_blank" rel="nofollow">友成基金会</a>
+									<a href="http://life.renren.com" target="_blank" rel="nofollow">人人生活</a>
+									<a href="http://www.meng800.com/ " target="_blank" rel="nofollow">众筹导航</a>
+									<a href="http://www.qidic.com" target="_blank" rel="nofollow">奇笛网</a>
+									<a href="http://www.rong360.com" target="_blank" rel="nofollow">融360</a>
+									<a href=" http://www.diyifangdai.com" target="_blank" rel="nofollow">第一房贷</a>
+									<a href="http://finance.ifeng.com/itfinance/index.shtml" target="_blank" rel="nofollow">凤凰互联网金融</a>
+									<a href="http://www.huoqiu.cn" target="_blank" >火球网</a>
+									<a href="http://www.renchoubao.com/" target="_blank" >认筹宝</a>
+									<a href="http://www.kuaidi100.com/" target="_blank" >快递查询</a>
+									<a href="http://www.csai.cn" target="_blank" >希财网</a>
+				              
+			</div>
+			 -->
+			 <div class="m-Links"></div>
+            <p>&copy;2014 北京网信众筹网络科技有限公司 zhongchou.cn 版权所有 京ICP备14016844号 | 出版物经营许可证编号新出发（京）批字第直140141号 | 营业性演出许可证 编号：京市演2102 | 食品流通许可证 编号：SP1101051410311599</p>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="http://zcs8.ncfstatic.com/zhongchou/pub/v3/fe3974b84fb6b50da0f329242078614c.js?V=1420799021"></script>                   
+<div id="gotop" class="go-top"></div>
+<!--footer end-->
+ 
+<!--footer end-->
+</body>
+</html> 

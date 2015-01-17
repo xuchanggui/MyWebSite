@@ -1,0 +1,516 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<%if(user){%>
+<title><%=user.mobile%>-众筹网</title>
+<%}else{%>
+<title>未登录-众筹网</title>
+<%}%>
+<meta name="keywords" content="众筹 创业 项目 投资 支持"/>
+<meta name="description" content="在众筹网发布项目，获得投资支持，实现你的创业梦想"/>
+<meta name="renderer" content="webkit"/>
+<link rel="shortcut icon" type="image/png" href="http://zcs6.ncfstatic.com/zhongchou/images/favicon_v3.png?v=1">
+<!--public js&css start-->            
+<link rel="stylesheet" type="text/css" href="http://zcs3.ncfstatic.com/zhongchou/pub/v3/14c4c0d24fba6ed25d8b6758064ef7b8.css?V=1420799021"/>
+<script type="text/javascript" src="http://zcs3.ncfstatic.com/zhongchou/pub/v3/2cc0475e1160ea574d0a9b5ebea60136.js?V=1420799021"></script>   
+<!--public js&css end -->                                         
+</head>
+<body>
+<!--header static-->
+<div class="header">
+	<div class="wrap clearfix">		
+        <div class="m-left">
+          <h2><a alt="众筹网" class="img-logo" title="众筹网" href="/">众筹网</a></h2>
+          <ul class="m-nav clearfix">
+			      <li><a  class="z-home" href="/"><span><i class="s-01"></i></span>首页</a></li>
+          	<li><a  href="/browse"><i class="s-02"></i>浏览项目</a></li>
+            <li><a href="http://www.yuanshihui.com/" target="_blank"><i class="s-30"></i>原始会</a></li>
+          	<li style="display:none"><a href="http://news.zhongchou.cn/"><i class="s-09"></i>资讯</a></li>
+          	<li><a  href="/project"><i class="s-03"></i>发起项目</a></li>
+            <li><a href="http://app.zhongchou.cn" target="_blank"><i class="s-phone"></i>手机众筹</a></li>
+            <li style="display:none"><a href="###"><i class="s-10"></i>论坛</a></li>
+          </ul>
+        </div>
+        <div class="m-right clearfix">
+        	
+        	
+            <div id="Js-header-loginBtn"> 
+             	<%if(user){%>
+				<span class="pull-down clearfix"><i class="meun-02"></i><i class="meun-01"><%=user.mobile%></i></span>
+				<%}else{%>
+				<span class="pull-down clearfix"><i class="meun-02"></i><i class="meun-01">没有登录</i></span>
+				<%}%>
+              <ul id="Js-header-login" class="mm-nubg">
+                  <li><a href="/home/id-428140"><i class="down-menu01"></i>支持的项目</a></li>
+                  <li><a href="/home-build_deal/id-428140"><i class="down-menu02"></i>发起的项目</a></li>
+                  <li><a href="/corp-index"><i class="down-menu07"></i>发起者后台</a></li>
+                  <li><a href="/home-focus/id-428140"><i class="down-menu03"></i>喜欢的项目</a></li>
+                  <li><a href="/message"><i class="down-menu04"></i>消息中心</a></li>
+                  <li><a href="/settings"><i class="down-menu05"></i>个人设置</a></li>
+                  <li><a href="/usernew-loginout"><i class="down-menu06"></i>退出</a></li>
+              </ul>
+            </div>
+                        <form action="/deals" method="post" id="header_new_search_form" wx-validator>
+            <span>
+              <input name="k" wx-validator-placeholder="输入关键词" wx-validator-rule="required" type="text" wx-validator-notip>
+              <span class="wx-placeholder" style="font-size:12px;position:absolute;top:3px;*top:3px;left:80px;*left:10px;">输入关键字</span>
+              <a href="###" type="submit" class="bh-mhnbo"></a>
+            </span>
+          </form>
+        </div>
+	</div>		
+</div>
+<!--header end-->
+
+<link rel="stylesheet" type="text/css" href="http://zcs3.ncfstatic.com/zhongchou/pub/v3/59e6ce7c3f399e8b0809a90e4c3f09b0.css?V=1420799021"/>
+<body>
+<!--main static-->
+<!--favicon static-->
+<div class="m-favicon">
+	<div class="wrap clearfix">
+		<a href="/settings-avatar" class="z-portrait"><img src="http://zcs6.ncfstatic.com/img/defaultavatar/noavatar_middle.gif"></a>
+		<div class="z-introduced">
+            <div class="z-chance clearfix">
+                <div class="ch-left">
+                    <h2 class="fl"><%=user.mobile%></h2>
+                </div>
+                <div class="ch-right">
+                    <a class="z-browse" href="/settings-avatar">头像设置</a>
+                    <a class="z-browse" href="/settings">个人设置</a>
+                    <a class="z-browse" href="/message">消息中心</a>
+                </div>
+                <div class="clearfix"></div>
+                <span>他很忙，忙的什么都没来得及留下。</span>
+            </div>
+			<div class="z-calculations">
+				<p class="ca-01"><i></i>上海,宝山区</p>
+				<p class="ca-02"><i></i>2014-11-22加入</p>
+			</div>
+		</div>    
+    </div>
+</div>
+<!--favicon end-->
+<!--ulitem static-->
+<div class="wrap m-ulitem">
+	<div class="particulars-nav clearfix">
+      <ul class="clearfix">
+      <!-- 点击样式调用a标签里的class 和i标签 -->
+        <li class="mm-op"><a href="/home/id-428140" >支持的项目<em> 1</em></a></li>
+        <li><a href="/home-build_deal/id-428140"  class="z-select" ><i class="a-pos"></i>发起的项目<em> 11</em></a></li>
+        <li><a href="/home-focus/id-428140" ><i ></i>喜欢的项目<em> 1</em></a></li>
+      </ul>     
+    </div>   
+	<ul class="list-nav clearfix">
+		<li><a href="/home-build_deal/id-428140"  class="z-own" >所有</a></li>
+		<li><a href="/home-build_deal/id-428140-r-di" >众筹中</a></li>
+		<li><a href="/home-build_deal/id-428140-r-ds" >已成功</a></li>
+        <li><a href="/home-build_deal/id-428140-r-df" >已失败</a></li>
+	</ul>
+	<div class="m-location">
+		<table>
+              <colgroup>
+              <col width="41%">
+              <col width="16%">
+              <col width="16%">
+              <col width="7%">
+              <col width="11%">
+              </colgroup>
+			<tr class="bg-tr">
+				<td class="par-name">项目名称</td>
+				<td>发布日期</td>
+				<td>截止日期</td>
+				<td>目标</td>
+				<td>进度</td>
+                <td>状态</td>
+			</tr>
+				<tr>               
+				<td>
+					<div class="z-reference clearfix">
+						<a href="/deal-show/id-65857" target="_blank" class="z-referenceimg"><img src="http://zcr6.ncfstatic.com/attachment/201501/11/18/fc6798068b0e335d24ce2d744c64b84024.jpg"></a>
+						<div class="z-referencetext">
+							<p><a href="/deal-show/id-65857" target="_blank">test</a></p>
+							<!-- <span>订单编号：188825</span>-->
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="z-day">
+						<span>-</span>
+					</div>
+				</td>
+				<td>
+                    <div class="z-day">
+						<span>-</span>
+					</div>
+                </td>
+				<td class="no-hl">500元</td>
+				<td>
+                    0元<br />0%
+                </td>
+                <td>
+																					草稿													                        <br>
+                                                                        <a class="z-payment" href="/projectnew-edit/id-65857">
+                        编辑</a>
+                                            
+                    <a class="z-payment" href="/deal-show/id-65857" target="_blank">预览</a>                                                                            </td> 
+			</tr>
+    			<tr>               
+				<td>
+					<div class="z-reference clearfix">
+						<a href="/deal-show/id-65332" target="_blank" class="z-referenceimg"><img src="http://zcr6.ncfstatic.com/attachment/201501/10/02/ad58e7b39587a9c8bd91ea8a3af0975586.jpg"></a>
+						<div class="z-referencetext">
+							<p><a href="/deal-show/id-65332" target="_blank">test</a></p>
+							<!-- <span>订单编号：188825</span>-->
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="z-day">
+						<span>-</span>
+					</div>
+				</td>
+				<td>
+                    <div class="z-day">
+						<span>-</span>
+					</div>
+                </td>
+				<td class="no-hl">700元</td>
+				<td>
+                    0元<br />0%
+                </td>
+                <td>
+																					草稿													                        <br>
+                                                                        <a class="z-payment" href="/projectnew-edit/id-65332">
+                        编辑</a>
+                                            
+                    <a class="z-payment" href="/deal-show/id-65332" target="_blank">预览</a>                                                                            </td> 
+			</tr>
+    			<tr>               
+				<td>
+					<div class="z-reference clearfix">
+						<a href="/deal-show/id-65329" target="_blank" class="z-referenceimg"><img src="http://zcr6.ncfstatic.com/attachment/201501/10/02/ad58e7b39587a9c8bd91ea8a3af0975586.jpg"></a>
+						<div class="z-referencetext">
+							<p><a href="/deal-show/id-65329" target="_blank">test</a></p>
+							<!-- <span>订单编号：188825</span>-->
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="z-day">
+						<span>-</span>
+					</div>
+				</td>
+				<td>
+                    <div class="z-day">
+						<span>-</span>
+					</div>
+                </td>
+				<td class="no-hl">700元</td>
+				<td>
+                    0元<br />0%
+                </td>
+                <td>
+																					草稿													                        <br>
+                                                                        <a class="z-payment" href="/projectnew-edit/id-65329">
+                        编辑</a>
+                                            
+                    <a class="z-payment" href="/deal-show/id-65329" target="_blank">预览</a>                                                                            </td> 
+			</tr>
+    			<tr>               
+				<td>
+					<div class="z-reference clearfix">
+						<a href="/deal-show/id-65326" target="_blank" class="z-referenceimg"><img src="http://zcr6.ncfstatic.com/attachment/201501/10/02/cf4244c300a3ede54876222210095be861.jpg"></a>
+						<div class="z-referencetext">
+							<p><a href="/deal-show/id-65326" target="_blank">test</a></p>
+							<!-- <span>订单编号：188825</span>-->
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="z-day">
+						<span>-</span>
+					</div>
+				</td>
+				<td>
+                    <div class="z-day">
+						<span>-</span>
+					</div>
+                </td>
+				<td class="no-hl">500元</td>
+				<td>
+                    0元<br />0%
+                </td>
+                <td>
+																					草稿													                        <br>
+                                                                        <a class="z-payment" href="/projectnew-edit/id-65326">
+                        编辑</a>
+                                            
+                    <a class="z-payment" href="/deal-show/id-65326" target="_blank">预览</a>                                                                            </td> 
+			</tr>
+    			<tr>               
+				<td>
+					<div class="z-reference clearfix">
+						<a href="/deal-show/id-65248" target="_blank" class="z-referenceimg"><img src="http://zcr6.ncfstatic.com/attachment/201501/10/00/9466fa6c5d67dfa522f8be3678d0ec9651.jpg"></a>
+						<div class="z-referencetext">
+							<p><a href="/deal-show/id-65248" target="_blank">test</a></p>
+							<!-- <span>订单编号：188825</span>-->
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="z-day">
+						<span>-</span>
+					</div>
+				</td>
+				<td>
+                    <div class="z-day">
+						<span>-</span>
+					</div>
+                </td>
+				<td class="no-hl">500元</td>
+				<td>
+                    0元<br />0%
+                </td>
+                <td>
+																					草稿													                        <br>
+                                                                        <a class="z-payment" href="/projectnew-edit/id-65248">
+                        编辑</a>
+                                            
+                    <a class="z-payment" href="/deal-show/id-65248" target="_blank">预览</a>                                                                            </td> 
+			</tr>
+    			<tr>               
+				<td>
+					<div class="z-reference clearfix">
+						<a href="/deal-show/id-65212" target="_blank" class="z-referenceimg"><img src="http://zcr6.ncfstatic.com/attachment/201501/09/22/e734a44b091028f29b3b1af0fb7d929a86.jpg"></a>
+						<div class="z-referencetext">
+							<p><a href="/deal-show/id-65212" target="_blank">我的众酬</a></p>
+							<!-- <span>订单编号：188825</span>-->
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="z-day">
+						<span>-</span>
+					</div>
+				</td>
+				<td>
+                    <div class="z-day">
+						<span>-</span>
+					</div>
+                </td>
+				<td class="no-hl">500元</td>
+				<td>
+                    0元<br />0%
+                </td>
+                <td>
+																					草稿													                        <br>
+                                                                        <a class="z-payment" href="/projectnew-edit/id-65212">
+                        编辑</a>
+                                            
+                    <a class="z-payment" href="/deal-show/id-65212" target="_blank">预览</a>                                                                            </td> 
+			</tr>
+    			<tr>               
+				<td>
+					<div class="z-reference clearfix">
+						<a href="/deal-show/id-65209" target="_blank" class="z-referenceimg"><img src="http://zcr6.ncfstatic.com/attachment/201501/09/22/e734a44b091028f29b3b1af0fb7d929a86.jpg"></a>
+						<div class="z-referencetext">
+							<p><a href="/deal-show/id-65209" target="_blank">我的众酬</a></p>
+							<!-- <span>订单编号：188825</span>-->
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="z-day">
+						<span>-</span>
+					</div>
+				</td>
+				<td>
+                    <div class="z-day">
+						<span>-</span>
+					</div>
+                </td>
+				<td class="no-hl">500元</td>
+				<td>
+                    0元<br />0%
+                </td>
+                <td>
+																					草稿													                        <br>
+                                                                        <a class="z-payment" href="/projectnew-edit/id-65209">
+                        编辑</a>
+                                            
+                    <a class="z-payment" href="/deal-show/id-65209" target="_blank">预览</a>                                                                            </td> 
+			</tr>
+    			<tr>               
+				<td>
+					<div class="z-reference clearfix">
+						<a href="/deal-show/id-63442" target="_blank" class="z-referenceimg"><img src="http://zcr6.ncfstatic.com/attachment/201501/06/22/e4567794df56d84fcea319a32413eb0c58.jpg"></a>
+						<div class="z-referencetext">
+							<p><a href="/deal-show/id-63442" target="_blank">托尔斯泰</a></p>
+							<!-- <span>订单编号：188825</span>-->
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="z-day">
+						<span>-</span>
+					</div>
+				</td>
+				<td>
+                    <div class="z-day">
+						<span>-</span>
+					</div>
+                </td>
+				<td class="no-hl">5,555元</td>
+				<td>
+                    0元<br />0%
+                </td>
+                <td>
+																					草稿													                        <br>
+                                                                        <a class="z-payment" href="/projectnew-edit/id-63442">
+                        编辑</a>
+                                            
+                    <a class="z-payment" href="/deal-show/id-63442" target="_blank">预览</a>                                                                            </td> 
+			</tr>
+    			<tr>               
+				<td>
+					<div class="z-reference clearfix">
+						<a href="/deal-show/id-60907" target="_blank" class="z-referenceimg"><img src="http://zcr6.ncfstatic.com/attachment/201501/03/21/87aaf4069f12ff4faf94f9260a3222cc33.jpg"></a>
+						<div class="z-referencetext">
+							<p><a href="/deal-show/id-60907" target="_blank">test</a></p>
+							<!-- <span>订单编号：188825</span>-->
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="z-day">
+						<span>-</span>
+					</div>
+				</td>
+				<td>
+                    <div class="z-day">
+						<span>-</span>
+					</div>
+                </td>
+				<td class="no-hl">500元</td>
+				<td>
+                    0元<br />0%
+                </td>
+                <td>
+																					草稿													                        <br>
+                                                                        <a class="z-payment" href="/projectnew-edit/id-60907">
+                        编辑</a>
+                                            
+                    <a class="z-payment" href="/deal-show/id-60907" target="_blank">预览</a>                                                                            </td> 
+			</tr>
+    			<tr>               
+				<td>
+					<div class="z-reference clearfix">
+						<a href="/deal-show/id-59944" target="_blank" class="z-referenceimg"><img src="http://zcr6.ncfstatic.com/attachment/201501/02/13/45e525260649984ab2aa3d9c8c98e34a42.jpg"></a>
+						<div class="z-referencetext">
+							<p><a href="/deal-show/id-59944" target="_blank">test</a></p>
+							<!-- <span>订单编号：188825</span>-->
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="z-day">
+						<span>-</span>
+					</div>
+				</td>
+				<td>
+                    <div class="z-day">
+						<span>-</span>
+					</div>
+                </td>
+				<td class="no-hl">500元</td>
+				<td>
+                    0元<br />0%
+                </td>
+                <td>
+																					草稿													                        <br>
+                                                                        <a class="z-payment" href="/projectnew-edit/id-59944">
+                        编辑</a>
+                                            
+                    <a class="z-payment" href="/deal-show/id-59944" target="_blank">预览</a>                                                                            </td> 
+			</tr>
+    		</table>
+		<div class="pager">     &nbsp;<A class='selected'>1</a>&nbsp;<a class='common-sprite' href='/home-build_deal/id-428140-p-2'>&nbsp;2&nbsp;</a>    <a class='next' href='/home-build_deal/id-428140-p-2'>下一页</a></div>
+	</div>  
+</div>
+<!--ulitem end-->
+<!--main end-->
+<!--footer static-->
+<!--footer static-->
+<div class="footer">
+	<div class="footer-nav">
+		<a rel="nofollow" href="/help-about/id-1" alt="关于众筹" title="关于众筹">关于我们 <i>｜</i> </a>
+		<a rel="nofollow" href="/help-contact" alt="联系我们" title="联系我们">联系我们 <i>｜</i> </a>
+		<!-- <a rel="nofollow" href="/help-team" alt="团队介绍" title="团队介绍">团队介绍 <i>｜</i> </a> -->
+		<a rel="nofollow" href="/help-term" alt="服务协议" title="服务协议">服务协议 <i>｜</i> </a>
+		<a rel="nofollow" href="/help-specification" alt="项目发起规范" title="项目发起规范">项目发起规范 <i>｜</i> </a>
+		<a  href="/partake" alt="新手帮助" title="新手帮助">新手帮助 <i>｜</i> </a>
+		<a  href="/help-center" alt="帮助中心" title="帮助中心">帮助中心 <i>｜</i> </a>
+		<a  target="_blank" href="/help-tourongzi" alt="投融资服务" title="投融资服务">投融资服务</a>
+	</div>
+	<div class="footer-icon">
+		<span>关注我们：</span>
+		<a class="s-05" rel="nofollow" target="_blank" href="http://e.weibo.com/zhongchouwang2013" alt="新浪微博" title="新浪微博"></a>
+		<a class="s-06" rel="nofollow" target="_blank" href="http://user.qzone.qq.com/2357291729" alt="QQ空间" title="QQ空间"></a>
+		<a class="s-07" rel="nofollow" target="_blank" href="http://tieba.baidu.com/f?ie=utf-8&kw=%E4%BC%97%E7%AD%B9%E7%BD%91" alt="百度贴吧" title="百度贴吧"></a>
+		<a class="s-08" rel="nofollow" target="_blank" href="http://www.douban.com/people/zhongchou_cn/" alt="豆瓣小站" title="豆瓣小站"></a>
+		<!--<a class="s-05" rel="nofollow" target="_blank" href="http://tieba.baidu.com/f?ie=utf-8&kw=%E4%BC%97%E7%AD%B9%E7%BD%91" alt="百度贴吧" title="百度贴吧">百度贴吧</a>-->
+		<!--<a class="s-06" rel="nofollow" target="_blank" href="http://user.qzone.qq.com/2357291729" alt="QQ空间" title="QQ空间">QQ空间</a>-->
+		<!--<a class="s-07" rel="nofollow" target="_blank" href="http://e.weibo.com/zhongchouwang2013" alt="新浪微博" title="新浪微博">新浪微博</a>-->
+		<!--<a class="s-08" rel="nofollow" target="_blank" href="http://www.douban.com/people/zhongchou_cn/" alt="豆瓣小站" title="豆瓣小站">豆瓣小站</a>-->
+	</div>
+	<div class="footer-copy">
+		<div class="wrap">
+			<!-- 
+			<div class="m-Links">
+									<a href="http://iof.hexun.com/zhongchou/index.html" target="_blank" rel="nofollow">和讯网</a>
+									<a href="http://www.leiphone.com/" target="_blank" rel="nofollow">雷锋网</a>
+									<a href="http://www.36kr.com/   " target="_blank" rel="nofollow">36氪</a>
+									<a href="http://www.hao123.com/" target="_blank" rel="nofollow">hao123</a>
+									<a href="http://hao.360.cn/" target="_blank" rel="nofollow">360安全网址</a>
+									<a href="http://www.ynet.com/" target="_blank" rel="nofollow">北青网</a>
+									<a href="http://finance.ifeng.com/" target="_blank" rel="nofollow">凤凰网</a>
+									<a href="http://jrj.com.cn" target="_blank" rel="nofollow">金融界</a>
+									<a href="http://www.caixin.com/" target="_blank" rel="nofollow">财新网</a>
+									<a href="http://www.tmtpost.com/" target="_blank" rel="nofollow">钛媒体</a>
+									<a href="http://www.imgii.com?zhongchou" target="_blank" rel="nofollow">IMGII</a>
+									<a href="http://www.m1905.com/film/" target="_blank" rel="nofollow">电影网</a>
+									<a href="http://www.artron.net/" target="_blank" rel="nofollow">雅昌艺术网</a>
+									<a href="http://www.vmovier.com/" target="_blank" rel="nofollow">V电影</a>
+									<a href="http://www.eguan.cn" target="_blank" rel="nofollow">易观网</a>
+									<a href="http://www.pedaily.cn/" target="_blank" rel="nofollow">投资界          </a>
+									<a href="http://home.ebrun.com/" target="_blank" rel="nofollow">亿邦动力社区</a>
+									<a href="http://www.9888.cn" target="_blank" rel="nofollow">金融工场</a>
+									<a href="http://www.trchina.org/" target="_blank" rel="nofollow">投融中国联盟</a>
+									<a href="http://www.youcheng.org/" target="_blank" rel="nofollow">友成基金会</a>
+									<a href="http://life.renren.com" target="_blank" rel="nofollow">人人生活</a>
+									<a href="http://www.meng800.com/ " target="_blank" rel="nofollow">众筹导航</a>
+									<a href="http://www.qidic.com" target="_blank" rel="nofollow">奇笛网</a>
+									<a href="http://www.rong360.com" target="_blank" rel="nofollow">融360</a>
+									<a href=" http://www.diyifangdai.com" target="_blank" rel="nofollow">第一房贷</a>
+									<a href="http://finance.ifeng.com/itfinance/index.shtml" target="_blank" rel="nofollow">凤凰互联网金融</a>
+									<a href="http://www.huoqiu.cn" target="_blank" >火球网</a>
+									<a href="http://www.renchoubao.com/" target="_blank" >认筹宝</a>
+									<a href="http://www.kuaidi100.com/" target="_blank" >快递查询</a>
+									<a href="http://www.csai.cn" target="_blank" >希财网</a>
+				              
+			</div>
+			 -->
+			 <div class="m-Links"></div>
+            <p>&copy;2014 北京网信众筹网络科技有限公司 zhongchou.cn 版权所有 京ICP备14016844号 | 出版物经营许可证编号新出发（京）批字第直140141号 | 营业性演出许可证 编号：京市演2102 | 食品流通许可证 编号：SP1101051410311599</p>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="http://zcs3.ncfstatic.com/zhongchou/pub/v3/fe3974b84fb6b50da0f329242078614c.js?V=1420799021"></script>                   
+<div id="gotop" class="go-top"></div>
+<!--footer end-->
+<!--footer end-->
+<script type="text/javascript" src="http://zcs3.ncfstatic.com/zhongchou/pub/v3/2642ca89f168817deb8737f3fc46b7b9.js?V=1420799021"></script>
+</body>
+</html>

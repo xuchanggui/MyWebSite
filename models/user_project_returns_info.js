@@ -9,6 +9,7 @@ function User_Project_Returns_Info(user_project_returns_info) {
   this.repaid_day=user_project_returns_info.repaid_day;//回报时间
   this.return_type=user_project_returns_info.return_type;//回报类型
   this.user_mobile=user_project_returns_info.user_mobile;//用户手机号码
+  this.data_id=user_project_returns_info.data_id;//预留id
 };
 
 module.exports = User_Project_Returns_Info;
@@ -24,7 +25,8 @@ User_Project_Returns_Info.prototype.save = function (callback) {
     delivery_fee:this.delivery_fee,
     repaid_day:this.repaid_day,
     return_type:this.return_type,
-    user_mobile:this.user_mobile
+    user_mobile:this.user_mobile,
+    data_id:this.data_id
   };
   //打开数据库
   mongodb.open(function (err, db) {
@@ -75,6 +77,33 @@ User_Project_Returns_Info.findUserProjectReturnsInfoByMobile = function(mobile, 
           return callback(err,null);//失败！返回 err 信息
         }
         callback(null, user_project_returns_info);//成功！返回查询的用户信息
+      });
+    });
+  });
+};
+
+//根据data-id删除用户项目反馈信息
+User_Project_Returns_Info.deleteUserProjectReturnsInfoByData_id = function(data_id, callback) {
+  //打开数据库
+  mongodb.open(function (err, db) {
+    if (err) {
+      return callback(err);//错误，返回 err 信息
+    }
+    //读取 users 集合
+    db.collection('user_project_returns_info', function (err, collection) {
+      if (err) {
+        mongodb.close();
+        return callback(err);//错误，返回 err 信息
+      }
+      //通过data_id删除用户反馈信息
+      collection.remove({
+        data_id: data_id
+      }, function (err, delete_result) {
+        mongodb.close();
+        if (err) {
+          return callback(err,null);//失败！返回 err 信息
+        }
+        callback(null, delete_result);//成功！返回查询的用户信息
       });
     });
   });
