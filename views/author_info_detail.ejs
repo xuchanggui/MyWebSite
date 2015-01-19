@@ -15,6 +15,13 @@
 <!--public js&css start-->            
 <link rel="stylesheet" type="text/css" href="http://zcs3.ncfstatic.com/zhongchou/pub/v3/14c4c0d24fba6ed25d8b6758064ef7b8.css?V=1420799021"/>
 <script type="text/javascript" src="http://zcs3.ncfstatic.com/zhongchou/pub/v3/2cc0475e1160ea574d0a9b5ebea60136.js?V=1420799021"></script>   
+<script type="text/javascript">
+function test(obj){
+	alert("哈哈哈==="+obj);
+	ddocument.getElementById(obj).className="selected";
+	
+}
+</script>
 <!--public js&css end -->                                         
 </head>
 <body>
@@ -49,7 +56,7 @@
                   <li><a href="/home-focus/id-428140"><i class="down-menu03"></i>喜欢的项目</a></li>
                   <li><a href="/message"><i class="down-menu04"></i>消息中心</a></li>
                   <li><a href="/settings"><i class="down-menu05"></i>个人设置</a></li>
-                  <li><a href="/usernew-loginout"><i class="down-menu06"></i>退出</a></li>
+                  <li><a href="/logout"><i class="down-menu06"></i>退出</a></li>
               </ul>
             </div>
                         <form action="/deals" method="post" id="header_new_search_form" wx-validator>
@@ -85,8 +92,8 @@
                 <span>他很忙，忙的什么都没来得及留下。</span>
             </div>
 			<div class="z-calculations">
-				<p class="ca-01"><i></i>上海,宝山区</p>
-				<p class="ca-02"><i></i>2014-11-22加入</p>
+				<p class="ca-01"><i></i><%=user_project_info.project_location%>,<%=user_project_info.city%></p>
+				<p class="ca-02"><i></i><%=user_project_info.time%>加入</p>
 			</div>
 		</div>    
     </div>
@@ -125,318 +132,16 @@
 				<td>进度</td>
                 <td>状态</td>
 			</tr>
-				<tr>               
-				<td>
-					<div class="z-reference clearfix">
-						<a href="/deal-show/id-65857" target="_blank" class="z-referenceimg"><img src="http://zcr6.ncfstatic.com/attachment/201501/11/18/fc6798068b0e335d24ce2d744c64b84024.jpg"></a>
-						<div class="z-referencetext">
-							<p><a href="/deal-show/id-65857" target="_blank">test</a></p>
-							<!-- <span>订单编号：188825</span>-->
-						</div>
-					</div>
-				</td>
-				<td>
-					<div class="z-day">
-						<span>-</span>
-					</div>
-				</td>
-				<td>
-                    <div class="z-day">
-						<span>-</span>
-					</div>
-                </td>
-				<td class="no-hl">500元</td>
-				<td>
-                    0元<br />0%
-                </td>
-                <td>
-																					草稿													                        <br>
-                                                                        <a class="z-payment" href="/projectnew-edit/id-65857">
-                        编辑</a>
-                                            
-                    <a class="z-payment" href="/deal-show/id-65857" target="_blank">预览</a>                                                                            </td> 
-			</tr>
-    			<tr>               
-				<td>
-					<div class="z-reference clearfix">
-						<a href="/deal-show/id-65332" target="_blank" class="z-referenceimg"><img src="http://zcr6.ncfstatic.com/attachment/201501/10/02/ad58e7b39587a9c8bd91ea8a3af0975586.jpg"></a>
-						<div class="z-referencetext">
-							<p><a href="/deal-show/id-65332" target="_blank">test</a></p>
-							<!-- <span>订单编号：188825</span>-->
-						</div>
-					</div>
-				</td>
-				<td>
-					<div class="z-day">
-						<span>-</span>
-					</div>
-				</td>
-				<td>
-                    <div class="z-day">
-						<span>-</span>
-					</div>
-                </td>
-				<td class="no-hl">700元</td>
-				<td>
-                    0元<br />0%
-                </td>
-                <td>
-																					草稿													                        <br>
-                                                                        <a class="z-payment" href="/projectnew-edit/id-65332">
-                        编辑</a>
-                                            
-                    <a class="z-payment" href="/deal-show/id-65332" target="_blank">预览</a>                                                                            </td> 
-			</tr>
-    			<tr>               
-				<td>
-					<div class="z-reference clearfix">
-						<a href="/deal-show/id-65329" target="_blank" class="z-referenceimg"><img src="http://zcr6.ncfstatic.com/attachment/201501/10/02/ad58e7b39587a9c8bd91ea8a3af0975586.jpg"></a>
-						<div class="z-referencetext">
-							<p><a href="/deal-show/id-65329" target="_blank">test</a></p>
-							<!-- <span>订单编号：188825</span>-->
-						</div>
-					</div>
-				</td>
-				<td>
-					<div class="z-day">
-						<span>-</span>
-					</div>
-				</td>
-				<td>
-                    <div class="z-day">
-						<span>-</span>
-					</div>
-                </td>
-				<td class="no-hl">700元</td>
-				<td>
-                    0元<br />0%
-                </td>
-                <td>
-																					草稿													                        <br>
-                                                                        <a class="z-payment" href="/projectnew-edit/id-65329">
-                        编辑</a>
-                                            
-                    <a class="z-payment" href="/deal-show/id-65329" target="_blank">预览</a>                                                                            </td> 
-			</tr>
-    			<tr>               
-				<td>
-					<div class="z-reference clearfix">
-						<a href="/deal-show/id-65326" target="_blank" class="z-referenceimg"><img src="http://zcr6.ncfstatic.com/attachment/201501/10/02/cf4244c300a3ede54876222210095be861.jpg"></a>
-						<div class="z-referencetext">
-							<p><a href="/deal-show/id-65326" target="_blank">test</a></p>
-							<!-- <span>订单编号：188825</span>-->
-						</div>
-					</div>
-				</td>
-				<td>
-					<div class="z-day">
-						<span>-</span>
-					</div>
-				</td>
-				<td>
-                    <div class="z-day">
-						<span>-</span>
-					</div>
-                </td>
-				<td class="no-hl">500元</td>
-				<td>
-                    0元<br />0%
-                </td>
-                <td>
-																					草稿													                        <br>
-                                                                        <a class="z-payment" href="/projectnew-edit/id-65326">
-                        编辑</a>
-                                            
-                    <a class="z-payment" href="/deal-show/id-65326" target="_blank">预览</a>                                                                            </td> 
-			</tr>
-    			<tr>               
-				<td>
-					<div class="z-reference clearfix">
-						<a href="/deal-show/id-65248" target="_blank" class="z-referenceimg"><img src="http://zcr6.ncfstatic.com/attachment/201501/10/00/9466fa6c5d67dfa522f8be3678d0ec9651.jpg"></a>
-						<div class="z-referencetext">
-							<p><a href="/deal-show/id-65248" target="_blank">test</a></p>
-							<!-- <span>订单编号：188825</span>-->
-						</div>
-					</div>
-				</td>
-				<td>
-					<div class="z-day">
-						<span>-</span>
-					</div>
-				</td>
-				<td>
-                    <div class="z-day">
-						<span>-</span>
-					</div>
-                </td>
-				<td class="no-hl">500元</td>
-				<td>
-                    0元<br />0%
-                </td>
-                <td>
-																					草稿													                        <br>
-                                                                        <a class="z-payment" href="/projectnew-edit/id-65248">
-                        编辑</a>
-                                            
-                    <a class="z-payment" href="/deal-show/id-65248" target="_blank">预览</a>                                                                            </td> 
-			</tr>
-    			<tr>               
-				<td>
-					<div class="z-reference clearfix">
-						<a href="/deal-show/id-65212" target="_blank" class="z-referenceimg"><img src="http://zcr6.ncfstatic.com/attachment/201501/09/22/e734a44b091028f29b3b1af0fb7d929a86.jpg"></a>
-						<div class="z-referencetext">
-							<p><a href="/deal-show/id-65212" target="_blank">我的众酬</a></p>
-							<!-- <span>订单编号：188825</span>-->
-						</div>
-					</div>
-				</td>
-				<td>
-					<div class="z-day">
-						<span>-</span>
-					</div>
-				</td>
-				<td>
-                    <div class="z-day">
-						<span>-</span>
-					</div>
-                </td>
-				<td class="no-hl">500元</td>
-				<td>
-                    0元<br />0%
-                </td>
-                <td>
-																					草稿													                        <br>
-                                                                        <a class="z-payment" href="/projectnew-edit/id-65212">
-                        编辑</a>
-                                            
-                    <a class="z-payment" href="/deal-show/id-65212" target="_blank">预览</a>                                                                            </td> 
-			</tr>
-    			<tr>               
-				<td>
-					<div class="z-reference clearfix">
-						<a href="/deal-show/id-65209" target="_blank" class="z-referenceimg"><img src="http://zcr6.ncfstatic.com/attachment/201501/09/22/e734a44b091028f29b3b1af0fb7d929a86.jpg"></a>
-						<div class="z-referencetext">
-							<p><a href="/deal-show/id-65209" target="_blank">我的众酬</a></p>
-							<!-- <span>订单编号：188825</span>-->
-						</div>
-					</div>
-				</td>
-				<td>
-					<div class="z-day">
-						<span>-</span>
-					</div>
-				</td>
-				<td>
-                    <div class="z-day">
-						<span>-</span>
-					</div>
-                </td>
-				<td class="no-hl">500元</td>
-				<td>
-                    0元<br />0%
-                </td>
-                <td>
-																					草稿													                        <br>
-                                                                        <a class="z-payment" href="/projectnew-edit/id-65209">
-                        编辑</a>
-                                            
-                    <a class="z-payment" href="/deal-show/id-65209" target="_blank">预览</a>                                                                            </td> 
-			</tr>
-    			<tr>               
-				<td>
-					<div class="z-reference clearfix">
-						<a href="/deal-show/id-63442" target="_blank" class="z-referenceimg"><img src="http://zcr6.ncfstatic.com/attachment/201501/06/22/e4567794df56d84fcea319a32413eb0c58.jpg"></a>
-						<div class="z-referencetext">
-							<p><a href="/deal-show/id-63442" target="_blank">托尔斯泰</a></p>
-							<!-- <span>订单编号：188825</span>-->
-						</div>
-					</div>
-				</td>
-				<td>
-					<div class="z-day">
-						<span>-</span>
-					</div>
-				</td>
-				<td>
-                    <div class="z-day">
-						<span>-</span>
-					</div>
-                </td>
-				<td class="no-hl">5,555元</td>
-				<td>
-                    0元<br />0%
-                </td>
-                <td>
-																					草稿													                        <br>
-                                                                        <a class="z-payment" href="/projectnew-edit/id-63442">
-                        编辑</a>
-                                            
-                    <a class="z-payment" href="/deal-show/id-63442" target="_blank">预览</a>                                                                            </td> 
-			</tr>
-    			<tr>               
-				<td>
-					<div class="z-reference clearfix">
-						<a href="/deal-show/id-60907" target="_blank" class="z-referenceimg"><img src="http://zcr6.ncfstatic.com/attachment/201501/03/21/87aaf4069f12ff4faf94f9260a3222cc33.jpg"></a>
-						<div class="z-referencetext">
-							<p><a href="/deal-show/id-60907" target="_blank">test</a></p>
-							<!-- <span>订单编号：188825</span>-->
-						</div>
-					</div>
-				</td>
-				<td>
-					<div class="z-day">
-						<span>-</span>
-					</div>
-				</td>
-				<td>
-                    <div class="z-day">
-						<span>-</span>
-					</div>
-                </td>
-				<td class="no-hl">500元</td>
-				<td>
-                    0元<br />0%
-                </td>
-                <td>
-																					草稿													                        <br>
-                                                                        <a class="z-payment" href="/projectnew-edit/id-60907">
-                        编辑</a>
-                                            
-                    <a class="z-payment" href="/deal-show/id-60907" target="_blank">预览</a>                                                                            </td> 
-			</tr>
-    			<tr>               
-				<td>
-					<div class="z-reference clearfix">
-						<a href="/deal-show/id-59944" target="_blank" class="z-referenceimg"><img src="http://zcr6.ncfstatic.com/attachment/201501/02/13/45e525260649984ab2aa3d9c8c98e34a42.jpg"></a>
-						<div class="z-referencetext">
-							<p><a href="/deal-show/id-59944" target="_blank">test</a></p>
-							<!-- <span>订单编号：188825</span>-->
-						</div>
-					</div>
-				</td>
-				<td>
-					<div class="z-day">
-						<span>-</span>
-					</div>
-				</td>
-				<td>
-                    <div class="z-day">
-						<span>-</span>
-					</div>
-                </td>
-				<td class="no-hl">500元</td>
-				<td>
-                    0元<br />0%
-                </td>
-                <td>
-																					草稿													                        <br>
-                                                                        <a class="z-payment" href="/projectnew-edit/id-59944">
-                        编辑</a>
-                                            
-                    <a class="z-payment" href="/deal-show/id-59944" target="_blank">预览</a>                                                                            </td> 
-			</tr>
+
+			<%if(items){%>
+			<%- partial('projectlistitem',items) %>										
+			<%}%>
+    		
     		</table>
-		<div class="pager">     &nbsp;<A class='selected'>1</a>&nbsp;<a class='common-sprite' href='/home-build_deal/id-428140-p-2'>&nbsp;2&nbsp;</a>    <a class='next' href='/home-build_deal/id-428140-p-2'>下一页</a></div>
+    		<%if(pageitems){%>
+		<div class="pager"> &nbsp;<%- partial('pagelistitem',pageitems) %>  <a class='next' href='/author_info_detail_query?page=next'>下一页</a></div>
+		<%}else{%>	
+		<%}%>
 	</div>  
 </div>
 <!--ulitem end-->

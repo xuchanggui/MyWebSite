@@ -12,7 +12,6 @@ formidable=require("formidable");
 uploadDir = "G:/NodeJs_Runtime/nodejsApp/MyWebSite/public/images/"
 temp="G:/NodeJs_Runtime/nodejsApp/temp/";
 var returns_arr=new Array();
-
 function reg(req,res){
 //检查用户两次输入的口令是否一致
 if(!(req.body['confirm_password'])||!(req.body['password'])||!(req.body['mobile']))
@@ -213,6 +212,8 @@ var password=md5.update(req.body.password).digest('base64');
 
 //保存项目信息
 function project_info_save(req,res){
+	req.session.project_info_arr=null;
+	req.session.paginate=null;
 	req.session.success=null;
 	req.session.error=null;
 	//验证提交表单的内容
@@ -226,14 +227,14 @@ function project_info_save(req,res){
  //检查用户名是否已经存在
  User_Project_Info.findUserProjectInfoByMobile(req.body.user_mobile,function(err,project_info){
  	console.log("通过手机号码查询项目信息");
- 	if(project_info){
+ 	/*if(project_info){
  		err='user_project_info already exists';
  	}
  	console.log("err===="+err);
  	if(err){
  		req.session.error=err;
  		return res.redirect('/project-info');
- 	}
+ 	}*/
 
  	//上传图片
    if(!upload(req,res)){
@@ -268,6 +269,38 @@ function project_info_save(req,res){
  	return res.redirect('/project_returns');	
  	});
  });
+}
+
+
+//查询用户所有的发布信息
+function findUserProject(req,res){
+	var paginate=req.session.paginate;
+	var page;
+	var pagesize=2;
+	if(paginate){
+     page=req.session.paginate.page;
+
+     pagesize= req.session.paginate.pagesize;
+	}
+	var mobile=req.session.user.mobile;	
+	console.log("requestHandler里面的pagesize===="+pagesize);
+	console.log("requestHandler里面的page===="+page);
+	console.log("requestHandler里面的mobile===="+mobile);
+		User_Project_Info.findUserProjectInfoByquery(req,pagesize,page,mobile,function(err,project_info_arr){
+
+		if(!project_info_arr){
+		err='project_info_arr not exists';
+		console.log("err===="+err);
+		req.session.error=err;
+		req.session.project_info_arr=[];
+		return res.redirect('/author_info_detail');
+		}
+		req.session.project_info_arr=project_info_arr;
+		console.log("project_info_arr[0]===="+project_info_arr[0]);
+        req.session.user_project_info=project_info_arr[0];
+		return res.redirect('/author_info_detail');	
+});
+
 }
 
 
@@ -756,4 +789,5 @@ exports.project_returns_save=project_returns_save;
 exports.delete_user_project_returns_info=delete_user_project_returns_info;
 exports.save_author_info_detail=save_author_info_detail;
 exports.checkUserAndPassword=checkUserAndPassword;
+exports.findUserProject=findUserProject;
 exports.logout=logout;

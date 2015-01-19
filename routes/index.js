@@ -3,11 +3,11 @@
  *路由转发模块
  */
 var requestHandlers=require('../models/requestHandlers');
+var Paginate=require('../util/Paginate')
 var	TITLE = 'insupper';
 module.exports=function(app){
 
 app.get('/',function(req, res){
-	console.log("cest");
 res.render('index', { title: 'Express' });
 });
 
@@ -44,7 +44,87 @@ app.get('/author_info',function(req,res){
 app.post('/author_info',requestHandlers.save_author_info_detail);
 
 app.get('/author_info_detail',function(req,res){
-	res.render('author_info_detail', { title: '个人信息'});
+	var project_info_arr=req.session.project_info_arr;
+	var num=req.session.flag;
+	console.log("project_info_arr=========="+project_info_arr);
+	var paginate= req.session.paginate;
+	var arr=req.session.arr;
+	if(project_info_arr){
+		console.log("req.session.count===="+req.session.count);		
+		if(!paginate){
+			var paginate=new Paginate(1,2,req.session.count);
+			req.session.paginate=paginate;
+			console.log("next===="+paginate.next());
+			console.log("pagesize===="+paginate.pagesize);        
+			console.log("maxpage===="+paginate.maxpage);
+			console.log("page===="+paginate.page);
+			console.log("total===="+paginate.total);
+			arr=new Array()
+
+			if(paginate.maxpage>=1){
+			for(var i=1;i<=paginate.maxpage;i++){
+               arr.push(i);
+          	}
+          }	
+          req.session.arr=arr;
+		}
+     console.log("nextPage===="+paginate.nextPage);
+	res.render('author_info_detail', { title: '项目信息',items:project_info_arr,pageitems:arr});	
+}else{
+      requestHandlers.findUserProject(req,res);
+}
+});
+
+app.get('/author_info_detail_query',function(req,res){
+	var paginate =req.session.paginate;
+	var flag=req.query.flag;
+	console.log("paginate.maxpage==="+paginate.maxpage);
+	var page=req.query.page;
+	if(page=="next"){
+	if(paginate.page>=paginate.maxpage){
+	paginate.page=paginate.maxpage;
+	page=paginate.page;
+	flag=paginate.page;
+	}else{
+	paginate.page=paginate.nextPage;
+	console.log("下一页的页数是==="+paginate.page);
+	page=paginate.page;
+	flag=paginate.page;
+	}
+	}
+	req.session.flag=flag;
+	console.log("req.query.page==="+page);
+	console.log("req.query.flag==="+flag);
+    //var pages=new Paginate(page,2,req.session.project_info_arr.length);
+
+     if(page>paginate.maxpage){
+       return false;
+    }else{
+        paginate.page = page;
+    }
+     if(page > paginate.maxpage){
+        return false;
+    }else{
+    	if(page==paginate.maxpage){
+    		paginate.nextPage=page;
+    	}else{
+    		 paginate.nextPage= (parseInt(page)+1);
+    	}
+
+    }
+	if(page <1){
+	return false;
+	}
+	else{
+		if(page==1){
+			paginate.prePage=page;
+		}else{
+			paginate.prePage= page-1;
+		}
+
+	}
+     req.session.paginate=paginate ;
+     requestHandlers.findUserProject(req,res);
 });
 
 app.post('/author_info_detail',function(req,res){

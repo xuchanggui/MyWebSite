@@ -56,8 +56,10 @@ console.log("初始化时间==="+time);
 //视图助手
 //start
 app.use(function(req, res, next){
-console.log(moment(new Date()).format('YYYY-MM-DD HH:mm:ss'));
+console.log(moment(new Date()).format('YYYY-MM-DD'));
 res.locals.user = req.session.user;
+res.locals.user_project_info = req.session.user_project_info;
+var flag=req.session.flag;
 var err = req.session.error;
 var succ =req.session.success;
 var pic_url=req.session.picture_url;
@@ -82,6 +84,12 @@ if(user){
 if(pic_url){
   res.locals.picture_url=pic_url;
   console.log("图片名称=============="+pic_url);
+}
+if(flag){
+  res.locals.flag=flag;
+}else{
+  flag=1;
+  res.locals.flag=flag;
 }
 if(err){
   res.locals.error=err;
