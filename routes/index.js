@@ -37,11 +37,26 @@ app.get('/project',function(req,res){
 	res.render('start_dream', { title: '发起我的项目'});
 });
 
+app.get('/author_info',requestHandlers.checkLogin);
 app.get('/author_info',function(req,res){
 	res.render('author_info', { title: '发起人信息'});
 });
-
 app.post('/author_info',requestHandlers.save_author_info_detail);
+
+
+app.get('/project_success',function(req,res){
+	res.render('project_success', { title: '众酬网-中国最具知名度的众酬平台'});
+});
+app.post('/project_success',function(req,res){
+	res.render('project_success', { title: '众酬网-中国最具知名度的众酬平台'});
+});
+
+
+app.get('/user_settings',function(req,res){
+	res.render('user_settings', { title: '众酬网-中国最具知名度的众酬平台'});
+});
+app.post('/user_settings',requestHandlers.user_settings_save);
+
 
 app.get('/author_info_detail',function(req,res){
 	var project_info_arr=req.session.project_info_arr;
@@ -74,6 +89,10 @@ app.get('/author_info_detail',function(req,res){
       requestHandlers.findUserProject(req,res);
 }
 });
+app.post('/author_info_detail',function(req,res){
+res.render('author_info_detail', { title: '个人信息'});
+});
+
 
 app.get('/author_info_detail_query',function(req,res){
 	var paginate =req.session.paginate;
@@ -92,6 +111,20 @@ app.get('/author_info_detail_query',function(req,res){
 	flag=paginate.page;
 	}
 	}
+
+	if(page=="pre"){
+	if(paginate.page<=1){
+	paginate.page=1;
+	page=paginate.page;
+	flag=paginate.page;
+	}else{
+	paginate.page=paginate.prePage;
+	console.log("上一页的页数是==="+paginate.page);
+	page=paginate.page;
+	flag=paginate.page;
+	}
+	}
+
 	req.session.flag=flag;
 	console.log("req.query.page==="+page);
 	console.log("req.query.flag==="+flag);
@@ -127,15 +160,12 @@ app.get('/author_info_detail_query',function(req,res){
      requestHandlers.findUserProject(req,res);
 });
 
-app.post('/author_info_detail',function(req,res){
-res.render('author_info_detail', { title: '个人信息'});
-});
 
 app.get('/project-info',function(req,res){
 	res.render('project_info', { title: '我的项目'});
 });
-
 app.post('/project-info',requestHandlers.project_info_save);
+
 
 app.get('/project_returns',function(req, res){
 var user_project_returns_info=req.session.user_project_returns_info;
@@ -153,8 +183,8 @@ if(user_project_returns_info){
 
 }
 });
-
 app.post('/project_returns',requestHandlers.project_returns_save);
+
 
 app.get('/delete_user_project_returns_info',requestHandlers.delete_user_project_returns_info);
 

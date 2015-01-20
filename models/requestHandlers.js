@@ -657,11 +657,113 @@ function save_author_info_detail(req,res){
  		return res.redirect('/author_info');
  	}
 	req.session.success='保存项目发起人信息成功!'
- 	return res.redirect('/author_info_detail');	
+ 	return res.redirect('/project_success');	
  	});
  });
 
 }
+
+//保存用户设置信息
+function user_settings_save(req,res){
+//检查用户两次输入的口令是否一致
+/*if(!(req.body['confirm_password'])||!(req.body['password'])||!(req.body['mobile']))
+{
+	err="密码或者手机号码不能为空!";
+	req.session.error=err;
+	return res.redirect('/reg');
+}
+
+len=req.body.mobile.length;
+console.log("登录mobile的长度====="+len);
+if(len==0){
+	err="请输入手机号码";
+	console.log(err);
+	req.session.error=err;
+	return res.redirect('/reg');
+}else if(len!=11){
+	err="请输入正确长度的手机号码";
+    console.log(err);
+    req.session.error=err;
+	return res.redirect('/reg');
+}else if(isNaN(len)){
+    err="您输入的手机号码格式不对,请输入正确的手机号码";
+    console.log(err);
+    req.session.error=err;
+	return res.redirect('/reg');
+}
+
+len=req.body.password.length;
+if(len==0){
+	err="密码不能为空,请输入密码!";
+	console.log(err);
+	req.session.error=err;
+	return res.redirect('/reg');
+}else if((len)<6||(len>16)){
+	err="您输入的密码长度有误，密码不能小于六位，同时也不能大于十六位！";
+	console.log(err);
+	req.session.error=err;
+	return res.redirect('/reg');
+}
+
+if(req.body['confirm_password']!=req.body['password']){
+	err="两次输入的口令不一致!";
+	console.log(err);
+	req.session.error=err;
+    return res.redirect('/reg');
+}*/
+
+var reg=/\s/g;
+if(req.body.username==""){
+    err="输入的昵称不能为空!";
+    console.log(err);
+	req.session.error=err;
+    return res.redirect('/user_settings');
+}else if(req.body.username.length>15){
+    err="输入昵称的长度不对，请重新输入！";
+    console.log(err);
+	req.session.error=err;
+    return res.redirect('/user_settings');
+}else if(reg.test(req.body.username)){
+	err="输入内容包含空格，请出新输入!";
+	console.log(err);
+	req.session.error=err;
+	return res.redirect('/user_settings');
+}
+
+if(req.body.intro==""){
+  err="自我介绍不能为空,请从新输入!";
+    console.log(err);
+	req.session.error=err;
+    return res.redirect('/user_settings');
+}else if(req.body.intro.length>75){
+	  err="输入的自我介绍长度不能大于75个字符!";
+    console.log(err);
+	req.session.error=err;
+    return res.redirect('/user_settings');
+}
+
+ console.log("输入的用户名====="+req.body.username);
+ console.log('自我介绍======'+req.body.intro);
+ console.log('性别======'+req.body.genders);
+ //检查用户名是否已经存在
+ User.updateUserByMobile(req,function(err,result){
+ 	console.log("result====="+result);
+ 	if(result<0){
+ 		err='更新用户信息失败!';
+ 		console.log("err===="+err);
+ 		req.session.error=err;
+ 		return res.redirect('/user_settings');
+ 	}
+    req.session.user.name=req.body.username;
+    req.session.user.gender=req.body.genders;
+    req.session.user.location=req.body.user_location;
+    req.session.user.city=req.body.city;
+    req.session.user.description=req.body.intro;
+    succ="更新用户信息成功!";
+	req.session.success=succ;
+ 	return res.redirect('/user_settings');	
+ 	});
+}	
 
 
 //检查发起人信息
@@ -790,4 +892,5 @@ exports.delete_user_project_returns_info=delete_user_project_returns_info;
 exports.save_author_info_detail=save_author_info_detail;
 exports.checkUserAndPassword=checkUserAndPassword;
 exports.findUserProject=findUserProject;
+exports.user_settings_save=user_settings_save;
 exports.logout=logout;

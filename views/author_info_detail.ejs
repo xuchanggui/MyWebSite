@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <%if(user){%>
-<title><%=user.mobile%>-众筹网</title>
+<title>众酬网-中国最具知名度的众酬平台</title>
 <%}else{%>
 <title>未登录-众筹网</title>
 <%}%>
@@ -35,7 +35,7 @@ function test(obj){
           	<li><a  href="/browse"><i class="s-02"></i>浏览项目</a></li>
             <li><a href="http://www.yuanshihui.com/" target="_blank"><i class="s-30"></i>原始会</a></li>
           	<li style="display:none"><a href="http://news.zhongchou.cn/"><i class="s-09"></i>资讯</a></li>
-          	<li><a  href="/project"><i class="s-03"></i>发起项目</a></li>
+          	<li><a  href="/project-info"><i class="s-03"></i>发起项目</a></li>
             <li><a href="http://app.zhongchou.cn" target="_blank"><i class="s-phone"></i>手机众筹</a></li>
             <li style="display:none"><a href="###"><i class="s-10"></i>论坛</a></li>
           </ul>
@@ -51,11 +51,11 @@ function test(obj){
 				<%}%>
               <ul id="Js-header-login" class="mm-nubg">
                   <li><a href="/home/id-428140"><i class="down-menu01"></i>支持的项目</a></li>
-                  <li><a href="/home-build_deal/id-428140"><i class="down-menu02"></i>发起的项目</a></li>
+                  <li><a href="/author_info_detail"><i class="down-menu02"></i>发起的项目</a></li>
                   <li><a href="/corp-index"><i class="down-menu07"></i>发起者后台</a></li>
                   <li><a href="/home-focus/id-428140"><i class="down-menu03"></i>喜欢的项目</a></li>
                   <li><a href="/message"><i class="down-menu04"></i>消息中心</a></li>
-                  <li><a href="/settings"><i class="down-menu05"></i>个人设置</a></li>
+                  <li><a href="/user_settings"><i class="down-menu05"></i>个人设置</a></li>
                   <li><a href="/logout"><i class="down-menu06"></i>退出</a></li>
               </ul>
             </div>
@@ -77,7 +77,7 @@ function test(obj){
 <!--favicon static-->
 <div class="m-favicon">
 	<div class="wrap clearfix">
-		<a href="/settings-avatar" class="z-portrait"><img src="http://zcs6.ncfstatic.com/img/defaultavatar/noavatar_middle.gif"></a>
+		<a href="/user_settings" class="z-portrait"><img src="http://zcs6.ncfstatic.com/img/defaultavatar/noavatar_middle.gif"></a>
 		<div class="z-introduced">
             <div class="z-chance clearfix">
                 <div class="ch-left">
@@ -85,7 +85,7 @@ function test(obj){
                 </div>
                 <div class="ch-right">
                     <a class="z-browse" href="/settings-avatar">头像设置</a>
-                    <a class="z-browse" href="/settings">个人设置</a>
+                    <a class="z-browse" href="/user_settings">个人设置</a>
                     <a class="z-browse" href="/message">消息中心</a>
                 </div>
                 <div class="clearfix"></div>
@@ -110,7 +110,7 @@ function test(obj){
       </ul>     
     </div>   
 	<ul class="list-nav clearfix">
-		<li><a href="/home-build_deal/id-428140"  class="z-own" >所有</a></li>
+		<li><a href="/author_info_detail"  class="z-own" >所有</a></li>
 		<li><a href="/home-build_deal/id-428140-r-di" >众筹中</a></li>
 		<li><a href="/home-build_deal/id-428140-r-ds" >已成功</a></li>
         <li><a href="/home-build_deal/id-428140-r-df" >已失败</a></li>
@@ -139,7 +139,7 @@ function test(obj){
     		
     		</table>
     		<%if(pageitems){%>
-		<div class="pager"> &nbsp;<%- partial('pagelistitem',pageitems) %>  <a class='next' href='/author_info_detail_query?page=next'>下一页</a></div>
+		<div class="pager"> <a class='next' href='/author_info_detail_query?page=pre'>上一页</a>&nbsp;<%- partial('pagelistitem',pageitems) %>  <a class='next' href='/author_info_detail_query?page=next'>下一页</a></div>
 		<%}else{%>	
 		<%}%>
 	</div>  

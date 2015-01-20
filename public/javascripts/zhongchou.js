@@ -1762,7 +1762,7 @@ function validate(){
                        document.getElementById("mobile").focus();
                        return false;
                   }else{
-                    alert(data.success);
+                    //alert(data.success);
                     flag=flag+1;
                     return true;
                   }

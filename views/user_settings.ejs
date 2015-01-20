@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>众筹网-中国最具影响力的众筹平台</title>
+<meta name="keywords" content="众筹 创业 项目 投资 支持"/>
+<meta name="description" content="在众筹网发布项目，获得投资支持，实现你的创业梦想"/>
+<meta name="renderer" content="webkit"/>
+<link rel="shortcut icon" type="image/png" href="http://zcs6.ncfstatic.com/zhongchou/images/favicon_v3.png?v=1">
+<!--public js&css start-->            
+<link rel="stylesheet" type="text/css" href="http://zcs2.ncfstatic.com/zhongchou/pub/v3/14c4c0d24fba6ed25d8b6758064ef7b8.css?V=1421652454"/>
+<script type="text/javascript" src="http://zcs2.ncfstatic.com/zhongchou/pub/v3/2cc0475e1160ea574d0a9b5ebea60136.js?V=1421652454"></script> 
+<script type="text/javascript" src="/javascripts/common.js"></script>
+<!--public js&css end -->                                         
+</head>
+<body>
+<!--header static-->
+<div class="header">
+	<div class="wrap clearfix">		
+        <div class="m-left">
+          <h2><a alt="众筹网" class="img-logo" title="众筹网" href="/">众筹网</a></h2>
+          <ul class="m-nav clearfix">
+			      <li><a  class="z-home" href="/"><span><i class="s-01"></i></span>首页</a></li>
+          	<li><a  href="/browse"><i class="s-02"></i>浏览项目</a></li>
+            <li><a href="http://www.yuanshihui.com/" target="_blank"><i class="s-30"></i>原始会</a></li>
+          	<li style="display:none"><a href="http://news.zhongchou.cn/"><i class="s-09"></i>资讯</a></li>
+          	<li><a  href="/project_info"><i class="s-03"></i>发起项目</a></li>
+            <li><a href="http://app.zhongchou.cn" target="_blank"><i class="s-phone"></i>手机众筹</a></li>
+            <li style="display:none"><a href="###"><i class="s-10"></i>论坛</a></li>
+          </ul>
+        </div>
+        <div class="m-right clearfix">
+        	
+        	
+            <div id="Js-header-loginBtn"> 
+              <%if(user){%>
+              <span class="pull-down clearfix"><i class="meun-02"></i><i class="meun-01"><%=user.mobile%></i></span>
+              <%}else{%>
+              <span class="pull-down clearfix"><i class="meun-02"></i><i class="meun-01">没有登录</i></span>
+              <%}%>
+              <ul id="Js-header-login" class="mm-nubg">
+                  <li><a href="/home/id-428140"><i class="down-menu01"></i>支持的项目</a></li>
+                  <li><a href="/author_info_detail"><i class="down-menu02"></i>发起的项目</a></li>
+                  <li><a href="/corp-index"><i class="down-menu07"></i>发起者后台</a></li>
+                  <li><a href="/home-focus/id-428140"><i class="down-menu03"></i>喜欢的项目</a></li>
+                  <li><a href="/message"><i class="down-menu04"></i>消息中心</a></li>
+                  <li><a href="/user_settings"><i class="down-menu05"></i>个人设置</a></li>
+                  <li><a href="/usernew-loginout"><i class="down-menu06"></i>退出</a></li>
+              </ul>
+            </div>
+                        <form action="/deals" method="post" id="header_new_search_form" wx-validator>
+            <span>
+              <input name="k" wx-validator-placeholder="输入关键词" wx-validator-rule="required" type="text" wx-validator-notip>
+              <span class="wx-placeholder" style="font-size:12px;position:absolute;top:3px;*top:3px;left:80px;*left:10px;">输入关键字</span>
+              <a href="###" type="submit" class="bh-mhnbo"></a>
+            </span>
+          </form>
+        </div>
+	</div>		
+</div>
+<!--header end-->
+
+<link rel="stylesheet" type="text/css" href="http://zcs2.ncfstatic.com/zhongchou/pub/v3/7ffb95504c3dc3e41f80429d1d3004ea.css?V=1421652454"/>
+<body>
+<!--main static-->
+<div class="wrap pb116 clearfix">
+    <h2 class="personal-set"><a href="/author_info_detail" class="mm-blue ml-pm a-personal-set  ">返回个人中心</a>个人设置</h2>
+        <!--left side static-->
+        <div class="personal-set-left">
+                <ul>
+                <li class="selected"><a href="/user_settings">资料修改</a></li>
+                <li><a href="/settings-password">密码修改</a></li>
+                <li><a href="/settings-avatar">头像修改</a></li>
+                <li><a href="/settings-consignee">收件地址管理</a></li>
+                <li class="end"><a href="/coupon">我的优惠劵</a></li>
+                </ul>
+        </div>
+        <!--left side end-->
+        
+        <!--right side static-->
+        <div class="personal-set-right">
+             <form class="setting-form" name="modify"  action="/user_settings" wx-validator wx-validator-error-class="error-text" method="post" >
+              <input type="hidden" name="mobile" id="mobile"  value="<%=user.mobile%>" /> 
+               <input type="hidden" name="genders" id="genders"  value="" /> 
+                   <div class="form-item clearfix">s
+                   	                           <div class="row clearfix">
+                               <label>手机：</label><span class="span-style"><%=user.mobile%></span>
+                          </div>
+                                          
+                          <div class="row clearfix">
+                               <label>用户名：</label>
+                               <input name="username"  id="username"  onblur="return checkTextSpace();" type="text" class="input-wid" placeholder="" value="<%=user.name%>" wx-validator-rule="required">
+                               <span id="show_username"  style="display:none"><p><font size="" color="#ff0000"></font></p></span>
+                          </div>
+                     
+                          <div class="row clearfix">
+                               <label>性别：</label>
+                              <span class="span-style">
+                                <%if(user.gender==1){%>
+                                  <label class="label-style"><input type="radio" checked="checked" name="sex" id="man" value=1 name="radio" onblur="return select_man();" >男</label>
+                                  <label class="label-style"><input type="radio"  name="sex" id="woman" value=0 name="radio" onblur="return select_woman();" >女</label>
+                                  <label class="label-style"><input type="radio"  name="sex" value="-1" id="secret" name="radio" onblur="return select_secret();" >保密</label>
+                                  <%}else if(user.gender==0){%>
+                                 
+                                  <label class="label-style"><input type="radio"  name="sex" id="man" value=1 name="radio" onblur="return select_man();" >男</label>
+                                  <label class="label-style"><input type="radio" checked="checked" name="sex" id="woman" value=0 name="radio" onblur="return select_woman();" >女</label>
+                                  <label class="label-style"><input type="radio"  name="sex" value="-1" id="secret" name="radio" onblur="return select_secret();" >保密</label>
+                                  <%}else{%>
+                                  <label class="label-style"><input type="radio"  name="sex" id="man" value=1 name="radio" onblur="return select_man();" >男</label>
+                                  <label class="label-style"><input type="radio"  name="sex" id="woman" value=0 name="radio" onblur="return select_woman();" >女</label>
+                                  <label class="label-style"><input type="radio" checked="checked"  name="sex" value="-1" id="secret" name="radio" onblur="return select_secret();" >保密</label>
+                                  <%}%>
+
+                              </span>
+                          </div>
+                          <div class="row clearfix">
+                               <label>所在地：</label>
+                                <select name="user_location" id="user_location" wx-validator-error-value="选择省份" onchange="checkItem(this.value)" data-default="四川">
+                                                                    <option value="请选择" data-id="" >请选择</option>  
+                                                                    <option value="安徽" data-id="3" >安徽</option>  
+                                                                    <option value="福建" data-id="4" >福建</option>  
+                                                                    <option value="甘肃" data-id="5" >甘肃</option>  
+                                                                    <option value="广东" data-id="6" >广东</option>  
+                                                                    <option value="广西" data-id="7" >广西</option>  
+                                                                    <option value="贵州" data-id="8" >贵州</option>  
+                                                                    <option value="海南" data-id="9" >海南</option>  
+                                                                    <option value="河北" data-id="10" >河北</option>  
+                                                                    <option value="河南" data-id="11" >河南</option>  
+                                                                    <option value="黑龙江" data-id="12" >黑龙江</option>  
+                                                                    <option value="湖北" data-id="13" >湖北</option>  
+                                                                    <option value="湖南" data-id="14" >湖南</option>  
+                                                                    <option value="吉林" data-id="15" >吉林</option>  
+                                                                    <option value="江苏" data-id="16" >江苏</option>  
+                                                                    <option value="江西" data-id="17" >江西</option>  
+                                                                    <option value="辽宁" data-id="18" >辽宁</option>  
+                                                                    <option value="内蒙古" data-id="19" >内蒙古</option>  
+                                                                    <option value="宁夏" data-id="20" >宁夏</option>  
+                                                                    <option value="青海" data-id="21" >青海</option>  
+                                                                    <option value="山东" data-id="22" >山东</option>  
+                                                                    <option value="山西" data-id="23" >山西</option>  
+                                                                    <option value="陕西" data-id="24" >陕西</option>  
+                                                                    <option value="西藏" data-id="28" >西藏</option>  
+                                                                    <option value="新疆" data-id="29" >新疆</option>  
+                                                                    <option value="云南" data-id="30" >云南</option>  
+                                                                    <option value="浙江" data-id="31" >浙江</option>  
+                                                                    <option value="北京" data-id="52" >北京</option>  
+                                                                    <option value="上海" data-id="321" >上海</option>  
+                                                                    <option value="天津" data-id="343" >天津</option>  
+                                                                    <option value="重庆" data-id="394" >重庆</option>  
+                                                                    <option value="香港" data-id="395" >香港</option>  
+                                                                    <option value="澳门" data-id="396" >澳门</option>  
+                                                                    <option value="台湾" data-id="397" >台湾</option>  
+                                                                    <option value="四川" data-id="26" selected="selected">四川</option>  
+                                                               </select>
+                               
+                               <select name="city" id="city" wx-validator-error-value="请选择城市" data-default="成都">
+                                                                   <option value="阿坝" data-id="324" >阿坝</option>  
+                                                                   <option value="巴中" data-id="325" >巴中</option>  
+                                                                   <option value="成都" data-id="322" selected="selected">成都</option>  
+                                                                   <option value="达州" data-id="326" >达州</option>  
+                                                                   <option value="德阳" data-id="327" >德阳</option>  
+                                                                   <option value="甘孜" data-id="328" >甘孜</option>  
+                                                                   <option value="广安" data-id="329" >广安</option>  
+                                                                   <option value="广元" data-id="330" >广元</option>  
+                                                                   <option value="乐山" data-id="331" >乐山</option>  
+                                                                   <option value="凉山" data-id="332" >凉山</option>  
+                                                                   <option value="眉山" data-id="333" >眉山</option>  
+                                                                   <option value="绵阳" data-id="323" >绵阳</option>  
+                                                                   <option value="南充" data-id="334" >南充</option>  
+                                                                   <option value="内江" data-id="335" >内江</option>  
+                                                                   <option value="攀枝花" data-id="336" >攀枝花</option>  
+                                                                   <option value="遂宁" data-id="337" >遂宁</option>  
+                                                                   <option value="雅安" data-id="338" >雅安</option>  
+                                                                   <option value="宜宾" data-id="339" >宜宾</option>  
+                                                                   <option value="泸州" data-id="342" >泸州</option>  
+                                                                   <option value="自贡" data-id="341" >自贡</option>  
+                                                                   <option value="资阳" data-id="340" >资阳</option>  
+                                                                   <option value="请选择" data-id="" >请选择</option>  
+                                                               </select>
+							        <span id="show_user_location"  style="display:none"><p><font size="" color="#ff0000"></font></p></span>
+                          </div>
+
+                          <div class="row clearfix">
+                               <label>个人说明：</label>
+                               <textarea name="intro" id="intro"  onblur="return check_person_description();" placeholder="您的介绍可更有效的帮助支持者了解您和了解项目的背景">我是一个……</textarea>
+                           <span id="show_intro"  style="display:none"><p><font size="" color="#ff0000"></font></p></span>
+
+			  </div>
+                          <p class="p-btn"><a type="submit" href="javascript:;"  class=" a-btn-blue btn-effect-blue">保存</a></p>
+                 </div>
+            </form>
+        </div>
+        <!--right side end-->
+</div>
+<!--main end-->
+<!--footer static-->
+<!--footer static-->
+<div class="footer">
+	<div class="footer-nav">
+		<a rel="nofollow" href="/help-about/id-1" alt="关于众筹" title="关于众筹">关于我们 <i>｜</i> </a>
+		<a rel="nofollow" href="/help-contact" alt="联系我们" title="联系我们">联系我们 <i>｜</i> </a>
+		<!-- <a rel="nofollow" href="/help-team" alt="团队介绍" title="团队介绍">团队介绍 <i>｜</i> </a> -->
+		<a rel="nofollow" href="/help-term" alt="服务协议" title="服务协议">服务协议 <i>｜</i> </a>
+		<a rel="nofollow" href="/help-specification" alt="项目发起规范" title="项目发起规范">项目发起规范 <i>｜</i> </a>
+		<a  href="/special-xinshou" alt="新手帮助" title="新手帮助">新手帮助 <i>｜</i> </a>
+		<a  href="/help-center" alt="帮助中心" title="帮助中心">帮助中心 <i>｜</i> </a>
+		<a  target="_blank" href="/help-tourongzi" alt="投融资服务" title="投融资服务">投融资服务</a>
+	</div>
+	<div class="footer-icon">
+		<span>关注我们：</span>
+		<a class="s-05" rel="nofollow" target="_blank" href="http://e.weibo.com/zhongchouwang2013" alt="新浪微博" title="新浪微博"></a>
+		<a class="s-06" rel="nofollow" target="_blank" href="http://user.qzone.qq.com/2357291729" alt="QQ空间" title="QQ空间"></a>
+		<a class="s-07" rel="nofollow" target="_blank" href="http://tieba.baidu.com/f?ie=utf-8&kw=%E4%BC%97%E7%AD%B9%E7%BD%91" alt="百度贴吧" title="百度贴吧"></a>
+		<a class="s-08" rel="nofollow" target="_blank" href="http://www.douban.com/people/zhongchou_cn/" alt="豆瓣小站" title="豆瓣小站"></a>
+		<!--<a class="s-05" rel="nofollow" target="_blank" href="http://tieba.baidu.com/f?ie=utf-8&kw=%E4%BC%97%E7%AD%B9%E7%BD%91" alt="百度贴吧" title="百度贴吧">百度贴吧</a>-->
+		<!--<a class="s-06" rel="nofollow" target="_blank" href="http://user.qzone.qq.com/2357291729" alt="QQ空间" title="QQ空间">QQ空间</a>-->
+		<!--<a class="s-07" rel="nofollow" target="_blank" href="http://e.weibo.com/zhongchouwang2013" alt="新浪微博" title="新浪微博">新浪微博</a>-->
+		<!--<a class="s-08" rel="nofollow" target="_blank" href="http://www.douban.com/people/zhongchou_cn/" alt="豆瓣小站" title="豆瓣小站">豆瓣小站</a>-->
+	</div>
+	<div class="footer-copy">
+		<div class="wrap">
+
+			 <div class="m-Links"></div>
+            <p>&copy;2014 北京网信众筹网络科技有限公司 zhongchou.cn 版权所有 京ICP备14016844号 | 出版物经营许可证编号新出发（京）批字第直140141号 | 营业性演出许可证 编号：京市演2102 | 食品流通许可证 编号：SP1101051410311599</p>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="http://zcs2.ncfstatic.com/zhongchou/pub/v3/fe3974b84fb6b50da0f329242078614c.js?V=1421652454"></script>                   
+<div id="gotop" class="go-top"></div>
+<!--footer end-->
+<!--footer end-->
+</body>
+</html>
