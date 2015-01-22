@@ -1,0 +1,30 @@
+        <!--right side static-->
+        <div class="personal-set-right">
+             <form  name="upload_header" id="upload_header" action="/upload_header" method="post"  enctype="multipart/form-data">
+                <div class="form-item clearfix pb70">   
+                   <div class="head-portrait">
+                   <div id="preview">
+                   <%if(user.head_portrait){%>
+                   <img src="/images/<%=user.head_portrait%>" id="image">
+                   <%}else{%>
+                   <img src="http://zcs4.ncfstatic.com/img/defaultavatar/noavatar_middle.gif" id="image">
+                   <%}%>
+                   </div>
+                   <p class="p-browse">
+                    <span class="file">
+                      <span class="above-file">上传</span>
+                      <input   name="image_file" id="image_file" onchange="previewImage(this);" type="file" class="file-input">
+                    </span>
+                    </p>
+                   <p class="caption">只能上传jpg、jpeg、png格式的图片</p>
+                    <span id="show_image_file"  class="error-text" style="display:none"><p><font size="" color="#ff0000"></font></p></span>
+                   </div>
+                </div>
+                <%if(success){%>
+                <h1><p><font size="" color="#ff0000"><%=success%></font></p></h1>
+                <%}%>
+                <p class="text-caption">*保存成功后如果头像不更新，您可以多刷新几次浏览器</p>
+                <input type="hidden" name="mobile" id="mobile"  value="<%=user.mobile%>" /> 
+             </form>
+        </div>
+        <!--right side end-->

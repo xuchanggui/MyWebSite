@@ -51,11 +51,16 @@ app.post('/project_success',function(req,res){
 	res.render('project_success', { title: '众酬网-中国最具知名度的众酬平台'});
 });
 
-
+app.get('/user_settings',requestHandlers.checkLogin);
 app.get('/user_settings',function(req,res){
-	res.render('user_settings', { title: '众酬网-中国最具知名度的众酬平台'});
+	res.render('user_settings', { title: '众酬网-中国最具知名度的众酬平台',flag:req.query.seting_flag});
 });
 app.post('/user_settings',requestHandlers.user_settings_save);
+
+
+app.post('/checkPasswordIsExist',requestHandlers.check_pwd_is_exist);
+app.post('/update_password',requestHandlers.update_user_password);
+
 
 
 app.get('/author_info_detail',function(req,res){
@@ -184,6 +189,9 @@ if(user_project_returns_info){
 }
 });
 app.post('/project_returns',requestHandlers.project_returns_save);
+
+app.post('/upload_header',requestHandlers.upload_header);
+
 
 
 app.get('/delete_user_project_returns_info',requestHandlers.delete_user_project_returns_info);

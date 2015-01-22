@@ -1,14 +1,14 @@
 var mongodb = require('./db');
 
 function User(user) {
-  this.name = user.name;
-  this.password = user.password;
-  this.mobile=user.mobile;
-  this.gender=user.gender;
-  this.location=user.location;
-  this.city=user.city;
-  this.description=user.description;
-  this.head_portrait=user.head_portrait;
+  this.name = user.name;//用户名
+  this.password = user.password;//密码
+  this.mobile=user.mobile;//手机号
+  this.gender=user.gender;//性别
+  this.location=user.location;//所在地
+  this.city=user.city;//所在城市
+  this.description=user.description;//自我介绍
+  this.head_portrait=user.head_portrait;//头像
 };
 
 module.exports = User;
@@ -129,6 +129,65 @@ User.updateUserByMobile = function(req, callback) {
         location:req.body.user_location,
         city:req.body.city,
         description:req.body.intro 
+      }}, function (err, result) {
+        mongodb.close();
+        if (err) {
+          return callback(err,null);//失败！返回 err 信息
+        }
+        callback(null, result);//成功！返回查询的用户信息
+      });
+    });
+  });
+};
+
+
+//更新用户密码
+User.updateUserPasswordByMobile = function(password,mobile, callback) {
+  //打开数据库
+  mongodb.open(function (err, db) {
+    if (err) {
+      return callback(err);//错误，返回 err 信息
+    }
+    //读取 users 集合
+    db.collection('users', function (err, collection) {
+      if (err) {
+        mongodb.close();
+        return callback(err);//错误，返回 err 信息
+      }
+      //更新用户密码通过手机号
+      collection.update({
+        mobile:mobile
+      },{$set:{
+      password:password
+      }}, function (err, result) {
+        mongodb.close();
+        if (err) {
+          return callback(err,null);//失败！返回 err 信息
+        }
+        callback(null, result);//成功！返回查询的用户信息
+      });
+    });
+  });
+};
+
+//更新用户头像
+User.updateUserHeaderByMobile = function(req, callback) {
+  //打开数据库
+  mongodb.open(function (err, db) {
+    if (err) {
+      return callback(err);//错误，返回 err 信息
+    }
+    //读取 users 集合
+    db.collection('users', function (err, collection) {
+      if (err) {
+        mongodb.close();
+        return callback(err);//错误，返回 err 信息
+      }
+      //更新用户密码通过手机号
+      collection.update({
+        mobile:req.body.mobile
+      },{$set:{
+      head_portrait:req.session.picture_url
       }}, function (err, result) {
         mongodb.close();
         if (err) {

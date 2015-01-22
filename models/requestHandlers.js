@@ -12,6 +12,10 @@ formidable=require("formidable");
 uploadDir = "G:/NodeJs_Runtime/nodejsApp/MyWebSite/public/images/"
 temp="G:/NodeJs_Runtime/nodejsApp/temp/";
 var returns_arr=new Array();
+
+
+
+//注册方法
 function reg(req,res){
 //检查用户两次输入的口令是否一致
 if(!(req.body['confirm_password'])||!(req.body['password'])||!(req.body['mobile']))
@@ -180,7 +184,7 @@ var password=md5.update(req.body.password).digest('base64');
 }
 
 function checkUserAndPassword(req, res){
-//生成口令的数列值return 
+//生成口令的数列值
 var md5=crypto.createHash('md5');
 var mobile=req.body.mobile;
 var password=md5.update(req.body.password).digest('base64');
@@ -408,23 +412,7 @@ function start(response){
 	response.end();
 }
 
-function upload_bak(response,request){	
-	console.log("this  upload function is called");
-	var form=new formidable.IncomingForm();
-	var time=new Date().getTime();
-	form.uploadDir="G:/NodeJs_Runtime/nodejsApp/temp"
-	console.log("begain to parse");
-	form.parse(request,function(error,fields,files){
-		console.log("parsing done");
-		console.log("files.upload.path======"+files.upload.path);
-		console.log("time===="+time);
-		fs.renameSync(files.upload.path,temp+time+".jpg");
-		response.writeHead(200,{"Content-Type":"text/html"});
-	    response.write("received image:<br/>");
-	    response.write("<img  src='/show?time="+time+"' width='393' height='436'/>");
-	    response.end();
-	});
-}
+
 
 function upload(req, res) {
   console.log("开始解析");
@@ -467,11 +455,7 @@ function upload(req, res) {
 	return true;
 	}
   }
-  if(req.session.error){
-  	console.log(req.session.error);
-  	res.redirect('/project-info');
-  	return false;
-  }
+
   succ="图片上传成功";
   req.session.success=succ;
   console.log(succ);
@@ -766,6 +750,112 @@ if(req.body.intro==""){
 }	
 
 
+function update_user_password(req,res){
+
+var len=req.body.new_pwd.length;
+if(len==0){
+	err="密码不能为空,请输入密码!";
+	console.log(err);
+	req.session.error=err;
+	return res.redirect('/user_settings?seting_flag=password_update');
+}else if((len)<6||(len>16)){
+	err="您输入的密码长度有误，密码不能小于六位，同时也不能大于十六位！";
+	console.log(err);
+	req.session.error=err;
+	return res.redirect('/user_settings?seting_flag=password_update');
+}
+
+if(req.body['confirm_password']!=req.body['new_pwd']){
+	err="两次输入的口令不一致!";
+	console.log(err);
+	req.session.error=err;
+   return res.redirect('/user_settings?seting_flag=password_update');
+}
+
+//生成口令的数列值
+var md5=crypto.createHash('md5');
+var password=md5.update(req.body.new_pwd).digest('base64');
+console.log("加密后的密码是==="+password);
+//更新密码
+ User.updateUserPasswordByMobile(password,req.body.mobile,function(err,result){
+ 	console.log("result====="+result);
+ 	if(result<0){
+ 		err='更新用户密码失败!';
+ 		console.log("err===="+err);
+ 		req.session.error=err;
+ 		return res.redirect('/user_settings?seting_flag=password_update');
+ 	}
+    succ="更新用户密码成功!";
+	req.session.success=succ;
+ 	return res.redirect('/user_settings?seting_flag=password_update');	
+ 	});
+
+}
+
+//上传用户头像
+function upload_header(req,res){
+	req.session.success=null;
+	req.session.error=null;
+ var image_file=req.body.image_file;
+ if(!image_file){
+ 	  	//上传图片
+   if(!upload(req,res)){
+   	console.log("上传图片失败!");
+     return res.redirect('/user_settings?seting_flag=header_update');
+   }
+ }
+
+ //更新头像地址
+ User.updateUserHeaderByMobile(req,function(err,result){
+ 	console.log("result====="+result);
+ 	if(result<0){
+ 		err='更新用户头像失败!';
+ 		console.log("err===="+err);
+ 		req.session.error=err;
+ 		return res.redirect('/user_settings?seting_flag=header_update');
+ 	}
+ 	req.session.user.head_portrait=req.session.picture_url;
+    succ="更新用户头像成功!";
+	req.session.success=succ;
+ 	return res.redirect('/user_settings?seting_flag=header_update');	
+ 	});
+
+
+}
+
+
+//检查用户密码是否存在
+function check_pwd_is_exist(req,res){
+//生成口令的数列值return 
+var md5=crypto.createHash('md5');
+console.log("old_pwd====="+req.body.password);
+var password=md5.update(req.body.password).digest('base64');
+var mobile=req.body.mobile;
+ //检查用户名是否已经存在
+ console.log("mobile===="+mobile);
+ User.findUserByMobile(mobile,function(err,user){
+ 	if(!user){
+ 		err='用户不存在!';
+ 		console.log("err==="+err);
+ 		req.session.error=err;
+		res.json({"error":err});
+		return;
+ 	}
+ 	console.log("password1==="+password);
+ 	console.log("password2==="+user.password);
+	if(user.password!=password){
+		err="输入的原密码错误，请重新输入!";
+		req.session.error=err; 
+		res.json({"error":err});
+       return;
+	}
+    req.session.success="原始密码存在";
+	res.json({"success":"原始密码存在"});
+ });
+
+}
+
+
 //检查发起人信息
 function validate_author_info_detail(req,res){
 var ex_real_name=req.body.ex_real_name;
@@ -799,31 +889,6 @@ return true;
 
 }
 
-function loadPic(response){
-	console.log("this  loadPic function is called");
-	response.writeHead(200,{"Content-Type":"text/html"});
-	response.write("hello loadPic");
-	//return "hello loadPic";
-	response.end();
-}
-
-function show(response,request){
-	console.log("request handler 'show' was called.");
-	 var arg = url.parse(request.url,true).query;
-	 console.log("time==="+arg.time);
-	fs.readFile(temp+arg.time+".jpg","binary",function(error,file){
-		if(error){
-			response.writeHead(500,{"Content-Type":"text/plain"});
-			response.write(error+"\n");
-			response.end();
-
-		}else{
-			response.writeHead(200,{"Content-Type":"image/jpg"});
-			response.write(file,"binary");
-			response.end();
-		}
-	});
-}
 
 function checkLogin(req,res,next){
 if(!req.session.user){
@@ -842,45 +907,10 @@ return res.redirect('/');
 next();
 }
 
-//start
-/* GET home page. */
 
-/*app.get('/',function(req, res) {
-  res.render('index', { title: TITLE });
-});
-
-app.post('/upload', function (req, res) {
-	console.log("开始解析");
-
-  for (var i in req.files) {
-    if (req.files[i].size == 0){
-      // 使用同步方式删除一个文件
-      fs.unlinkSync(req.files[i].path);
-      console.log('Successfully removed an empty file!');
-    } else {
-     var target_path = uploadDir+ req.files[i].name;
-      // 使用同步方式重命名一个文件
-      //fs.renameSync(req.files[i].path, target_path);
-	var readStream = fs.createReadStream(req.files[i].path)
-	var writeStream = fs.createWriteStream(target_path);
-
-	util.pump(readStream, writeStream, function() {
-	fs.unlinkSync(req.files[i].path);
-	console.log('临时文件已被删除');
-	});
-	console.log('Successfully renamed a file!');
-	}
-  }
-  req.session.success="文件上传成功";
-  res.redirect('/');
-});*/
-
-//end
 
 exports.start=start;
 exports.upload=upload;
-exports.loadPic=loadPic;
-exports.show=show;
 exports.checkLogin=checkLogin;
 exports.checkNotLogin=checkNotLogin;
 exports.login_form=login_form;
@@ -893,4 +923,7 @@ exports.save_author_info_detail=save_author_info_detail;
 exports.checkUserAndPassword=checkUserAndPassword;
 exports.findUserProject=findUserProject;
 exports.user_settings_save=user_settings_save;
+exports.update_user_password=update_user_password;
+exports.upload_header=upload_header;
+exports.check_pwd_is_exist=check_pwd_is_exist;
 exports.logout=logout;

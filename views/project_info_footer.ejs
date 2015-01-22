@@ -381,7 +381,7 @@ function previewImage(file)
     var src = document.selection.createRange().text;
     var img = document.getElementById('image');
     var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
-    div.innerHTML = "<div id=div_head style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;margin-left:"+rect.left+"px;"+sFilter+src+"\"'></div>"+"<h3 class='project-name'><a id='Js-name' href='javascript:;'></a></h3>"+"<div class='item-caption'>"+"<span class='caption-title'>目标：<span id='Js-days'>&nbsp;&nbsp;&nbsp"+"<span id='Js-price'></span></span>";
+    div.innerHTML = "<img id=image style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;margin-left:"+rect.left+"px;"+sFilter+src+"\"'>"+"<h3 class='project-name'><a id='Js-name' href='javascript:;'></a></h3>"+"<div class='item-caption'>"+"<span class='caption-title'>目标：<span id='Js-days'>&nbsp;&nbsp;&nbsp"+"<span id='Js-price'></span></span>";
 
   }
 }

@@ -194,6 +194,7 @@ z-index: 3;
 										</div>
 										<span class="gray">支持jpg、jpeg、png、gif格式，大小不超过500KB。最多上传3张</span>
 										<ul id="JS-deal_item_imgload" class="clearfix" style="clear:both;"></ul>
+										 <span id="show_image_file"  class="error-text" style="display:none"><p><font size="" color="#ff0000"></font></p></span>
 									</div>
 								</div>
 								<div class="form-item clearfix">
@@ -569,7 +570,7 @@ function previewImage(file)
     var src = document.selection.createRange().text;
     var img = document.getElementById('image');
     var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
-    div.innerHTML = "<div id=div_head style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;margin-left:"+rect.left+"px;"+sFilter+src+"\"'></div>"+"<h3 class='project-name'><a id='Js-name' href='javascript:;'></a></h3>"+"<div class='item-caption'>"+"<span class='caption-title'>目标：<span id='Js-days'>&nbsp;&nbsp;&nbsp"+"<span id='Js-price'></span></span>";
+    div.innerHTML = "<img id=image style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;margin-left:"+rect.left+"px;"+sFilter+src+"\"'>"+"<h3 class='project-name'><a id='Js-name' href='javascript:;'></a></h3>"+"<div class='item-caption'>"+"<span class='caption-title'>目标：<span id='Js-days'>&nbsp;&nbsp;&nbsp"+"<span id='Js-price'></span></span>";
 
   }
 }

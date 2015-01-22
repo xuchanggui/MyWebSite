@@ -77,14 +77,18 @@ function test(obj){
 <!--favicon static-->
 <div class="m-favicon">
 	<div class="wrap clearfix">
+		<%if(user.head_portrait){%>
+       		<a href="/user_settings" class="z-portrait"><img src="/images/<%=user.head_portrait%>"></a>
+		<%}else{%>
 		<a href="/user_settings" class="z-portrait"><img src="http://zcs6.ncfstatic.com/img/defaultavatar/noavatar_middle.gif"></a>
+		<%}%>
 		<div class="z-introduced">
             <div class="z-chance clearfix">
                 <div class="ch-left">
                     <h2 class="fl"><%=user.mobile%></h2>
                 </div>
                 <div class="ch-right">
-                    <a class="z-browse" href="/settings-avatar">头像设置</a>
+                    <a class="z-browse" href="/user_settings?seting_flag=header_update">头像设置</a>
                     <a class="z-browse" href="/user_settings">个人设置</a>
                     <a class="z-browse" href="/message">消息中心</a>
                 </div>
@@ -105,7 +109,7 @@ function test(obj){
       <ul class="clearfix">
       <!-- 点击样式调用a标签里的class 和i标签 -->
         <li class="mm-op"><a href="/home/id-428140" >支持的项目<em> 1</em></a></li>
-        <li><a href="/home-build_deal/id-428140"  class="z-select" ><i class="a-pos"></i>发起的项目<em> 11</em></a></li>
+        <li><a href="/author_info_detail"  class="z-select" ><i class="a-pos"></i>发起的项目<em> 11</em></a></li>
         <li><a href="/home-focus/id-428140" ><i ></i>喜欢的项目<em> 1</em></a></li>
       </ul>     
     </div>   
