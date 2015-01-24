@@ -1,0 +1,41 @@
+		<div class="right">
+						<div class='v-content'>
+				
+<div class='corp-banner'>
+	<form action='/projectnew-add' name="fqform" method="post">
+	
+	<a class='pub btn btn-large b<tn-flat-lg btn-red'  href='javascript:void(0)' onclick='dosubmit()'>立即发起项目</a>
+	<div class='licence'>
+		<p><input checked id='flag' type='checkbox' /> 阅读并同意众筹网的<a href="/help-term" target="_blank">《服务协议》</a><a href="/help-announcement" target="_bank">《众筹公告》</a></p>
+	</div>
+	</form>
+</div>
+
+<div class="modal fade" id='hint-modal'>
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title">温馨提示</h4>
+	      </div>
+	      <div class="modal-body" >
+	      	<p>您还没有同意众筹网服务协议</p>
+	      
+	      </div>
+	      <div class="modal-footer">
+	    
+	        <button type="button"  data-dismiss="modal" class="btn btn-primary">确定</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+<script type="text/javascript">
+function dosubmit(){
+	if(!$("#flag").attr("checked")){
+		$("#hint-modal").modal();
+		return false;
+	}
+
+	document.fqform.submit();
+}

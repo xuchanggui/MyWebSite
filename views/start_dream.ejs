@@ -12,9 +12,9 @@
 		<a href="/help-term" target="_blank">《服务协议》</a>
 		<a href="/help-announcement" target="_bank">《众筹公告》</a></p>
 		<%if(!user){%>
-		<a class="start-dream" href="javascript:getLogin('/project-info');">发起我的梦想</a>
+		<a class="start-dream" href="javascript:getLogin('/project-info?action_flag=start_project');">发起我的梦想</a>
 		<%}else{%>
-		<a class="start-dream" href="/project-info">发起我的梦想</a>
+		<a class="start-dream" href="/project-info?action_flag=start_project">发起我的梦想</a>
 		<%}%>
 	</div>
 </div>

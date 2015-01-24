@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>众筹网-中国最具影响力的众筹平台</title>
+<meta name="keywords" content="众筹 创业 项目 投资 支持"/>
+<meta name="description" content="在众筹网发布项目，获得投资支持，实现你的创业梦想"/>
+<meta name="renderer" content="webkit"/>
+<link rel="shortcut icon" type="image/png" href="http://zcs5.ncfstatic.com/zhongchou/images/favicon_v3.png?v=1">
+<!--public js&css start-->            
+<link rel="stylesheet" type="text/css" href="http://zcs2.ncfstatic.com/zhongchou/pub/v3/14c4c0d24fba6ed25d8b6758064ef7b8.css?V=1422009557"/>
+<script type="text/javascript" src="http://zcs2.ncfstatic.com/zhongchou/pub/v3/2cc0475e1160ea574d0a9b5ebea60136.js?V=1422009557"></script>   
+<!--public js&css end -->                                         
+</head>
+<body>
+<!--header static-->
+<%include header.ejs%>
+<!--header end-->
+
+<link rel="stylesheet" type="text/css" href="http://zcs2.ncfstatic.com/zhongchou/pub/v3/7ffb95504c3dc3e41f80429d1d3004ea.css?V=1422009557"/>
+<body>
+<!--main static-->
+<div class="wrap pb116 clearfix">
+    <h2 class="personal-set">
+      <a href="/author_info_detail" class="mm-blue ml-pm a-personal-set ">返回个人中心</a>
+      消息中心
+    </h2>
+        <!--left side static-->
+        <div class="personal-set-left">
+                <ul>
+          <%if(message_flag=='private_letter'){%>
+          <li class="selected"><a class="icons msg ie6fixpic" href="/message?message_flag=private_letter">私信</a></li>
+          <li ><a class="icons rec-com ie6fixpic" href="/message?message_flag=topic">发出的话题</a></li>
+          <li ><a class="icons rec-com ie6fixpic" href="/message?message_flag=send_comment">发出的评论</a></li>
+          <li ><a class="icons emit-com ie6fixpic" href="/message?message_flag=receive_comment">收到的评论</a></li>
+          <%}else if(message_flag=='topic'){%>
+          <li ><a class="icons msg ie6fixpic" href="/message?message_flag=private_letter">私信</a></li>
+          <li class="selected"><a class="icons rec-com ie6fixpic" href="/message?message_flag=topic">发出的话题</a></li>
+          <li ><a class="icons rec-com ie6fixpic" href="/message?message_flag=send_comment">发出的评论</a></li>
+          <li ><a class="icons emit-com ie6fixpic" href="/message?message_flag=receive_comment">收到的评论</a></li>
+          <%}else if(message_flag=='send_comment'){%>
+          <li ><a class="icons msg ie6fixpic" href="/message?message_flag=private_letter">私信</a></li>
+          <li ><a class="icons rec-com ie6fixpic" href="/message?message_flag=topic">发出的话题</a></li>
+          <li class="selected"><a class="icons rec-com ie6fixpic" href="/message?message_flag=send_comment">发出的评论</a></li>
+          <li ><a class="icons emit-com ie6fixpic" href="/message?message_flag=receive_comment">收到的评论</a></li>
+          <%}else if(message_flag=='receive_comment'){%>
+
+          <li ><a class="icons msg ie6fixpic" href="/message?message_flag=private_letter">私信</a></li>
+          <li ><a class="icons rec-com ie6fixpic" href="/message?message_flag=topic">发出的话题</a></li>
+          <li ><a class="icons rec-com ie6fixpic" href="/message?message_flag=send_comment">发出的评论</a></li>
+          <li class="selected"><a class="icons emit-com ie6fixpic" href="/message?message_flag=receive_comment">收到的评论</a></li>
+          <%}else{%>
+          <li class="selected"><a class="icons msg ie6fixpic" href="/message?message_flag=private_letter">私信</a></li>
+          <li ><a class="icons rec-com ie6fixpic" href="/message?message_flag=topic">发出的话题</a></li>
+          <li ><a class="icons rec-com ie6fixpic" href="/message?message_flag=send_comment">发出的评论</a></li>
+          <li ><a class="icons emit-com ie6fixpic" href="/message?message_flag=receive_comment">收到的评论</a></li> 
+          <%}%>
+                </ul>
+        </div>
+        <!--left side end-->
+        
+        <!--right side static-->
+        <div class="personal-set-right">
+            <ul class="comment-list">
+                    <div class="prompt-text">
+               <p class="prompt"></p>
+               <p class="prompt-sorry">很抱歉...这是个荒地！</p>
+               <p class="project-review">您可以向站内用户发送私信～～</p>
+            </div>  
+                 </ul>
+<div class="pager"></div>
+        </div>
+        <!--right side end-->
+</div>
+<!--main end-->
+<!--footer static-->
+<div class="footer">
+<!--footer static-->
+<div class="footer">
+  <div class="footer-nav">
+    <a rel="nofollow" href="/help-about/id-1" alt="关于众筹" title="关于众筹">关于我们 <i>｜</i> </a>
+    <a rel="nofollow" href="/help-contact" alt="联系我们" title="联系我们">联系我们 <i>｜</i> </a>
+    <!-- <a rel="nofollow" href="/help-team" alt="团队介绍" title="团队介绍">团队介绍 <i>｜</i> </a> -->
+    <a rel="nofollow" href="/help-term" alt="服务协议" title="服务协议">服务协议 <i>｜</i> </a>
+    <a rel="nofollow" href="/help-specification" alt="项目发起规范" title="项目发起规范">项目发起规范 <i>｜</i> </a>
+    <a  href="/special-xinshou" alt="新手帮助" title="新手帮助">新手帮助 <i>｜</i> </a>
+    <a  href="/help-center" alt="帮助中心" title="帮助中心">帮助中心 <i>｜</i> </a>
+    <a  target="_blank" href="/help-tourongzi" alt="投融资服务" title="投融资服务">投融资服务</a>
+  </div>
+  <div class="footer-icon">
+    <span>关注我们：</span>
+    <a class="s-05" rel="nofollow" target="_blank" href="http://e.weibo.com/zhongchouwang2013" alt="新浪微博" title="新浪微博"></a>
+    <a class="s-06" rel="nofollow" target="_blank" href="http://user.qzone.qq.com/2357291729" alt="QQ空间" title="QQ空间"></a>
+    <a class="s-07" rel="nofollow" target="_blank" href="http://tieba.baidu.com/f?ie=utf-8&kw=%E4%BC%97%E7%AD%B9%E7%BD%91" alt="百度贴吧" title="百度贴吧"></a>
+    <a class="s-08" rel="nofollow" target="_blank" href="http://www.douban.com/people/zhongchou_cn/" alt="豆瓣小站" title="豆瓣小站"></a>
+    <!--<a class="s-05" rel="nofollow" target="_blank" href="http://tieba.baidu.com/f?ie=utf-8&kw=%E4%BC%97%E7%AD%B9%E7%BD%91" alt="百度贴吧" title="百度贴吧">百度贴吧</a>-->
+    <!--<a class="s-06" rel="nofollow" target="_blank" href="http://user.qzone.qq.com/2357291729" alt="QQ空间" title="QQ空间">QQ空间</a>-->
+    <!--<a class="s-07" rel="nofollow" target="_blank" href="http://e.weibo.com/zhongchouwang2013" alt="新浪微博" title="新浪微博">新浪微博</a>-->
+    <!--<a class="s-08" rel="nofollow" target="_blank" href="http://www.douban.com/people/zhongchou_cn/" alt="豆瓣小站" title="豆瓣小站">豆瓣小站</a>-->
+  </div>
+  <div class="footer-copy">
+    <div class="wrap">
+       <div class="m-Links"></div>
+            <p>&copy;2014 北京网信众筹网络科技有限公司 zhongchou.cn 版权所有 京ICP备14016844号 | 出版物经营许可证编号新出发（京）批字第直140141号 | 营业性演出许可证 编号：京市演2102 | 食品流通许可证 编号：SP1101051410311599</p>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="http://zcs2.ncfstatic.com/zhongchou/pub/v3/fe3974b84fb6b50da0f329242078614c.js?V=1422009557"></script>                   
+<div id="gotop" class="go-top"></div>
+<!--footer end-->
+</div>
+<!--footer end-->
+</body>
+</html>
+<script type="text/javascript" src="http://zcs2.ncfstatic.com/zhongchou/pub/v3/b94127e32e931444b260d19bc9d4d12f.js?V=1422009557"></script>
+<script type="text/javascript">
+var url = {
+    delMess:"/message-delmessage",
+    replyMess:"/message-send"
+}
+</script>
+

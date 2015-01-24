@@ -1,5 +1,5 @@
 var mongodb = require('./db');
-
+var moment = require('moment');
 function User(user) {
   this.name = user.name;//用户名
   this.password = user.password;//密码
@@ -9,6 +9,7 @@ function User(user) {
   this.city=user.city;//所在城市
   this.description=user.description;//自我介绍
   this.head_portrait=user.head_portrait;//头像
+  this.time=moment(new Date()).format('YYYY-MM-DD');
 };
 
 module.exports = User;
@@ -24,7 +25,8 @@ User.prototype.save = function (callback) {
     gender:this.gender,
     location:this.location,
     description:this.description,
-    head_portrait:this.head_portrait
+    head_portrait:this.head_portrait,
+    time:this.time
   };
   //打开数据库
   mongodb.open(function (err, db) {

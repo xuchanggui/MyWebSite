@@ -8,7 +8,7 @@ var	TITLE = 'insupper';
 module.exports=function(app){
 
 app.get('/',function(req, res){
-res.render('index', { title: 'Express' });
+res.render('index', { title: 'Express',action_flag:req.query.action_flag });
 });
 
 app.get('/reg',requestHandlers.checkNotLogin);
@@ -34,26 +34,26 @@ app.post('/login_form',requestHandlers.login_form);
 app.post('/upload', requestHandlers.upload);
 
 app.get('/project',function(req,res){
-	res.render('start_dream', { title: '发起我的项目'});
+	res.render('start_dream', { title: '发起我的项目',action_flag:"start_project"});
 });
 
 app.get('/author_info',requestHandlers.checkLogin);
 app.get('/author_info',function(req,res){
-	res.render('author_info', { title: '发起人信息'});
+	res.render('author_info', { title: '发起人信息',action_flag:"start_project"});
 });
 app.post('/author_info',requestHandlers.save_author_info_detail);
 
 
 app.get('/project_success',function(req,res){
-	res.render('project_success', { title: '众酬网-中国最具知名度的众酬平台'});
+	res.render('project_success', { title: '众酬网-中国最具知名度的众酬平台',action_flag:"start_project"});
 });
 app.post('/project_success',function(req,res){
-	res.render('project_success', { title: '众酬网-中国最具知名度的众酬平台'});
+	res.render('project_success', { title: '众酬网-中国最具知名度的众酬平台',action_flag:"start_project"});
 });
 
 app.get('/user_settings',requestHandlers.checkLogin);
 app.get('/user_settings',function(req,res){
-	res.render('user_settings', { title: '众酬网-中国最具知名度的众酬平台',flag:req.query.seting_flag});
+	res.render('user_settings', { title: '众酬网-中国最具知名度的众酬平台',flag:req.query.seting_flag,action_flag:""});
 });
 app.post('/user_settings',requestHandlers.user_settings_save);
 
@@ -89,7 +89,7 @@ app.get('/author_info_detail',function(req,res){
           req.session.arr=arr;
 		}
      console.log("nextPage===="+paginate.nextPage);
-	res.render('author_info_detail', { title: '项目信息',items:project_info_arr,pageitems:arr});	
+	res.render('author_info_detail', { title: '项目信息',items:project_info_arr,pageitems:arr,action_flag:""});	
 }else{
       requestHandlers.findUserProject(req,res);
 }
@@ -136,12 +136,12 @@ app.get('/author_info_detail_query',function(req,res){
     //var pages=new Paginate(page,2,req.session.project_info_arr.length);
 
      if(page>paginate.maxpage){
-       return false;
+       return res.redirect('/author_info_detail');
     }else{
         paginate.page = page;
     }
      if(page > paginate.maxpage){
-        return false;
+       return res.redirect('/author_info_detail');
     }else{
     	if(page==paginate.maxpage){
     		paginate.nextPage=page;
@@ -151,7 +151,7 @@ app.get('/author_info_detail_query',function(req,res){
 
     }
 	if(page <1){
-	return false;
+	return res.redirect('/author_info_detail');
 	}
 	else{
 		if(page==1){
@@ -167,7 +167,7 @@ app.get('/author_info_detail_query',function(req,res){
 
 
 app.get('/project-info',function(req,res){
-	res.render('project_info', { title: '我的项目'});
+	res.render('project_info', { title: '我的项目',action_flag:"start_project"});
 });
 app.post('/project-info',requestHandlers.project_info_save);
 
@@ -178,17 +178,19 @@ if(user_project_returns_info){
 	if(user_project_returns_info.length>0){
 		console.log("user_project_returns_info.length===="+user_project_returns_info.length);
 		console.log("user_project_returns_info===="+user_project_returns_info[0].price);
-		res.render('project_returns', { title: 'project_returns',items:user_project_returns_info});
+		res.render('project_returns', { title: 'project_returns',items:user_project_returns_info,action_flag:"start_project"});
 		}else{
-			res.render('project_returns', { title: 'project_returns',items:null});
+			res.render('project_returns', { title: 'project_returns',items:null,action_flag:"start_project"});
 		}
 
 }else{
-	res.render('project_returns', { title: 'project_returns',items:null});
+	res.render('project_returns', { title: 'project_returns',items:null,action_flag:"start_project"});
 
 }
 });
 app.post('/project_returns',requestHandlers.project_returns_save);
+
+
 
 app.post('/upload_header',requestHandlers.upload_header);
 
@@ -197,6 +199,26 @@ app.post('/upload_header',requestHandlers.upload_header);
 app.get('/delete_user_project_returns_info',requestHandlers.delete_user_project_returns_info);
 
 app.post('/checkUserAndPassword',requestHandlers.checkUserAndPassword);
+
+
+app.get('/message',function(req,res){
+	res.render('message', { title: '消息中心',message_flag:req.query.message_flag,action_flag:""});
+});
+
+app.get('/user_admin',function(req,res){
+	res.render('user_admin', { title: '个人后台管理',user_admin_flag:req.query.user_admin_flag});
+});
+
+
+app.post('/start_project',function(req,res){
+ res.render('project_info', { title: '我的项目',action_flag:req.body.action_flag});
+});
+
+
+app.get('/help_term',function(req,res){
+ res.render('help_term', { title: '众酬协议',help_flag:req.query.help_flag});
+});
+
 
 app.get('/home',requestHandlers.checkLogin);
 app.get('/home',function(req, res){

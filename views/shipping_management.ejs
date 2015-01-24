@@ -1,0 +1,64 @@
+		<div class="right">
+						<div>
+				<h3 class='page-header'>发货管理<small>发货、追踪</small></h3>
+			</div>
+						<div class='v-content'>
+				
+<div class='row-box w940 with-head with-tbl'>
+    <h4 class='page-subtitle'>总体情况</h4>
+    
+	<strong class='lead'>暂无数据</strong>
+</div>
+
+<div class='row-box w1200 with-head with-tbl'>
+    <h4 class='page-subtitle'>详细清单</h4>
+    <form class="form-inline  pl" role="form" method="get" action="">
+        <div>
+        	<div class='input-prepend'>
+	            <span class="sr-only add-on" for="selectPrj">项目选择</span> 
+	            <select name='deal_id' class="form-control" id="selectPrj">
+	                	                    <option value=''>暂无数据</option>
+						            </select>
+            </div>
+            <div  class='input-prepend input-append'>
+                <div  class="input-group abs">
+                     <span class="input-group-addon">
+                        物流状态
+                      </span>
+                    <select name="delivery_status" class="form-control"  id="selectDeliveryStatus">
+	                    <option
+	                    selected	                        value="">全部支持者</option>
+	                    
+	                    <option
+	                    	                        value="0">未发货</option>
+	                    <option
+	                    	                        value="1">已发货</option>
+	                    <option
+	                    	                        value="3">无需发货</option>
+	             </select>
+	             <button type="submit" class="btn">搜索</button>
+                </div>
+                       
+	        	
+	         <div class='search-toolbar'>    
+		         <a href="/corp-dm?action=download&deal_id="
+	               class='btn btn-default'>报表下载</a>
+	            <input type="file"
+	               style="" onclick="upload_file('image_file_Ts');" value="" name="delivery" id="image_file_Ts"> 
+	            <a onclick="upload_file('image_file_Ts');" id="uploadbtn"
+	               class='btn btn-default'>批量发货</a>
+	            </div>
+            </div>
+        </div>
+
+
+        <div class='fr inline'  style='margin-right:20px;'>
+            
+
+        </div>
+    </form>
+
+	<strong class='lead'>暂无数据</strong>
+    <div style='clear:both'></div>
+
+</div>

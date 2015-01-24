@@ -91,7 +91,10 @@ var newUser=new User(
 {
 	name:username,
 	password:password,
-	mobile:mobile
+	mobile:mobile,
+	location:'未知',
+	city:'未知',
+	gender:'-1'
 });
  console.log("password====="+newUser.password);
  console.log('username======'+newUser.name);
@@ -115,6 +118,8 @@ var newUser=new User(
  		return res.redirect('/reg');
  	}
    // console.log("执行到了7");
+    //newUser.mobile=newUser.mobile.replace(newUser.mobile.substr(3,7),"*****");
+	//console.log("newUser.mobile======"+newUser.mobile);
  	req.session.user=newUser;
 	req.session.success='注册成功!'
  	return res.redirect('/');	
@@ -146,6 +151,8 @@ var password=md5.update(req.body.password).digest('base64');
 		req.session.error="用户密码错误";
 		return res.redirect('/login');
 	}
+	//user.mobile=user.mobile.replace(user.mobile.substr(3,7),"*****");
+	//console.log("user.mobile======"+user.mobile);
  	req.session.user=user;
     req.session.success="登录成功";
 	return res.redirect('/');
@@ -899,7 +906,7 @@ next();
 }
 
 function checkNotLogin(req,res,next){
-console.log("usename===="+req.session.user);
+console.log("user===="+req.session.user);
 if(req.session.user){
 req.session.error="已登录";
 return res.redirect('/');

@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" /> 
+<title>众筹网-发起人后台-</title>
+<meta name="description" content="专业、权威的众筹项目管理后台" />
+<link rel="bookmark" type="image/x-icon"
+	href="http://zcs9.ncfstatic.com/v3/static/images/icon/title.png?v=">
+<link rel="shortcut icon" type="image/png"
+	href="http://zcs9.ncfstatic.com/v3/static/images/icon/title.png?v="/>
+<link rel="icon" type="image/png"
+	href="http://zcs9.ncfstatic.com/v3/static/images/icon/title.png?v=">
+<link rel="apple-touch-icon"
+	href="http://zcs9.ncfstatic.com/v3/static/images/icon/title.png?v=">
+<!--public js&css start-->
+
+<!--public js&css end -->
+
+<script type="text/javascript" src="http://zcs9.ncfstatic.com/zhongchou/pub/3ee64c4326e582d45aae591bff8ac0a2.js?V=1422009557" ></script>
+<script type="text/javascript" src="http://zcs9.ncfstatic.com/zhongchou/pub/c3c37b2a0bbefa535ff092bc3983dea6.js?V=1422009557" ></script>
+<link rel="stylesheet" type="text/css" href="http://zcs9.ncfstatic.com/zhongchou/pub/5b8a7c172e391b3b2de2df8e4205894c.css?V=1422009557" >
+<link rel="stylesheet" type="text/css" href="http://zcs9.ncfstatic.com/zhongchou/pub/1e0a0b327afafd2522f38e8844dcc8c4.css?V=1422009557" >
+
+</head>
+
+<body>
+
+	<!--header static-->
+	<div class='header' role='navigation' id='nav'>
+		<a class="navbar-brand" href="/">Brand</a>
+		<ul class="top-menu">				
+								<li><a href="http://www.zhongchou.cn/browse-index">浏览项目</a></li>
+								<li><a href="http://www.zhongchou.cn/open-index">开放平台</a></li>
+								<li><a href="partake">新手帮助</a></li>
+								<li><a href="/project-info">发起项目</a></li>
+				
+		</ul>
+		   		<!-- user menu start-->
+		<div class="user-menu" id="jsddm">
+				<div class="menu-hd tx">
+					<a
+						href="http://www.zhongchou.cn/home/id-428140"
+						class="tit"> <span class='avatar-box'> <img id="headeravatar"
+							src="http://www.zhongchou.cn/avatar/000/42/81/40virtual_avatar_small.jpg?v=1421917627" />
+							<%if(user){%>
+                      </span> <span class="user-name word-break ie6fixpic"><%=user.mobile%></span>
+                      <%}else{%>
+                       </span> <span class="user-name word-break ie6fixpic">没有登录</span>
+                      <%}%>
+					</a>
+				</div>
+				<div class="menu-bd JS-myinfo">
+					<ul class="clearfix">
+						<ul>
+							<li class="sup"><a class="ie6fixpic"
+								href="/home/id-428140">支持的项目</a></li>
+							<li class="msg"><a class="ie6fixpic"
+								href="/author_info_detail">发起的项目</a></li>
+							<li class="att"><a class="ie6fixpic"
+								href="/home-focus/id-428140">喜欢的项目</a></li>
+							<li class="msg"><a class="ie6fixpic"
+								href="/message">消息中心</a></li>
+							<li class="set"><a class="ie6fixpic"
+								href="/user_settings">个人设置</a></li>
+							<li class="exit bn"><a class="ie6fixpic"
+								href="/logout">退出</a></li>
+						</ul>
+					</ul>
+				</div>
+			</div>
+			<!-- user menu end-->
+			
+	</div>
+
+	<div class='main-content'>
+		<div class='left-menu'>
+			
+			
+<ul class='page-sidebar'>
+			<li class='menu-group'>
+				<%if(user_admin_flag=='project_list'){%>
+				<a href='/user_admin?user_admin_flag=project_list' class='active menu-item'>
+				<span class='icon'></span>
+				<span class='link'>
+				<span>项目列表</span>
+				</span>
+				</a>
+				<li class='menu-group'>
+				<a href='/user_admin?user_admin_flag=shipping_management' class=' menu-item'>
+				<span class='icon'></span>
+				<span class='link'>
+				<span>发货管理</span>
+				</span>
+				</a>
+				<li class='menu-group'>
+				<a href='/user_admin?user_admin_flag=unpublic_project_list' class=' menu-item'>
+				<span class='icon'></span>
+				<span class='link'>
+				<span>未发布项目</span>
+				</span>
+				</a>
+			<%}else if(user_admin_flag=='shipping_management'){%>
+				<a href='/user_admin?user_admin_flag=project_list' class=' menu-item'>
+				<span class='icon'></span>
+				<span class='link'>
+				<span>项目列表</span>
+				</span>
+				</a>
+				<li class='menu-group'>
+				<a href='/user_admin?user_admin_flag=shipping_management' class='active menu-item'>
+				<span class='icon'></span>
+				<span class='link'>
+				<span>发货管理</span>
+				</span>
+				</a>
+				<li class='menu-group'>
+				<a href='/user_admin?user_admin_flag=unpublic_project_list' class=' menu-item'>
+				<span class='icon'></span>
+				<span class='link'>
+				<span>未发布项目</span>
+				</span>
+				</a>
+			<%}else if(user_admin_flag=='unpublic_project_list'){%>
+				<a href='/user_admin?user_admin_flag=project_list' class=' menu-item'>
+				<span class='icon'></span>
+				<span class='link'>
+				<span>项目列表</span>
+				</span>
+				</a>
+				<li class='menu-group'>
+				<a href='/user_admin?user_admin_flag=shipping_management' class=' menu-item'>
+				<span class='icon'></span>
+				<span class='link'>
+				<span>发货管理</span>
+				</span>
+				</a>
+				<li class='menu-group'>
+				<a href='/user_admin?user_admin_flag=unpublic_project_list' class='active menu-item'>
+				<span class='icon'></span>
+				<span class='link'>
+				<span>未发布项目</span>
+				</span>
+				</a>
+			<%}else{%>
+				<a href='/user_admin?user_admin_flag=project_list' class='active menu-item'>
+				<span class='icon'></span>
+				<span class='link'>
+				<span>项目列表</span>
+				</span>
+				</a>
+				<li class='menu-group'>
+				<a href='/user_admin?user_admin_flag=shipping_management' class=' menu-item'>
+				<span class='icon'></span>
+				<span class='link'>
+				<span>发货管理</span>
+				</span>
+				</a>
+				<li class='menu-group'>
+				<a href='/user_admin?user_admin_flag=unpublic_project_list' class=' menu-item'>
+				<span class='icon'></span>
+				<span class='link'>
+				<span>未发布项目</span>
+				</span>
+				</a>
+			<%}%>
+	</li>
+</ul>
+		</div>
+     <%if(user_admin_flag=='project_list'){%>
+	<%include public_project_list.ejs%>
+	<%}else if(user_admin_flag=='shipping_management'){%>
+	<%include shipping_management.ejs%>
+	<%}else if(user_admin_flag=='unpublic_project_list'){%>
+	<%include unpublic_project_list.ejs%>
+	<%}else{%>
+	<%include public_project_list.ejs%>
+	<%}%>
+
+	</script>
+	<script type="text/javascript" src="http://zcs9.ncfstatic.com/zhongchou/pub/d4c6a1a930065834ea077dda8374c419.js?V=1422009557" ></script>
+	
+
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$(".btn-share").click(function(){
+			var id = $(this).attr("data-id");
+			var name = $(this).attr("data-name");
+			var src = "http://" + domain + "/" + "corp-share?id=" + id;
+			$("#prj_name").text(name);
+			$("#share-frm")[0].src = src;
+			$("#share-modal").modal();
+		});
+
+		on_wnd_resize();	
+	});
+	</script>
+	
+
+</body>
+</html>

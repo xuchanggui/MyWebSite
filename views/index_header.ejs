@@ -14,53 +14,6 @@
 </head>
 <body>
 <!--header static-->
-<div class="header">
-	<div class="wrap clearfix">		
-        <div class="m-left">
-                 <h1><a alt="众筹网" class="img-logo" title="众筹网" href="/">众筹网</a></h1>
-                  
-          <ul class="m-nav clearfix">
-          	<li><a class='selected' class="z-home" href="/"><span><i class="s-01"></i></span>首页</a></li>
-          	<li><a  href="/browse"><i class="s-02"></i>浏览项目</a></li>
-          	<li style="display:none"><a href="http://news.zhongchou.cn/"><i class="s-09"></i>资讯</a></li>
-            <li><a href="http://www.yuanshihui.com/" target="_blank"><i class="s-30"></i>原始会</a></li>
-          	<li><a href="/project" ><i class="s-03"></i>发起项目</a></li>
-            <li style="display:none"><a href="http://www.zhongchou.cn/forum"><i class="s-10"></i>论坛</a></li>
-          </ul>
-        </div>
-        <div class="m-right clearfix">
-        	
-        	
-		<%if(!user){%> 
-		<span class="z-Login">
-			<a class="z-register" href="/reg" >注册</a>
-		<a  class="Js-showLogin" href="/login" >登录</a>
-		</span> 
-		<%}else{%>
-		<div id="Js-header-loginBtn">
-              <span class="pull-down clearfix"><i class="meun-02"></i><i class="meun-01"><%=user.mobile%></i></span>
-              <ul id="Js-header-login" class="mm-nubg">
-                  <li><a href="/home/id-428140"><i class="down-menu01"></i>支持的项目</a></li>
-                  <li><a href="/author_info_detail"><i class="down-menu02"></i>发起的项目</a></li>
-                  <li><a href="/corp-index"><i class="down-menu07"></i>发起者后台</a></li>
-                  <li><a href="/home-focus/id-428140"><i class="down-menu03"></i>喜欢的项目</a></li>
-                  <li><a href="/message"><i class="down-menu04"></i>消息中心</a></li>
-                  <li><a href="/settings"><i class="down-menu05"></i>个人设置</a></li>
-                  <li><a href="/logout"><i class="down-menu06"></i>退出</a></li>
-              </ul>
-            </div>
-		<%}%>
-
-                        <form action="/deals" method="get" wx-validator>
-            <span>
-              <input name="k" wx-validator-placeholder="输入关键词" wx-validator-rule="required" type="text" wx-validator-notip>
-              <span class="wx-placeholder" style="font-size:12px;position:absolute;top:3px;*top:3px;left:80px;*left:10px;">输入关键字</span>
-                <a href="javascript:;" type="submit" class="bh-mhnbo"></a>
-            </span>
-          </form>
-        </div>
-	</div>
-	<input type='hidden' id='csrf_token' value='97160843' />		
-</div>
+<%include header.ejs%>
 <!--header end-->
 <link rel="stylesheet" type="text/css" href="http://zcstatic.wangxingroup.com/zhongchou/pub/v3/54a58051ccf1833f8e04a32cf144a640.css?V=1419321176" >
