@@ -41,7 +41,7 @@ app.use(express.cookieParser());
 //ssession组件
 app.use(session({
       secret : settings.cookieSecret,
-      cookie : {maxAge : 60000000},
+      cookie : {maxAge : 6000000},
       store : new MongoStore({
           db : settings.db
       }),
@@ -58,6 +58,7 @@ console.log("初始化时间==="+time);
 app.use(function(req, res, next){
 console.log(moment(new Date()).format('YYYY-MM-DD'));
 res.locals.user = req.session.user;
+res.locals.user_mobile=req.session.user_mobile;
 res.locals.user_project_info = req.session.user_project_info;
 var flag=req.session.flag;
 var err = req.session.error;

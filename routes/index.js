@@ -167,13 +167,30 @@ app.get('/author_info_detail_query',function(req,res){
 
 
 app.get('/project-info',function(req,res){
-	res.render('project_info', { title: '我的项目',action_flag:"start_project"});
+	if(req.query.flag=='edit'){
+
+            res.render('edit_project_info', { title: '我的项目',action_flag:"start_project",edit_project_info_flag:req.session.user_project_info});
+	}else{
+			res.render('project_info', { title: '我的项目',action_flag:"start_project"});
+	}
+
 });
-app.post('/project-info',requestHandlers.project_info_save);
+app.post('/project-info',function(req,res){
+	if(req.body.update=='update'){
+		console.log("update project");
+		requestHandlers.project_info_update(req,res);
+	}else{
+		requestHandlers.project_info_save(req,res);
+	}
+});
+
+
+app.get('/delete_project',requestHandlers.delete_project);
+
 
 
 app.get('/project_returns',function(req, res){
-var user_project_returns_info=req.session.user_project_returns_info;
+var user_project_returns_info=req.session.user_project_returns_info_arr;
 if(user_project_returns_info){
 	if(user_project_returns_info.length>0){
 		console.log("user_project_returns_info.length===="+user_project_returns_info.length);
@@ -184,7 +201,9 @@ if(user_project_returns_info){
 		}
 
 }else{
-	res.render('project_returns', { title: 'project_returns',items:null,action_flag:"start_project"});
+	//查询数据库
+	requestHandlers.query_project_returns(req,res);
+	//res.render('project_returns', { title: 'project_returns',items:null,action_flag:"start_project"});
 
 }
 });
@@ -206,8 +225,119 @@ app.get('/message',function(req,res){
 });
 
 app.get('/user_admin',function(req,res){
+	if(req.query.user_admin_flag){
+	req.session.user_admin_flag=req.query.user_admin_flag;	
+	}
+	
+	if(req.session.user_admin_flag=='unpublic_project_list'){
+    var project_info_arr=req.session.unpublish_project_info_arr;
+	var num=req.session.flag;
+	console.log("project_info_arr=========="+project_info_arr);
+	var paginate= req.session.unpublish_paginate;
+	var arr=req.session.arr;
+	if(project_info_arr){
+		console.log("req.session.count===="+req.session.count);		
+		if(!paginate){
+			var paginate=new Paginate(1,2,req.session.count);
+			req.session.unpublish_paginate=paginate;
+			console.log("next===="+paginate.next());
+			console.log("pagesize===="+paginate.pagesize);        
+			console.log("maxpage===="+paginate.maxpage);
+			console.log("page===="+paginate.page);
+			console.log("total===="+paginate.total);
+			arr=new Array()
+
+			if(paginate.maxpage>=1){
+			for(var i=1;i<=paginate.maxpage;i++){
+               arr.push(i);
+          	}
+          }	
+          req.session.arr=arr;
+		}
+     console.log("nextPage===="+paginate.nextPage);
+	res.render('user_admin', { title: '项目信息',items:project_info_arr,pageitems:arr,user_admin_flag:req.session.user_admin_flag,action_flag:""});	
+	}else{
+	requestHandlers.query_unpublish_project(req,res);
+	}
+
+	}else if(req.session.user_admin_flag=='shipping_management'){
 	res.render('user_admin', { title: '个人后台管理',user_admin_flag:req.query.user_admin_flag});
+	}else if(req.session.user_admin_flag=='project_list'){
+	res.render('user_admin', { title: '个人后台管理',user_admin_flag:req.query.user_admin_flag});
+	}else{
+		res.render('user_admin', { title: '个人后台管理',user_admin_flag:req.query.user_admin_flag});
+	}
+
 });
+
+
+
+app.get('/public_project_query',function(req,res){
+	var paginate =req.session.unpublish_paginate;
+	var flag=req.query.flag;
+	console.log("paginate.maxpage==="+paginate.maxpage);
+	var page=req.query.page;
+	if(page=="next"){
+	if(paginate.page>=paginate.maxpage){
+	paginate.page=paginate.maxpage;
+	page=paginate.page;
+	flag=paginate.page;
+	}else{
+	paginate.page=paginate.nextPage;
+	console.log("下一页的页数是==="+paginate.page);
+	page=paginate.page;
+	flag=paginate.page;
+	}
+	}
+
+	if(page=="pre"){
+	if(paginate.page<=1){
+	paginate.page=1;
+	page=paginate.page;
+	flag=paginate.page;
+	}else{
+	paginate.page=paginate.prePage;
+	console.log("上一页的页数是==="+paginate.page);
+	page=paginate.page;
+	flag=paginate.page;
+	}
+	}
+
+	req.session.flag=flag;
+	console.log("req.query.page==="+page);
+	console.log("req.query.flag==="+flag);
+    //var pages=new Paginate(page,2,req.session.project_info_arr.length);
+
+     if(page>paginate.maxpage){
+       return res.redirect('/user_admin');
+    }else{
+        paginate.page = page;
+    }
+     if(page > paginate.maxpage){
+       return res.redirect('/user_admin');
+    }else{
+    	if(page==paginate.maxpage){
+    		paginate.nextPage=page;
+    	}else{
+    		 paginate.nextPage= (parseInt(page)+1);
+    	}
+
+    }
+	if(page <1){
+	return res.redirect('/user_admin');
+	}
+	else{
+		if(page==1){
+			paginate.prePage=page;
+		}else{
+			paginate.prePage= page-1;
+		}
+
+	}
+     req.session.unpublish_paginate=paginate ;
+     requestHandlers.query_unpublish_project(req,res);
+});
+
 
 
 app.post('/start_project',function(req,res){
@@ -216,7 +346,7 @@ app.post('/start_project',function(req,res){
 
 
 app.get('/help_term',function(req,res){
- res.render('help_term', { title: '众酬协议',help_flag:req.query.help_flag});
+ res.render('help_term', { title: '众酬协议',help_flag:req.query.help_flag,action_flag:""});
 });
 
 

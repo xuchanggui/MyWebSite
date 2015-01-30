@@ -108,3 +108,62 @@ User_Project_Returns_Info.deleteUserProjectReturnsInfoByData_id = function(data_
     });
   });
 };
+
+//根据用户手机号删除用户项目反馈信息
+User_Project_Returns_Info.deleteUserProjectReturnsInfoByMobile = function(mobile, callback) {
+  //打开数据库
+  mongodb.open(function (err, db) {
+    if (err) {
+      return callback(err);//错误，返回 err 信息
+    }
+    //读取 users 集合
+    db.collection('user_project_returns_info', function (err, collection) {
+      if (err) {
+        mongodb.close();
+        return callback(err);//错误，返回 err 信息
+      }
+      //通过data_id删除用户反馈信息
+      collection.remove({
+        user_mobile: mobile
+      }, function (err, delete_result) {
+        mongodb.close();
+        if (err) {
+          return callback(err,null);//失败！返回 err 信息
+        }
+        callback(null, delete_result);//成功！返回查询的用户信息
+      });
+    });
+  });
+};
+
+
+//根据手机号码获取用户项目信息
+User_Project_Returns_Info.find_project_returns_info_by_mobile = function(req, callback) {
+  //打开数据库
+  mongodb.open(function (err, db) {
+    if (err) {
+      return callback(err);//错误，返回 err 信息
+    }
+    //读取 users 集合
+    db.collection('user_project_returns_info', function (err, collection) {
+      if (err) {
+        mongodb.close();
+        return callback(err);//错误，返回 err 信息
+      }
+      //查找用户名（name键）值为 name 一个文档
+      //如果传入的参数page存在则进行分页查询
+          collection.find({user_mobile:req.session.user.mobile}).toArray(function(err, docs) {
+          mongodb.close();
+          if (err) {
+          callback(err, null);
+          }
+          // 封裝 posts 爲 Post 對象
+          var user_project_returns_info_arr = [];
+          docs.forEach(function(doc, index) {
+          user_project_returns_info_arr.push(doc);
+          });
+          callback(null, user_project_returns_info_arr);
+          });
+    });
+  });
+};

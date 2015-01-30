@@ -1,40 +1,56 @@
 <div class="header">
 	<div class="wrap clearfix">		
-        <div class="m-left">
-                 <h1><a alt="众筹网" class="img-logo" title="众筹网" href="/">众筹网</a></h1>
-                  
-          <ul class="m-nav clearfix">
-          <%if(action_flag=='start_project'){%>
-          <li><a  class="z-home" href="/?action_flag=index"><span><i class="s-01"></i></span>首页</a></li>
-          <li><a  href="/browse?action_flag=browse"><i class="s-02"></i>浏览项目</a></li>
-          <li style="display:none"><a href="http://news.zhongchou.cn/"><i class="s-09"></i>资讯</a></li>
-          <li><a href="http://www.yuanshihui.com/" target="_blank"><i class="s-30"></i>原始会</a></li>
-          <li ><a class='selected' href="/project?action_flag=start_project" ><i class="s-03"></i>发起项目</a></li>
-          <li style="display:none"><a href="http://www.zhongchou.cn/forum"><i class="s-10"></i>论坛</a></li>
-          <%}else if(action_flag=='browse'){%>
-          <li><a  class="z-home" href="/?action_flag=index"><span><i class="s-01"></i></span>首页</a></li>
-          <li ><a class='selected' href="/browse?action_flag=browse"><i class="s-02"></i>浏览项目</a></li>
-          <li style="display:none"><a href="http://news.zhongchou.cn/"><i class="s-09"></i>资讯</a></li>
-          <li><a href="http://www.yuanshihui.com/" target="_blank"><i class="s-30"></i>原始会</a></li>
-          <li ><a href="/project?action_flag=start_project" ><i class="s-03"></i>发起项目</a></li>
-          <li style="display:none"><a href="http://www.zhongchou.cn/forum"><i class="s-10"></i>论坛</a></li>
-          <%}else if(action_flag=='index'){%>
-          <li><a class='selected' class="z-home" href="/?action_flag=index"><span><i class="s-01"></i></span>首页</a></li>
-          <li ><a  href="/browse?action_flag=browse"><i class="s-02"></i>浏览项目</a></li>
-          <li style="display:none"><a href="http://news.zhongchou.cn/"><i class="s-09"></i>资讯</a></li>
-          <li><a href="http://www.yuanshihui.com/" target="_blank"><i class="s-30"></i>原始会</a></li>
-          <li ><a href="/project?action_flag=start_project" ><i class="s-03"></i>发起项目</a></li>
-          <li style="display:none"><a href="http://www.zhongchou.cn/forum"><i class="s-10"></i>论坛</a></li>
-          <%}else{%>
-          <li><a  class="z-home" href="/?action_flag=index"><span><i class="s-01"></i></span>首页</a></li>
-          <li ><a  href="/browse?action_flag=browse"><i class="s-02"></i>浏览项目</a></li>
-          <li style="display:none"><a href="http://news.zhongchou.cn/"><i class="s-09"></i>资讯</a></li>
-          <li><a href="http://www.yuanshihui.com/" target="_blank"><i class="s-30"></i>原始会</a></li>
-          <li ><a  href="/project?action_flag=start_project" ><i class="s-03"></i>发起项目</a></li>
-          <li style="display:none"><a href="http://www.zhongchou.cn/forum"><i class="s-10"></i>论坛</a></li>
-          <%}%>
-          </ul>
-        </div>
+      <div class="m-left">
+      <h1><a alt="众筹网" class="img-logo" title="众筹网" href="/">众筹网</a></h1>
+
+      <ul class="m-nav clearfix">
+      <%if(action_flag=='start_project'){%>
+      <li><a  class="z-home" href="/?action_flag=index"><span><i class="s-01"></i></span>首页</a></li>
+      <li><a  href="/browse?action_flag=browse"><i class="s-02"></i>浏览项目</a></li>
+      <li style="display:none"><a href="http://news.zhongchou.cn/"><i class="s-09"></i>资讯</a></li>
+      <li><a href="http://www.yuanshihui.com/" target="_blank"><i class="s-30"></i>原始会</a></li>
+      <%if(user){%>
+      <li ><a class='selected' href="/project-info?action_flag=start_project" ><i class="s-03"></i>发起项目</a></li>
+      <%}else{%>
+      <li ><a class='selected' href="/project?action_flag=start_project" ><i class="s-03"></i>发起项目</a></li>
+      <%}%>
+      <li style="display:none"><a href="http://www.zhongchou.cn/forum"><i class="s-10"></i>论坛</a></li>
+      <%}else if(action_flag=='browse'){%>
+      <li><a  class="z-home" href="/?action_flag=index"><span><i class="s-01"></i></span>首页</a></li>
+      <li ><a class='selected' href="/browse?action_flag=browse"><i class="s-02"></i>浏览项目</a></li>
+      <li style="display:none"><a href="http://news.zhongchou.cn/"><i class="s-09"></i>资讯</a></li>
+      <li><a href="http://www.yuanshihui.com/" target="_blank"><i class="s-30"></i>原始会</a></li>
+      <%if(user){%>
+      <li ><a  href="/project-info?action_flag=start_project" ><i class="s-03"></i>发起项目</a></li>
+      <%}else{%>
+      <li ><a href="/project?action_flag=start_project" ><i class="s-03"></i>发起项目</a></li>
+      <%}%>
+      <li style="display:none"><a href="http://www.zhongchou.cn/forum"><i class="s-10"></i>论坛</a></li>
+      <%}else if(action_flag=='index'){%>
+      <li><a class='selected' class="z-home" href="/?action_flag=index"><span><i class="s-01"></i></span>首页</a></li>
+      <li ><a  href="/browse?action_flag=browse"><i class="s-02"></i>浏览项目</a></li>
+      <li style="display:none"><a href="http://news.zhongchou.cn/"><i class="s-09"></i>资讯</a></li>
+      <li><a href="http://www.yuanshihui.com/" target="_blank"><i class="s-30"></i>原始会</a></li>
+      <%if(user){%>
+      <li ><a  href="/project-info?action_flag=start_project" ><i class="s-03"></i>发起项目</a></li>
+      <%}else{%>
+      <li ><a  href="/project?action_flag=start_project" ><i class="s-03"></i>发起项目</a></li>
+      <%}%>
+      <li style="display:none"><a href="http://www.zhongchou.cn/forum"><i class="s-10"></i>论坛</a></li>
+      <%}else{%>
+      <li><a  class="z-home" href="/?action_flag=index"><span><i class="s-01"></i></span>首页</a></li>
+      <li ><a  href="/browse?action_flag=browse"><i class="s-02"></i>浏览项目</a></li>
+      <li style="display:none"><a href="http://news.zhongchou.cn/"><i class="s-09"></i>资讯</a></li>
+      <li><a href="http://www.yuanshihui.com/" target="_blank"><i class="s-30"></i>原始会</a></li>
+      <%if(user){%>
+      <li ><a  href="/project-info?action_flag=start_project" ><i class="s-03"></i>发起项目</a></li>
+      <%}else{%>
+      <li ><a  href="/project?action_flag=start_project" ><i class="s-03"></i>发起项目</a></li>
+      <%}%>
+      <li style="display:none"><a href="http://www.zhongchou.cn/forum"><i class="s-10"></i>论坛</a></li>
+      <%}%>
+      </ul>
+      </div>
         <div class="m-right clearfix">
         	
         	
@@ -45,11 +61,11 @@
 		</span> 
 		<%}else{%>
 		<div id="Js-header-loginBtn">
-              <span class="pull-down clearfix"><i class="meun-02"></i><i class="meun-01"><%=user.mobile%></i></span>
+              <span class="pull-down clearfix"><i class="meun-02"></i><i class="meun-01"><%=user_mobile%></i></span>
               <ul id="Js-header-login" class="mm-nubg">
                   <li><a href="/home/id-428140"><i class="down-menu01"></i>支持的项目</a></li>
                   <li><a href="/author_info_detail?action_flag="><i class="down-menu02"></i>发起的项目</a></li>
-                  <li><a href="/user_admin"><i class="down-menu07"></i>发起者后台</a></li>
+                  <li><a href="/user_admin?user_admin_flag=project_list"><i class="down-menu07"></i>发起者后台</a></li>
                   <li><a href="/home-focus/id-428140"><i class="down-menu03"></i>喜欢的项目</a></li>
                   <li><a href="/message"><i class="down-menu04"></i>消息中心</a></li>
                   <li><a href="/user_settings?action_flag="><i class="down-menu05"></i>个人设置</a></li>

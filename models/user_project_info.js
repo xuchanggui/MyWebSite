@@ -182,3 +182,79 @@ User_Project_Info.findUserProjectInfoByMobile = function(mobile, callback) {
     });
   });
 };
+
+//根据项目名称删除项目信息
+User_Project_Info.delete_project_info = function(req, callback) {
+  //打开数据库
+  mongodb.open(function (err, db) {
+    if (err) {
+      return callback(err);//错误，返回 err 信息
+    }
+    //读取 users 集合
+    db.collection('user_project_info', function (err, collection) {
+      if (err) {
+        mongodb.close();
+        return callback(err);//错误，返回 err 信息
+      }
+      //通过data_id删除用户反馈信息
+      collection.remove({
+        user_mobile: req.session.user.mobile,
+        name:req.query.name
+      }, function (err, delete_result) {
+        mongodb.close();
+        if (err) {
+          return callback(err,null);//失败！返回 err 信息
+        }
+        callback(null, delete_result);//成功！返回查询的用户信息
+      });
+    });
+  });
+};
+
+
+//更新项目信息
+User_Project_Info.prototype.update_project_info = function(req, callback) {
+  //l相当于java里面的bean
+    var user_project_info = {
+    name: this.name,
+    limit_price: this.limit_price,
+    deal_days:this.deal_days,
+    category:this.category,
+    pic_path:this.pic_path,
+    project_location:this.project_location,
+    city:this.city,
+    vedio_url:this.vedio_url,
+    project_brief:this.project_brief,
+    project_details:this.project_details,
+    user_mobile:this.user_mobile,
+    tags:this.tags,
+    time:this.time
+  };
+  //打开数据库
+  mongodb.open(function (err, db) {
+    if (err) {
+      return callback(err);//错误，返回 err 信息
+    }
+    //读取 users 集合
+    db.collection('user_project_info', function (err, collection) {
+      if (err) {
+        mongodb.close();
+        return callback(err);//错误，返回 err 信息
+      }
+
+
+      console.log("user_project_info=========="+user_project_info.name);
+      //查找用户名（name键）值为 name 一个文档
+      collection.update({
+        user_mobile: req.body.user_mobile,
+        name:req.body.project_name
+      },{$set:user_project_info}, function (err, result) {
+        mongodb.close();
+        if (err) {
+          return callback(err,null);//失败！返回 err 信息
+        }
+        callback(null, result);//成功！返回查询的用户信息
+      });
+    });
+  });
+};

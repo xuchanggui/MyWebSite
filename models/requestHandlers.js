@@ -3,6 +3,7 @@ var url=require("url");
 var util = require('util');
 var crypto=require('crypto');
 var User = require('./user');
+var Paginate=require('../util/Paginate')
 var User_Project_Info = require('./user_project_info');
 var User_Project_Returns_Info = require('./user_project_returns_info');
 var Author_Information = require('./author_information');
@@ -120,6 +121,8 @@ var newUser=new User(
    // console.log("执行到了7");
     //newUser.mobile=newUser.mobile.replace(newUser.mobile.substr(3,7),"*****");
 	//console.log("newUser.mobile======"+newUser.mobile);
+	req.session.user_mobile=newUser.mobile.replace(newUser.mobile.substr(3,7),"*****");
+	console.log("user.mobile======"+newUser.mobile);
  	req.session.user=newUser;
 	req.session.success='注册成功!'
  	return res.redirect('/');	
@@ -151,8 +154,8 @@ var password=md5.update(req.body.password).digest('base64');
 		req.session.error="用户密码错误";
 		return res.redirect('/login');
 	}
-	//user.mobile=user.mobile.replace(user.mobile.substr(3,7),"*****");
-	//console.log("user.mobile======"+user.mobile);
+	req.session.user_mobile=user.mobile.replace(user.mobile.substr(3,7),"*****");
+	console.log("user.mobile======"+user.mobile);
  	req.session.user=user;
     req.session.success="登录成功";
 	return res.redirect('/');
@@ -184,6 +187,8 @@ var password=md5.update(req.body.password).digest('base64');
 		req.session.error="用户密码错误";
 		return res.redirect('/login');
 	}
+	req.session.user_mobile=user.mobile.replace(user.mobile.substr(3,7),"*****");
+	console.log("user.mobile======"+user.mobile);
  	req.session.user=user;
     req.session.success="登录成功";
 	return res.redirect('/project-info');
@@ -248,10 +253,13 @@ function project_info_save(req,res){
  	}*/
 
  	//上传图片
-   if(!upload(req,res)){
+ 	console.log("req.body.real_pic_url===="+req.body.real_pic_url);
+ 	if(req.body.real_pic_url){
+     if(!upload(req,res)){
    	console.log("上传图片失败!");
      return res.redirect('/project-info');
    }
+ 	}
    var user_project_info=getUserProjectInfo(req,res);
 	console.log("name====="+user_project_info.name);
 	console.log('limit_price======'+user_project_info.limit_price);
@@ -276,10 +284,165 @@ function project_info_save(req,res){
    // console.log("执行到了7");
  	//req.session.user=newUser;
 	req.session.success='项目信息保存成功!';
+	req.session.unpublish_project_info_arr=null;
+    req.session.project_info_arr=null;
+    req.session.unpublish_project_info_arr=null;
+    req.session.unpublish_paginate=null;
 	req.session.user_project_info=user_project_info;
  	return res.redirect('/project_returns');	
  	});
  });
+}
+
+//更新项目信息
+function project_info_update(req,res){
+//验证提交表单的内容
+	if(!validate_project_info(req,res)){
+		err="请仔细检查所填写的内容是否有误";
+		req.session.error=err;
+		console.log("验证表单不通过");
+		return res.redirect('/project-info');
+	}
+
+ 	//上传图片
+ 	if(req.body.real_pic_url){
+		if(!upload(req,res)){
+		console.log("上传图片失败!");
+		req.query.flag=='edit'
+		return res.redirect('/project-info');
+		}
+ 	}
+
+	var user_project_info=getUserProjectInfo(req,res);
+	console.log("name====="+user_project_info.name);
+	console.log('limit_price======'+user_project_info.limit_price);
+	console.log('deal_days======'+user_project_info.deal_days);
+	console.log("category====="+user_project_info.category);
+	console.log("pic_path===="+user_project_info.pic_path);
+	console.log('project_location======'+user_project_info.project_location);
+	console.log('city======'+user_project_info.city);
+	console.log("vedio_url====="+user_project_info.vedio_url);
+	console.log('project_brief======'+user_project_info.project_brief);
+	console.log('project_details======'+user_project_info.project_details);
+	console.log('user_mobile======'+user_project_info.user_mobile);
+	console.log('tags======'+user_project_info.tags);
+
+ //更行项目信息
+    user_project_info.update_project_info(req,function(err,result){
+    	console.log("hahhhhhhhh ===");
+	if(err){
+	console.log(err);
+	req.session.error=err;
+	return res.redirect('/project-info');
+	}
+
+	 console.log("result==="+result);
+	if(result<0){
+		err="更新项目失败";
+		console.log(err);
+		req.session.error=err;	
+		req.query.flag=='edit'
+		return res.redirect('/project-info');
+	}
+ 	succ="更新项目成功!";
+ 	console.log(succ);
+    req.session.success=succ;
+    //清空缓存里面的项目信息
+    req.session.unpublish_project_info_arr=null;
+    req.session.project_info_arr=null;
+    req.session.unpublish_project_info_arr=null;
+    req.session.unpublish_paginate=null;
+    return res.redirect('/project_returns');
+
+
+ });
+
+}
+
+//删除项目信息
+function delete_project(req,res){
+
+var mobile=req.session.user.mobile;
+var name=req.query.name;
+var pic_url=req.query.pic_url;
+console.log("准备删除用户的手机号码==="+mobile);
+console.log("准备删除用户的项目名称==="+name);
+console.log("准备删除用户的项目封面图片==="+pic_url);
+//先删除session缓存的数据
+req.session.unpublish_project_info_arr=null;
+req.session.unpublish_paginate=null;
+req.session.project_info_arr=null;
+User_Project_Info.delete_project_info(req,function(err,result){
+ 	if(err){
+ 		err='删除过程失败!';
+ 		console.log(err);
+ 		req.session.error=err;
+ 		req.query.user_admin_flag="unpublic_project_list";
+		 return res.redirect('/user_admin');
+		
+ 	}
+	if(result<0){
+		err="删除项目失败";
+		console.log(err);
+		req.session.error=err;
+		req.query.user_admin_flag="unpublic_project_list";	
+		return res.redirect('/user_admin');
+	}
+     console.log("result==="+result);
+	//删除项目封面
+	fs.unlinkSync(uploadDir+pic_url);
+	console.log('项目封面图片已被删除');
+	//删除与该项目关联的反馈信息
+	console.log("准备删除与该项目关联的反馈信息");
+	User_Project_Returns_Info.deleteUserProjectReturnsInfoByMobile(mobile,function(err,result){
+	if(err){
+	err='删除关联的项目反馈信息失败!';
+	console.log("err==="+err);
+	req.session.error=err;
+	req.query.user_admin_flag="unpublic_project_list";
+	return res.redirect('/user_admin');
+	}
+	console.log("result==="+result);
+	if(result<0){
+	err="删除关联的项目反馈信息失败!";
+	req.session.error=err;
+	req.query.user_admin_flag="unpublic_project_list";
+	return res.redirect('/user_admin');
+	}
+	//清空session中保存的反馈信息缓存
+	req.session.user_project_returns_info_arr=null;
+	succ="删除关联的项目反馈信息成功!";
+	console.log(succ);
+	//删除与该项目关联的用户银行帐号信息
+    Author_Information.delete_author_info(req,function(err,result){
+ 	if(err){
+		err='删除关联银行帐号信息失败!';
+		console.log("err==="+err);
+		req.session.error=err;
+		req.query.user_admin_flag="unpublic_project_list";
+		return res.redirect('/user_admin');
+ 	}
+ 	console.log("result==="+result);
+	if(result<0){
+		err="删除关联银行帐号信息失败";
+		req.session.error=err;
+		req.query.user_admin_flag="unpublic_project_list";
+		return res.redirect('/user_admin');
+	}
+ 	succ="删除关联银行帐号信息成功!";
+    console.log(succ);
+
+    succ="删除项目成功!";
+ 	console.log(succ);
+    req.session.success=succ;
+    req.query.user_admin_flag="unpublic_project_list";
+    return res.redirect('/user_admin');
+	});
+
+ });
+
+ });
+
 }
 
 
@@ -350,13 +513,18 @@ function project_returns_save(req,res){
  		//console.log("执行到了6");
  		return res.redirect('/project_returns');
  	}
-   // console.log("执行到了7");
- 	//req.session.user=newUser;
- 	returns_arr.push(user_project_returns_info);
-    //returns_arr.splice(1,1);
+    if(req.session.returns_arr){
+     returns_arr=req.session.returns_arr;
+	  returns_arr.push(user_project_returns_info);
+    }else{
+    	returns_arr.push(user_project_returns_info);
+    }
+
+	//returns_arr.splice(1,1);
 	req.session.success='项目反馈信息保存成功!';
 	req.session.returns_arr=returns_arr;
-	req.session.user_project_returns_info=req.session.returns_arr;
+	req.session.user_project_returns_info_arr=req.session.returns_arr;
+ 
  	return res.redirect('/project_returns');	
  	});
 
@@ -369,7 +537,7 @@ function delete_user_project_returns_info(req,res){
 var data_id=req.query.data_id;
 console.log("data_id==="+data_id);
 //先删除session缓存的数据
-returns_arr=req.session.user_project_returns_info;
+returns_arr=req.session.user_project_returns_info_arr;
 for(var i=0;i<returns_arr.length;i++){
 	if(returns_arr[i].data_id==data_id){
 		console.log("删除的data_id=="+data_id);
@@ -377,7 +545,7 @@ for(var i=0;i<returns_arr.length;i++){
 		console.log("returns_arr.length===="+returns_arr.length);
 		//重新给session赋值
 		req.session.returns_arr=returns_arr;
-		req.session.user_project_returns_info=req.session.returns_arr;
+		req.session.user_project_returns_info_arr=req.session.returns_arr;
 
 	}
 }
@@ -390,7 +558,7 @@ User_Project_Returns_Info.deleteUserProjectReturnsInfoByData_id(data_id,function
 		
  	}
  	console.log("result==="+result);
-	if(result<=0){
+	if(result<0){
 		err="删除记录失败";
 		req.session.error=err;
 		 res.json({"error":err});
@@ -475,7 +643,7 @@ var name=req.body.name;
 var limit_price=req.body.limit_price;
 var deal_days=req.body.deal_days;
 var category=req.body.category;
-var real_pic_url=req.body.real_pic_url;//这里是特殊情况
+/*var real_pic_url=req.body.real_pic_url;//这里是特殊情况*/
 var project_location=req.body.project_location;
 var city=req.body.city;
 var vedio_url=req.body.vedio_url;
@@ -484,18 +652,7 @@ var project_details=req.body.project_details;
 var user_mobile=req.body.user_mobile;
 var tags=req.body.tags;
 var agr=req.body.agr;
-console.log("验证 name====="+name);
-console.log('验证 limit_price======'+limit_price);
-console.log('验证 deal_days======'+deal_days);
-console.log("验证 category====="+category);
-console.log("验证 real_pic_url===="+real_pic_url);
-console.log('验证 project_location======'+project_location);
-console.log('验证 city======'+city);
-console.log("验证 vedio_url====="+vedio_url);
-console.log('验证 project_brief======'+project_brief);
-console.log('验证 project_details======'+project_details);
-console.log('验证 user_mobile======'+user_mobile);
-console.log('验证 tags======'+tags);
+
 if(name==""){
 	 return false;
 	}else if(name.length>40){
@@ -534,9 +691,9 @@ if(tags==""){
 	}else if(tags.length>12){
 	return false;
 	}
-if(real_pic_url==""){
+/*if(real_pic_url==""){
     return false;
-    }
+    }*/
 return true;
 
 }
@@ -625,7 +782,8 @@ function save_author_info_detail(req,res){
 		bank_name:req.body.bank_name,
 		bank:req.body.bank,
 		bank_user_name:req.body.bank_user_name,
-		bank_card:req.body.bank_card
+		bank_card:req.body.bank_card,
+		user_mobile:req.session.user.mobile
 	});
 
 
@@ -831,6 +989,58 @@ function upload_header(req,res){
 }
 
 
+//查询未发布的项目
+function query_unpublish_project(req,res){
+
+	var paginate=req.session.unpublish_paginate;
+	var page;
+	var pagesize=2;
+	if(paginate){
+     page=req.session.unpublish_paginate.page;
+
+     pagesize= req.session.unpublish_paginate.pagesize;
+	}
+	var mobile=req.session.user.mobile;	
+	console.log("requestHandler里面的pagesize===="+pagesize);
+	console.log("requestHandler里面的page===="+page);
+	console.log("requestHandler里面的mobile===="+mobile);
+		User_Project_Info.findUserProjectInfoByquery(req,pagesize,page,mobile,function(err,unpublish_project_info_arr){
+
+		if(!unpublish_project_info_arr){
+		err='unpublish_project_info_arr not exists';
+		console.log("err===="+err);
+		req.session.error=err;
+		req.session.unpublish_project_info_arr=[];
+		return res.redirect('/user_admin');
+		}
+		req.session.unpublish_project_info_arr=unpublish_project_info_arr;
+		console.log("unpublish_project_info_arr[0]===="+unpublish_project_info_arr[0]);
+        req.session.user_project_info=unpublish_project_info_arr[0];
+		return res.redirect('/user_admin');	
+});
+
+}
+
+//查询项目反馈信息
+function query_project_returns(req,res){
+	User_Project_Returns_Info.find_project_returns_info_by_mobile(req,function(err,user_project_returns_info_arr){
+
+	if(!user_project_returns_info_arr){
+	err='user_project_returns_info_arr not exists';
+	console.log("err===="+err);
+	req.session.error=err;
+	req.session.user_project_returns_info_arr=[];
+	return res.redirect('/project_returns');
+	}
+	req.session.returns_arr=user_project_returns_info_arr;
+	req.session.user_project_returns_info_arr=user_project_returns_info_arr;
+	return res.redirect('/project_returns');	
+});
+
+}
+
+
+
 //检查用户密码是否存在
 function check_pwd_is_exist(req,res){
 //生成口令的数列值return 
@@ -932,5 +1142,9 @@ exports.findUserProject=findUserProject;
 exports.user_settings_save=user_settings_save;
 exports.update_user_password=update_user_password;
 exports.upload_header=upload_header;
+exports.query_unpublish_project=query_unpublish_project;
+exports.delete_project=delete_project;
+exports.project_info_update=project_info_update;
+exports.query_project_returns=query_project_returns;
 exports.check_pwd_is_exist=check_pwd_is_exist;
 exports.logout=logout;

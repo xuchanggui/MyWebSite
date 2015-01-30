@@ -42,10 +42,11 @@
 				<div class="menu-hd tx">
 					<a
 						href="http://www.zhongchou.cn/home/id-428140"
-						class="tit"> <span class='avatar-box'> <img id="headeravatar"
-							src="http://www.zhongchou.cn/avatar/000/42/81/40virtual_avatar_small.jpg?v=1421917627" />
-							<%if(user){%>
-                      </span> <span class="user-name word-break ie6fixpic"><%=user.mobile%></span>
+						class="tit"> <span class='avatar-box'> 
+	                   <%if(user){%>
+						<img id="headeravatar"
+							src="/images/<%=user.head_portrait%>" />
+                      </span> <span class="user-name word-break ie6fixpic"><%=user_mobile%></span>
                       <%}else{%>
                        </span> <span class="user-name word-break ie6fixpic">没有登录</span>
                       <%}%>
@@ -179,24 +180,42 @@
 	<%}%>
 
 	</script>
-	<script type="text/javascript" src="http://zcs9.ncfstatic.com/zhongchou/pub/d4c6a1a930065834ea077dda8374c419.js?V=1422009557" ></script>
 	
-
 	<script type="text/javascript">
-	$(document).ready(function(){
-		$(".btn-share").click(function(){
-			var id = $(this).attr("data-id");
-			var name = $(this).attr("data-name");
-			var src = "http://" + domain + "/" + "corp-share?id=" + id;
-			$("#prj_name").text(name);
-			$("#share-frm")[0].src = src;
-			$("#share-modal").modal();
-		});
+		function on_wnd_resize(){
+			var rh = 0;
+			var w = $(".main-content").width();
+			var lw = $(".left-menu").width();
+			$(".right").find(">div").each(function(i, item){
+				rh += $(item).height();
+			});
 
-		on_wnd_resize();	
-	});
+			
+			$(".right").height(rh);
+			$(".right").width(w-lw - 10);
+			var lh = $(".left-menu").height();
+			var rh = $(".right").height();
+			if(lh < rh){
+				$(".left-menu").height(rh);
+			}
+
+			$(".left-menu").height(rh);
+			$("#nav").width(lw + $(".right").width());
+			$(".main-content").height($(".left-menu").height);
+		}
+		
+		(function(){
+			on_wnd_resize();
+			$(window).resize(function(){
+				on_wnd_resize();
+			});
+			
+		})();       
+
 	</script>
 	
 
+
 </body>
 </html>
+

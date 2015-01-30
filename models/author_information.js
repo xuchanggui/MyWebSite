@@ -9,6 +9,7 @@ function Author_Information(author_information) {
   this.bank=author_information.bank;//开户支行
   this.bank_user_name=author_information.bank_user_name;//开户名称
   this.bank_card=author_information.bank_card;//银行账号
+  this.user_mobile=author_information.user_mobile;
 };
 
 module.exports = Author_Information;
@@ -24,7 +25,8 @@ Author_Information.prototype.save = function (callback) {
     bank_name:this.bank_name,
     bank:this.bank,
     bank_user_name:this.bank_user_name,
-    bank_card:this.bank_card
+    bank_card:this.bank_card,
+    user_mobile:this.user_mobile
   };
   //打开数据库
   mongodb.open(function (err, db) {
@@ -75,6 +77,33 @@ Author_Information.findAuthor_InformationByMobile = function(mobile, callback) {
           return callback(err,null);//失败！返回 err 信息
         }
         callback(null, author_information);//成功！返回查询的用户信息
+      });
+    });
+  });
+};
+
+//根据用户手机号删除用户银行帐号信息
+Author_Information.delete_author_info = function(req, callback) {
+  //打开数据库
+  mongodb.open(function (err, db) {
+    if (err) {
+      return callback(err);//错误，返回 err 信息
+    }
+    //读取 users 集合
+    db.collection('author_information', function (err, collection) {
+      if (err) {
+        mongodb.close();
+        return callback(err);//错误，返回 err 信息
+      }
+      //通过data_id删除用户反馈信息
+      collection.remove({
+        user_mobile: req.session.user.mobile
+      }, function (err, delete_result) {
+        mongodb.close();
+        if (err) {
+          return callback(err,null);//失败！返回 err 信息
+        }
+        callback(null, delete_result);//成功！返回查询的用户信息
       });
     });
   });
