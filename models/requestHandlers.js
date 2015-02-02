@@ -7,6 +7,7 @@ var Paginate=require('../util/Paginate')
 var User_Project_Info = require('./user_project_info');
 var User_Project_Returns_Info = require('./user_project_returns_info');
 var Author_Information = require('./author_information');
+var log4js = require('log4js');
 var path = require('path');
 fs=require("fs");
 formidable=require("formidable");
@@ -477,6 +478,34 @@ function findUserProject(req,res){
 
 }
 
+//查询所有用户的项目发布信息
+function findAllUserProject(req,res){
+	var paginate=req.session.index_paginate;
+	var page;
+	var pagesize=10;
+	if(paginate){
+     page=paginate.page;
+
+     pagesize=paginate.pagesize;
+	}
+	console.log("requestHandler里面的pagesize===="+pagesize);
+	console.log("requestHandler里面的page===="+page);
+		User_Project_Info.findAllUserProjectInfoByquery(req,pagesize,page,function(err,all_user_project_info_arr){
+
+		if(!all_user_project_info_arr){
+		err='all_user_project_info_arr not exists';
+		console.log("err===="+err);
+		req.session.error=err;
+		req.session.all_user_project_info_arr=[];
+		req.query.action_flag="index";
+		return res.redirect('/');
+		}
+		req.session.all_user_project_info_arr=all_user_project_info_arr;
+		req.query.action_flag="index";
+		return res.redirect('/');	
+});
+}
+
 
 //保存项目反馈信息
 function project_returns_save(req,res){
@@ -599,7 +628,7 @@ function upload(req, res) {
      req.session.error=err;
      console.log(err);
      return false;
-  	}else if(req.files[i].size>1048576){  	//1M=lo48576;
+  	}else if(req.files[i].size>10485760){  	//1M=lo48576;
   		err="图片大小最多不超过1M，请从新上传!";
   		console.log(err);
   		req.session.error=err;
@@ -786,8 +815,19 @@ function save_author_info_detail(req,res){
 		user_mobile:req.session.user.mobile
 	});
 
+    author_info.save(function(err){
+ 	if(err){
+ 		console.log("保存项目发起人信息出错==="+err);
+ 		req.session.error=err;
+ 		//console.log("执行到了6");
+ 		return res.redirect('/author_info');
+ 	}
+	req.session.success='保存项目发起人信息成功!'
+ 	return res.redirect('/project_success');	
+ 	});
 
- Author_Information.findAuthor_InformationByMobile(req.body.ex_contact,function(err,author_information){
+
+/* Author_Information.findAuthor_InformationByMobile(req.body.ex_contact,function(err,author_information){
  	if(author_information){
  		err='author_information already exists!';
  			console.log("err===="+err);
@@ -808,7 +848,7 @@ function save_author_info_detail(req,res){
 	req.session.success='保存项目发起人信息成功!'
  	return res.redirect('/project_success');	
  	});
- });
+ });*/
 
 }
 
@@ -962,6 +1002,7 @@ function upload_header(req,res){
 	req.session.success=null;
 	req.session.error=null;
  var image_file=req.body.image_file;
+ var pic_url=req.body.pic_url;
  if(!image_file){
  	  	//上传图片
    if(!upload(req,res)){
@@ -981,6 +1022,8 @@ function upload_header(req,res){
  	}
  	req.session.user.head_portrait=req.session.picture_url;
     succ="更新用户头像成功!";
+    //删除以前的图片
+    fs.unlinkSync(uploadDir+pic_url);
 	req.session.success=succ;
  	return res.redirect('/user_settings?seting_flag=header_update');	
  	});
@@ -1039,7 +1082,28 @@ function query_project_returns(req,res){
 
 }
 
+//根据id查询项目信息
+function  query_project_by_id(req,res){
 
+	var id=req.query.id;	
+	    console.log("id===="+id);
+		User_Project_Info.findUserPorjectInfoById(id,function(err,project_info){
+
+		if(!project_info){
+		err='project_info not exists';
+		console.log("err===="+err);
+		req.session.error=err;
+		req.session.project_info=null;
+        req.session.id_flag='no';
+		return res.redirect('/project_details');
+		}
+		req.session.project_info=project_info;
+		console.log("project_info===="+project_info._id);
+		req.session.id_flag=project_info._id;
+		console.log("req.session.id_flag===="+req.session.id_flag);
+		return res.redirect('/project_details');	
+});
+}
 
 //检查用户密码是否存在
 function check_pwd_is_exist(req,res){
@@ -1139,6 +1203,7 @@ exports.delete_user_project_returns_info=delete_user_project_returns_info;
 exports.save_author_info_detail=save_author_info_detail;
 exports.checkUserAndPassword=checkUserAndPassword;
 exports.findUserProject=findUserProject;
+exports.findAllUserProject=findAllUserProject;
 exports.user_settings_save=user_settings_save;
 exports.update_user_password=update_user_password;
 exports.upload_header=upload_header;
@@ -1146,5 +1211,11 @@ exports.query_unpublish_project=query_unpublish_project;
 exports.delete_project=delete_project;
 exports.project_info_update=project_info_update;
 exports.query_project_returns=query_project_returns;
+exports.query_project_by_id=query_project_by_id;
 exports.check_pwd_is_exist=check_pwd_is_exist;
 exports.logout=logout;
+exports.logger=function(name){
+  var logger = log4js.getLogger(name);
+  logger.setLevel('INFO');
+  return logger;
+}

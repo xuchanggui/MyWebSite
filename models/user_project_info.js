@@ -1,5 +1,6 @@
 var mongodb = require('./db');
 var moment = require('moment');
+var ObjectID = require('mongodb').ObjectID;
 function User_Project_Info(user_project_info) {
   this.name = user_project_info.name;//项目名称
   this.limit_price = user_project_info.limit_price;//筹集金额
@@ -13,7 +14,7 @@ function User_Project_Info(user_project_info) {
   this.project_details=user_project_info.project_details;//项目详情 
   this.user_mobile= user_project_info.user_mobile;//项目发起者手机号码(这是唯一的主键)
   this.tags=user_project_info.tags;//项目标签
-  this.time=moment(new Date()).format('YYYY-MM-DD');
+  this.time=moment(new Date()).format('YYYY-MM-DD');//项目创建时间
 };
 
 module.exports = User_Project_Info;
@@ -121,7 +122,7 @@ User_Project_Info.findUserProjectInfoByquery = function(req,pagesize,page,mobile
           
       }else{
         //查询总数
-            collection.count(function(err,count){ 
+            collection.count({user_mobile:mobile},function(err,count){ 
             total = count; 
             console.log("总共数量是===="+total);
             req.session.count=count;
@@ -151,6 +152,97 @@ User_Project_Info.findUserProjectInfoByquery = function(req,pagesize,page,mobile
     });
   });
 };
+
+//根据id查询项目信息
+User_Project_Info.findUserPorjectInfoById=function(id,callback){
+    //打开数据库
+  mongodb.open(function (err, db) {
+    if (err) {
+      return callback(err);//错误，返回 err 信息
+    }
+    //读取 users 集合
+    db.collection('user_project_info', function (err, collection) {
+      if (err) {
+        mongodb.close();
+        return callback(err);//错误，返回 err 信息
+      }
+      //查找用户名（name键）值为 name 一个文档
+      collection.findOne({
+        _id: ObjectID(id)
+      }, function (err, user_project_info) {
+        mongodb.close();
+        if (err) {
+          return callback(err,null);//失败！返回 err 信息
+        }
+        callback(null, user_project_info);//成功！返回查询的用户信息
+      });
+    });
+  });
+}
+
+//查询所有用户的项目发布信息
+User_Project_Info.findAllUserProjectInfoByquery = function(req,pagesize,page, callback) {
+  //打开数据库
+  mongodb.open(function (err, db) {
+    if (err) {
+      return callback(err);//错误，返回 err 信息
+    }
+    //读取 users 集合
+    db.collection('user_project_info', function (err, collection) {
+      if (err) {
+        mongodb.close();
+        return callback(err);//错误，返回 err 信息
+      }
+      //查找用户名（name键）值为 name 一个文档
+      //如果传入的参数page存在则进行分页查询
+    if(page){
+          collection.find().sort({time: -1}).limit(pagesize).skip(pagesize*(page-1)).toArray(function(err, docs) {
+          mongodb.close();
+          if (err) {
+          callback(err, null);
+          }
+          // 封裝 posts 爲 Post 對象
+          var all_user_project_info_arr = [];
+          docs.forEach(function(doc, index) {
+          console.log("doc.name===="+doc.name);
+          all_user_project_info_arr.push(doc);
+          });
+          callback(null, all_user_project_info_arr);
+          });
+          
+      }else{
+        //查询总数
+            collection.count(function(err,count){ 
+            project_total = count; 
+            console.log("查询的所有用户的项目数量是===="+project_total);
+            req.session.project_total=project_total;
+            if(count==0){
+              mongodb.close();
+              err="没有查询到项目信息!";
+               return callback(err, null);
+            }
+            collection.find().sort({time: -1}).limit(pagesize).toArray(function(err, docs) {
+            mongodb.close();
+            if (err) {
+            return callback(err, null);
+            }
+            // 封裝 posts 爲 Post 對象
+            var all_user_project_info_arr = [];
+            docs.forEach(function(doc, index) {
+            console.log("doc.name===="+doc.name);
+            all_user_project_info_arr.push(doc);
+            });
+            callback(null, all_user_project_info_arr);
+            });
+
+         });
+
+          }
+
+    });
+  });
+};
+
 
 //根据分页查询项目信息
 User_Project_Info.findUserProjectInfoByMobile = function(mobile, callback) {

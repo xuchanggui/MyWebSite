@@ -7,7 +7,7 @@
                    <%if(user.head_portrait){%>
                    <img src="/images/<%=user.head_portrait%>" id="image">
                    <%}else{%>
-                   <img src="http://zcs4.ncfstatic.com/img/defaultavatar/noavatar_middle.gif" id="image">
+                   <img src="/images/noavatar_middle.jpg" id="image">
                    <%}%>
                    </div>
                    <p class="p-browse">
@@ -25,6 +25,7 @@
                 <%}%>
                 <p class="text-caption">*保存成功后如果头像不更新，您可以多刷新几次浏览器</p>
                 <input type="hidden" name="mobile" id="mobile"  value="<%=user.mobile%>" /> 
+                <input type="hidden" name="pic_url" id="pic_url"  value="<%=user.head_portrait%>" />
              </form>
         </div>
         <!--right side end-->

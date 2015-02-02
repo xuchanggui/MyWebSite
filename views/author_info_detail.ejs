@@ -31,9 +31,9 @@
 <div class="m-favicon">
 	<div class="wrap clearfix">
 		<%if(user.head_portrait){%>
-       		<a href="/user_settings" class="z-portrait"><img src="/images/<%=user.head_portrait%>"></a>
+       		<a href="/user_settings?seting_flag=header_update" class="z-portrait"><img src="/images/<%=user.head_portrait%>"></a>
 		<%}else{%>
-		<a href="/user_settings" class="z-portrait"><img src="http://zcs6.ncfstatic.com/img/defaultavatar/noavatar_middle.gif"></a>
+		<a href="/user_settings?seting_flag=header_update" class="z-portrait"><img src="http://zcs6.ncfstatic.com/img/defaultavatar/noavatar_middle.gif"></a>
 		<%}%>
 		<div class="z-introduced">
             <div class="z-chance clearfix">

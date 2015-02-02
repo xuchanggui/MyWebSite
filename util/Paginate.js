@@ -11,7 +11,7 @@ function Paginate(page, pagesize, total){
         page = 1;
     }
     if(!pagesize || pagesize<1){
-        pagesize = 5;
+        pagesize = 10;
     }
     if(!total || total <0){
         total = 0;

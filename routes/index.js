@@ -7,9 +7,108 @@ var Paginate=require('../util/Paginate')
 var	TITLE = 'insupper';
 module.exports=function(app){
 
-app.get('/',function(req, res){
-res.render('index', { title: 'Express',action_flag:req.query.action_flag });
+app.get('/',function(req,res){
+	var all_user_project_info_arr=req.session.all_user_project_info_arr;
+	var num=req.session.flag;
+	console.log("all_user_project_info_arr=========="+all_user_project_info_arr);
+	var paginate= req.session.index_paginate;
+	var index_arr=req.session.index_arr;
+	if(all_user_project_info_arr){
+		console.log("req.session.project_total===="+req.session.project_total);		
+		if(!paginate){
+			var paginate=new Paginate(1,10,req.session.project_total);
+			req.session.index_paginate=paginate;
+			console.log("next===="+paginate.next());
+			console.log("pagesize===="+paginate.pagesize);        
+			console.log("maxpage===="+paginate.maxpage);
+			console.log("page===="+paginate.page);
+			console.log("total===="+paginate.total);
+			index_arr=new Array()
+
+			if(paginate.maxpage>=1){
+			for(var i=1;i<=paginate.maxpage;i++){
+               index_arr.push(i);
+          	}
+          }	
+          req.session.index_arr=index_arr;
+		}
+     console.log("nextPage===="+paginate.nextPage);
+	res.render('index', { title: '众酬网-中国最具知名度的众酬平台',items:all_user_project_info_arr,pageitems:index_arr,action_flag:req.query.action_flag });	
+}else{
+      requestHandlers.findAllUserProject(req,res);
+}
+}
+);
+
+app.get('/all_user_project_info_query',function(req,res){
+	var paginate =req.session.index_paginate;
+	var flag=req.query.flag;
+	console.log("paginate.maxpage==="+paginate.maxpage);
+	var page=req.query.page;
+	if(page=="next"){
+	if(paginate.page>=paginate.maxpage){
+	paginate.page=paginate.maxpage;
+	page=paginate.page;
+	flag=paginate.page;
+	}else{
+	paginate.page=paginate.nextPage;
+	console.log("下一页的页数是==="+paginate.page);
+	page=paginate.page;
+	flag=paginate.page;
+	}
+	}
+
+	if(page=="pre"){
+	if(paginate.page<=1){
+	paginate.page=1;
+	page=paginate.page;
+	flag=paginate.page;
+	}else{
+	paginate.page=paginate.prePage;
+	console.log("上一页的页数是==="+paginate.page);
+	page=paginate.page;
+	flag=paginate.page;
+	}
+	}
+
+	req.session.flag=flag;
+	console.log("req.query.page==="+page);
+	console.log("req.query.flag==="+flag);
+    //var pages=new Paginate(page,2,req.session.project_info_arr.length);
+
+     if(page>paginate.maxpage){
+      		req.query.action_flag="index";
+		return res.redirect('/');
+    }else{
+        paginate.page = page;
+    }
+     if(page > paginate.maxpage){
+      		req.query.action_flag="index";
+		return res.redirect('/');
+    }else{
+    	if(page==paginate.maxpage){
+    		paginate.nextPage=page;
+    	}else{
+    		 paginate.nextPage= (parseInt(page)+1);
+    	}
+
+    }
+	if(page <1){
+			req.query.action_flag="index";
+		return res.redirect('/');
+	}
+	else{
+		if(page==1){
+			paginate.prePage=page;
+		}else{
+			paginate.prePage= page-1;
+		}
+
+	}
+     req.session.index_paginate=paginate ;
+     requestHandlers.findAllUserProject(req,res);
 });
+
 
 app.get('/reg',requestHandlers.checkNotLogin);
 app.get('/reg',function(req,res){
@@ -344,6 +443,40 @@ app.post('/start_project',function(req,res){
  res.render('project_info', { title: '我的项目',action_flag:req.body.action_flag});
 });
 
+
+app.get('/project_details',function(req,res){
+var user_project_info=req.session.project_info;
+if(req.query.id){
+	if(user_project_info){
+	if(user_project_info._id==req.query.id){
+      res.render('project_details', { title: '众酬网-中国最具知名度的众酬平台',project_info:user_project_info,action_flag:"browse"});
+	}else{
+		console.log("开始进行查询数据库操作");
+		requestHandlers.query_project_by_id(req,res);
+	}
+}else{
+	console.log("开始进行查询数据库操作");
+	requestHandlers.query_project_by_id(req,res);
+}
+}else{
+	if(user_project_info){
+	console.log("user_project_info._id==="+user_project_info._id);
+	console.log("req.session.id=====)"+req.session.id_flag);
+
+	if(user_project_info._id==req.session.id_flag){
+      res.render('project_details', { title: '众酬网-中国最具知名度的众酬平台',project_info:user_project_info,action_flag:"browse"});
+	}else{
+		console.log("开始进行查询数据库操作");
+		requestHandlers.query_project_by_id(req,res);
+	}
+}else{
+	console.log("开始进行查询数据库操作");
+	requestHandlers.query_project_by_id(req,res);
+}
+}
+
+
+});
 
 app.get('/help_term',function(req,res){
  res.render('help_term', { title: '众酬协议',help_flag:req.query.help_flag,action_flag:""});

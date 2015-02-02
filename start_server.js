@@ -12,7 +12,9 @@ var http = require('http');
 var path = require('path');
 var flash = require('connect-flash');
 var settings=require('./settings');
+var requestHandlers=require('./models/requestHandlers');
 var partials = require('express-partials');
+var log4js = require('log4js');
 var moment = require('moment');
 var time=new Date().getTime();
 //var SessionStore = require("session-mongoose")(express);
@@ -49,6 +51,23 @@ app.use(session({
       saveUninitialized : true
   }));
 
+
+//配置日志功能
+//start
+log4js.configure({
+  appenders: [
+    { type: 'console' },{
+      type: 'file', 
+      filename: 'logs/access.log', 
+      maxLogSize: 1024,
+      backups:4,
+      category: 'normal'
+    }
+  ],
+  replaceConsole: true
+});
+app.use(log4js.connectLogger(requestHandlers.logger('normal'), {level:'auto', format:':method :url'}));
+//end
 
 console.log("main===");
 console.log("初始化时间==="+time);
