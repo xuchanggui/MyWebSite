@@ -9,7 +9,8 @@ function Author_Information(author_information) {
   this.bank=author_information.bank;//开户支行
   this.bank_user_name=author_information.bank_user_name;//开户名称
   this.bank_card=author_information.bank_card;//银行账号
-  this.user_mobile=author_information.user_mobile;
+  this.user_mobile=author_information.user_mobile;//项目发起人手机号
+  this.project_name=author_information.project_name;//项目名称
 };
 
 module.exports = Author_Information;
@@ -26,7 +27,8 @@ Author_Information.prototype.save = function (callback) {
     bank:this.bank,
     bank_user_name:this.bank_user_name,
     bank_card:this.bank_card,
-    user_mobile:this.user_mobile
+    user_mobile:this.user_mobile,
+    project_name:this.project_name
   };
   //打开数据库
   mongodb.open(function (err, db) {
@@ -83,7 +85,7 @@ Author_Information.findAuthor_InformationByMobile = function(mobile, callback) {
 };
 
 //根据用户手机号删除用户银行帐号信息
-Author_Information.delete_author_info = function(req, callback) {
+Author_Information.delete_author_info = function(user_mobile,project_name, callback) {
   //打开数据库
   mongodb.open(function (err, db) {
     if (err) {
@@ -97,7 +99,8 @@ Author_Information.delete_author_info = function(req, callback) {
       }
       //通过data_id删除用户反馈信息
       collection.remove({
-        user_mobile: req.session.user.mobile
+        user_mobile: user_mobile,
+        project_name:project_name
       }, function (err, delete_result) {
         mongodb.close();
         if (err) {

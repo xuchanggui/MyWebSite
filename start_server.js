@@ -47,8 +47,8 @@ app.use(session({
       store : new MongoStore({
           db : settings.db
       }),
-      resave : true,
-      saveUninitialized : true
+      resave : false,
+      saveUninitialized : false
   }));
 
 

@@ -266,12 +266,26 @@ app.get('/author_info_detail_query',function(req,res){
 
 
 app.get('/project-info',function(req,res){
-	if(req.query.flag=='edit'){
+	console.log("req.query.flag===="+req.query.flag);
+	console.log("req.session.update_project_flag==="+req.session.update_project_flag)
+    if(req.query.flag=='edit'){
+			if(req.session.user_project_info._id==req.query.id){
+            res.render('edit_project_info', { title: '我的项目',action_flag:"start_project",edit_project_info_flag:req.session.user_project_info});	
+            }else{
+             requestHandlers.query_unpublish_project_by_id(req,res);
+            }
 
-            res.render('edit_project_info', { title: '我的项目',action_flag:"start_project",edit_project_info_flag:req.session.user_project_info});
+	}else if(req.session.update_project_flag=='edit'){
+		 req.session.update_project_flag=null;
+		 res.render('edit_project_info', { title: '我的项目',action_flag:"start_project",edit_project_info_flag:req.session.user_project_info});	
+			
+	}else if(req.session.update_project_flag=='error'){
+		req.session.update_project_flag=null;
+		res.render('project_info', { title: '我的项目',action_flag:"start_project"});
 	}else{
-			res.render('project_info', { title: '我的项目',action_flag:"start_project"});
+		res.render('project_info', { title: '我的项目',action_flag:"start_project"});
 	}
+
 
 });
 app.post('/project-info',function(req,res){

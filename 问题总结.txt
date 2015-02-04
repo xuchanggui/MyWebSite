@@ -1,0 +1,1 @@
+db object already connecting open cannot be called multiple times这种情况一般是数据库没有关闭，比如并发调用两个操作数据库的函数，就会出现这种情况，因为nodejs是并发执行的。

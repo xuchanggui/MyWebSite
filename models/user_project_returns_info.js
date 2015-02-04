@@ -10,6 +10,7 @@ function User_Project_Returns_Info(user_project_returns_info) {
   this.return_type=user_project_returns_info.return_type;//回报类型
   this.user_mobile=user_project_returns_info.user_mobile;//用户手机号码
   this.data_id=user_project_returns_info.data_id;//预留id
+  this.project_name=user_project_returns_info.project_name;
 };
 
 module.exports = User_Project_Returns_Info;
@@ -26,7 +27,8 @@ User_Project_Returns_Info.prototype.save = function (callback) {
     repaid_day:this.repaid_day,
     return_type:this.return_type,
     user_mobile:this.user_mobile,
-    data_id:this.data_id
+    data_id:this.data_id,
+    project_name:this.project_name
   };
   //打开数据库
   mongodb.open(function (err, db) {
@@ -83,7 +85,7 @@ User_Project_Returns_Info.findUserProjectReturnsInfoByMobile = function(mobile, 
 };
 
 //根据data-id删除用户项目反馈信息
-User_Project_Returns_Info.deleteUserProjectReturnsInfoByData_id = function(data_id, callback) {
+User_Project_Returns_Info.deleteUserProjectReturnsInfoByData_id = function(data_id,name, callback) {
   //打开数据库
   mongodb.open(function (err, db) {
     if (err) {
@@ -97,7 +99,8 @@ User_Project_Returns_Info.deleteUserProjectReturnsInfoByData_id = function(data_
       }
       //通过data_id删除用户反馈信息
       collection.remove({
-        data_id: data_id
+        data_id: data_id,
+        project_name:name
       }, function (err, delete_result) {
         mongodb.close();
         if (err) {
@@ -110,7 +113,7 @@ User_Project_Returns_Info.deleteUserProjectReturnsInfoByData_id = function(data_
 };
 
 //根据用户手机号删除用户项目反馈信息
-User_Project_Returns_Info.deleteUserProjectReturnsInfoByMobile = function(mobile, callback) {
+User_Project_Returns_Info.deleteUserProjectReturnsInfoByMobile = function(mobile,name, callback) {
   //打开数据库
   mongodb.open(function (err, db) {
     if (err) {
@@ -124,7 +127,8 @@ User_Project_Returns_Info.deleteUserProjectReturnsInfoByMobile = function(mobile
       }
       //通过data_id删除用户反馈信息
       collection.remove({
-        user_mobile: mobile
+        user_mobile: mobile,
+        project_name:name
       }, function (err, delete_result) {
         mongodb.close();
         if (err) {
@@ -138,7 +142,7 @@ User_Project_Returns_Info.deleteUserProjectReturnsInfoByMobile = function(mobile
 
 
 //根据手机号码获取用户项目信息
-User_Project_Returns_Info.find_project_returns_info_by_mobile = function(req, callback) {
+User_Project_Returns_Info.find_project_returns_info = function(user_mobile,project_name, callback) {
   //打开数据库
   mongodb.open(function (err, db) {
     if (err) {
@@ -152,7 +156,7 @@ User_Project_Returns_Info.find_project_returns_info_by_mobile = function(req, ca
       }
       //查找用户名（name键）值为 name 一个文档
       //如果传入的参数page存在则进行分页查询
-          collection.find({user_mobile:req.session.user.mobile}).toArray(function(err, docs) {
+          collection.find({user_mobile:user_mobile,project_name:project_name}).toArray(function(err, docs) {
           mongodb.close();
           if (err) {
           callback(err, null);
