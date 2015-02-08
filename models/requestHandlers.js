@@ -323,7 +323,19 @@ function project_info_update(req,res){
     console.log("删除原来的项目封面成功");
     //删除原来的项目反馈信息
     var old_project_name=req.body.project_name;
-    User_Project_Returns_Info.deleteUserProjectReturnsInfoByMobile(req.body.user_mobile,old_project_name,function(err,result){
+    var mobile=req.body.user_mobile;
+    console.log("准备删除原来的项目反馈信息");
+    User_Project_Returns_Info.find_project_returns_info(mobile,old_project_name,function(err,user_project_returns_info_arr){
+	if(user_project_returns_info_arr){
+	console.log("开始删除该项目对应的所有的反馈信息图片!");
+	for(var i=0;i<user_project_returns_info_arr.length;i++){
+	console.log("删除的图片名称===="+user_project_returns_info_arr[i].image_file);
+	fs.unlinkSync(uploadDir+user_project_returns_info_arr[i].image_file);
+	} 
+	console.log("删除与该项目关联的所有反馈信息的图片成功!");	
+	}
+
+    User_Project_Returns_Info.deleteUserProjectReturnsInfoByMobile(mobile,old_project_name,function(err,result){
 	if(err){
 	err='删除原来的项目反馈信息失败!';
 	console.log("err==="+err);
@@ -343,7 +355,26 @@ function project_info_update(req,res){
 	succ="删除原来的项目反馈信息成功!";
 	console.log(succ);
 
-	var user_project_info=getUserProjectInfo(req,res);
+    //删除与该项目关联的用户银行帐号信息
+    Author_Information.delete_author_info(req.body.user_mobile,req.body.name,function(err,result){
+ 	if(err){
+		err='删除关联银行帐号信息失败!';
+		console.log("err==="+err);
+		req.session.error=err;
+		req.session.update_project_flag='error';
+		return res.redirect('/project-info');
+ 	}
+ 	console.log("result==="+result);
+	if(result<0){
+		err="删除关联银行帐号信息失败";
+		req.session.error=err;
+		req.session.update_project_flag='error';
+		return res.redirect('/project-info');
+	}
+ 	succ="删除关联银行帐号信息成功!";
+    console.log(succ);
+
+    var user_project_info=getUserProjectInfo(req,res);
 	console.log("name====="+user_project_info.name);
 	console.log('limit_price======'+user_project_info.limit_price);
 	console.log('deal_days======'+user_project_info.deal_days);
@@ -384,10 +415,11 @@ function project_info_update(req,res){
     req.session.unpublish_paginate=null;
     req.session.user_project_info=user_project_info;
     return res.redirect('/project_returns');
-
-
+ });
+    
  });
 
+ });
  });
 
 }
@@ -410,7 +442,7 @@ User_Project_Info.delete_project_info(req,function(err,result){
  		err='删除项目过程失败!';
  		console.log(err);
  		req.session.error=err;
- 		req.query.user_admin_flag="unpublic_project_list";
+ 		req.session.user_admin_flag="unpublic_project_list";
 		 return res.redirect('/user_admin');
 		
  	}
@@ -418,7 +450,7 @@ User_Project_Info.delete_project_info(req,function(err,result){
 		err="删除项目失败";
 		console.log(err);
 		req.session.error=err;
-		req.query.user_admin_flag="unpublic_project_list";	
+		req.session.user_admin_flag="unpublic_project_list";	
 		return res.redirect('/user_admin');
 	}
      console.log("result==="+result);
@@ -446,14 +478,14 @@ User_Project_Info.delete_project_info(req,function(err,result){
 	err='删除关联的项目反馈信息失败!';
 	console.log("err==="+err);
 	req.session.error=err;
-	req.query.user_admin_flag="unpublic_project_list";
+	req.session.user_admin_flag="unpublic_project_list";
 	return res.redirect('/user_admin');
 	}
 	console.log("result==="+result);
 	if(result<0){
 	err="删除关联的项目反馈信息失败!";
 	req.session.error=err;
-	req.query.user_admin_flag="unpublic_project_list";
+	req.session.user_admin_flag="unpublic_project_list";
 	return res.redirect('/user_admin');
 	}
 	//清空session中保存的反馈信息缓存
@@ -466,14 +498,14 @@ User_Project_Info.delete_project_info(req,function(err,result){
 		err='删除关联银行帐号信息失败!';
 		console.log("err==="+err);
 		req.session.error=err;
-		req.query.user_admin_flag="unpublic_project_list";
+		req.session.user_admin_flag="unpublic_project_list";
 		return res.redirect('/user_admin');
  	}
  	console.log("result==="+result);
 	if(result<0){
 		err="删除关联银行帐号信息失败";
 		req.session.error=err;
-		req.query.user_admin_flag="unpublic_project_list";
+		req.session.user_admin_flag="unpublic_project_list";
 		return res.redirect('/user_admin');
 	}
  	succ="删除关联银行帐号信息成功!";
@@ -482,7 +514,7 @@ User_Project_Info.delete_project_info(req,function(err,result){
     succ="删除项目成功!";
  	console.log(succ);
     req.session.success=succ;
-    req.query.user_admin_flag="unpublic_project_list";
+    req.session.user_admin_flag="unpublic_project_list";
     return res.redirect('/user_admin');
 	});
 
@@ -538,19 +570,70 @@ function findAllUserProject(req,res){
 	}
 	console.log("requestHandler里面的pagesize===="+pagesize);
 	console.log("requestHandler里面的page===="+page);
-		User_Project_Info.findAllUserProjectInfoByquery(req,pagesize,page,function(err,all_user_project_info_arr){
+	User_Project_Info.findAllUserProjectInfoByquery(req,pagesize,page,function(err,all_user_project_info_arr){
 
-		if(!all_user_project_info_arr){
-		err='all_user_project_info_arr not exists';
-		console.log("err===="+err);
-		req.session.error=err;
-		req.session.all_user_project_info_arr=[];
-		req.query.action_flag="index";
-		return res.redirect('/');
+	if(!all_user_project_info_arr){
+	err='all_user_project_info_arr not exists';
+	console.log("err===="+err);
+	req.session.error=err;
+	req.session.all_user_project_info_arr=[];
+	req.query.action_flag="index";
+	console.log("req.query.action_flag==="+req.query.action_flag);
+	var all_user_project_info_arr=req.session.all_user_project_info_arr;
+	var num=req.session.flag;
+	console.log("all_user_project_info_arr=========="+all_user_project_info_arr);
+	var paginate= req.session.index_paginate;
+	var index_arr=req.session.index_arr;
+	console.log("req.session.project_total===="+req.session.project_total);		
+	if(!paginate){
+	var paginate=new Paginate(1,10,req.session.project_total);
+	req.session.index_paginate=paginate;
+	console.log("next===="+paginate.next());
+	console.log("pagesize===="+paginate.pagesize);        
+	console.log("maxpage===="+paginate.maxpage);
+	console.log("page===="+paginate.page);
+	console.log("total===="+paginate.total);
+	index_arr=new Array()
+
+	if(paginate.maxpage>=1){
+	for(var i=1;i<=paginate.maxpage;i++){
+	index_arr.push(i);
+	}
+	}	
+	req.session.index_arr=index_arr;
+	}
+    console.log("nextPage===="+paginate.nextPage);
+	res.render('index', { title: '众酬网-中国最具知名度的众酬平台',items:all_user_project_info_arr,pageitems:index_arr,action_flag:req.query.action_flag });
+	}
+	req.session.all_user_project_info_arr=all_user_project_info_arr;
+    req.query.action_flag="index";
+   	console.log("req.query.action_flag==="+req.query.action_flag);
+	var all_user_project_info_arr=req.session.all_user_project_info_arr;
+	var num=req.session.flag;
+	console.log("all_user_project_info_arr=========="+all_user_project_info_arr);
+	var paginate= req.session.index_paginate;
+	var index_arr=req.session.index_arr;
+    		console.log("req.session.project_total===="+req.session.project_total);		
+		if(!paginate){
+			var paginate=new Paginate(1,10,req.session.project_total);
+			req.session.index_paginate=paginate;
+			console.log("next===="+paginate.next());
+			console.log("pagesize===="+paginate.pagesize);        
+			console.log("maxpage===="+paginate.maxpage);
+			console.log("page===="+paginate.page);
+			console.log("total===="+paginate.total);
+			index_arr=new Array()
+
+			if(paginate.maxpage>=1){
+			for(var i=1;i<=paginate.maxpage;i++){
+               index_arr.push(i);
+          	}
+          }	
+          req.session.index_arr=index_arr;
 		}
-		req.session.all_user_project_info_arr=all_user_project_info_arr;
-		req.query.action_flag="index";
-		return res.redirect('/');	
+    console.log("nextPage===="+paginate.nextPage);
+	res.render('index', { title: '众酬网-中国最具知名度的众酬平台',items:all_user_project_info_arr,pageitems:index_arr,action_flag:req.query.action_flag });
+	//return res.redirect('/');	
 });
 }
 
@@ -676,6 +759,7 @@ function start(response){
 
 function upload(req, res) {
   console.log("开始解析");
+  var time=new Date().getTime();
   for (var i in req.files) {
   	console.log("图片大小信息==="+req.files[i].size);
   	console.log("图片类型==="+req.files[i].type);
@@ -700,7 +784,7 @@ function upload(req, res) {
       console.log('Successfully removed an empty file!');
       return false;
     } else {
-     var target_path = uploadDir+ req.files[i].name;
+     var target_path = uploadDir+time+ req.files[i].name;
       // 使用同步方式重命名一个文件
       //fs.renameSync(req.files[i].path, target_path);
 	var readStream = fs.createReadStream(req.files[i].path)
@@ -711,7 +795,7 @@ function upload(req, res) {
 	console.log('临时图片已被删除');
 	});
 	console.log('Successfully renamed a file!');
-	req.session.picture_url=req.files[i].name;
+	req.session.picture_url=time+req.files[i].name;
 	return true;
 	}
   }

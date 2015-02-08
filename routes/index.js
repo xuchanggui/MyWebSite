@@ -32,13 +32,13 @@ app.get('/',function(req,res){
           }	
           req.session.index_arr=index_arr;
 		}
-     console.log("nextPage===="+paginate.nextPage);
+    console.log("nextPage===="+paginate.nextPage);
 	res.render('index', { title: '众酬网-中国最具知名度的众酬平台',items:all_user_project_info_arr,pageitems:index_arr,action_flag:req.query.action_flag });	
 }else{
       requestHandlers.findAllUserProject(req,res);
 }
-}
-);
+
+});
 
 app.get('/all_user_project_info_query',function(req,res){
 	var paginate =req.session.index_paginate;
@@ -268,10 +268,15 @@ app.get('/author_info_detail_query',function(req,res){
 app.get('/project-info',function(req,res){
 	console.log("req.query.flag===="+req.query.flag);
 	console.log("req.session.update_project_flag==="+req.session.update_project_flag)
+	console.log("req.session.user_project_info===="+req.session.user_project_info);
     if(req.query.flag=='edit'){
+    	if(req.session.user_project_info){
 			if(req.session.user_project_info._id==req.query.id){
-            res.render('edit_project_info', { title: '我的项目',action_flag:"start_project",edit_project_info_flag:req.session.user_project_info});	
-            }else{
+			res.render('edit_project_info', { title: '我的项目',action_flag:"start_project",edit_project_info_flag:req.session.user_project_info});	
+			}else{
+			requestHandlers.query_unpublish_project_by_id(req,res);
+			}
+    	}else{
              requestHandlers.query_unpublish_project_by_id(req,res);
             }
 
